@@ -7,6 +7,11 @@
 
 <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"/>
 
+<xsl:param name="chunker.output.method" select="'text'"/>
+<xsl:param name="chunker.output.encoding" select="'UTF-8'"/>
+
+<xsl:output method="text" encoding="UTF-8" indent="no"/>
+
 <xsl:template match='replaceable'>
   <xsl:text>\fI&lt;</xsl:text><xsl:apply-templates/><xsl:text>&gt;\fR</xsl:text>
 </xsl:template>

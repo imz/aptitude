@@ -7,12 +7,13 @@
   <!ENTITY dselect '<command>dselect</command>'>
   <!ENTITY apt-get '<command>apt-get</command>'>
   <!ENTITY root '<systemitem class="username">root</systemitem>'>
-  <!ENTITY VERSION '0.4.1'>
+  <!ENTITY VERSION '0.4.2'>
 
   <!-- Shortcuts for menu commands: -->
 
   <!ENTITY actions-install "<menuchoice><shortcut><keycap>g</keycap></shortcut><guimenu>Actions</guimenu><guimenuitem>Install/remove packages</guimenuitem></menuchoice>">
   <!ENTITY actions-update "<menuchoice><shortcut><keycap>u</keycap></shortcut><guimenu>Actions</guimenu><guimenuitem>Update package list</guimenuitem></menuchoice>">
+  <!ENTITY actions-cancel "<menuchoice><guimenu>Actions</guimenu><guimenuitem>Cancel pending actions</guimenuitem></menuchoice>">
   <!ENTITY actions-forget "<menuchoice><shortcut><keycap>f</keycap></shortcut><guimenu>Actions</guimenu><guimenuitem>Forget new packages</guimenuitem></menuchoice>">
   <!ENTITY actions-clean "<menuchoice><guimenu>Actions</guimenu><guimenuitem>Clean package cache</guimenuitem></menuchoice>">
   <!ENTITY actions-clean-obs "<menuchoice><guimenu>Actions</guimenu><guimenuitem>Clean obsolete files</guimenuitem></menuchoice>">
@@ -77,13 +78,13 @@
   <!ENTITY manpage SYSTEM "manpage.xml">
 ]>
 
-<book> <bookinfo> <title>&aptitude; user's manual</title>
+<book lang="en"> <bookinfo> <title>&aptitude; user's manual</title>
 <subtitle>Version &VERSION;</subtitle>
 
 <author><personname><firstname>Daniel</firstname><surname>Burrows</surname></personname><email>dburrows@debian.org</email></author>
 
 <copyright>
-  <year>2004</year>
+  <year>2004-2006</year>
   <holder>Daniel Burrows</holder>
 </copyright>
 
@@ -111,6 +112,8 @@
 </legalnotice>
 
 </bookinfo>
+
+<toc/>
 
 <preface>
 
@@ -517,7 +520,7 @@
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/start-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/start-snapshot.png' format='PNG' scalefit='1' width='100%'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -572,7 +575,7 @@ These packages are currently installed on your computer.
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/menu-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/menu-snapshot.png' format='PNG' scalefit='1' width='100%'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -634,7 +637,7 @@ Perform all pending installs and removals</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/start-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/start-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -688,7 +691,7 @@ These packages are currently installed on your computer.
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/expand-once-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/expand-once-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -732,7 +735,7 @@ These packages are currently installed on your computer.
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/expand-twice-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/expand-twice-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -782,7 +785,7 @@ examining network traffic, and so on.
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/expand-thrice-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/expand-thrice-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -845,7 +848,7 @@ http://www.debian.org/social_contract#guidelines
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/search-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/search-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -904,7 +907,7 @@ URL: http://www.frozen-bubble.org/
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/limit-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/limit-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -949,7 +952,7 @@ Th+--------------------------------------------------------------------------+ a
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/limit-result-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/limit-result-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -1037,7 +1040,7 @@ These packages are currently installed on your computer.
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/install-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/install-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -1102,7 +1105,7 @@ including kdesdk, qt3-designer, and all core KDE -dev packages.
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/broken-snapshot.png' format='PNG'/>
+		<imagedata fileref='images/broken-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1170,7 +1173,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/solution-screen-snapshot.png' format='PNG'/>
+		<imagedata fileref='images/solution-screen-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1215,7 +1218,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot id='solutionScreenSnapshot2'>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/solution-screen-snapshot2.png' format='PNG'/>
+		<imagedata fileref='images/solution-screen-snapshot2.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1263,7 +1266,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/solution-screen-snapshot3.png' format='PNG'/>
+		<imagedata fileref='images/solution-screen-snapshot3.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1330,7 +1333,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/solution-screen-snapshot4.png' format='PNG'/>
+		<imagedata fileref='images/solution-screen-snapshot4.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1396,7 +1399,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/solution-screen-snapshot5.png' format='PNG'/>
+		<imagedata fileref='images/solution-screen-snapshot5.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -1471,7 +1474,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/preview-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/preview-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -1952,6 +1955,18 @@ Abort.</screen>
 		    <entry>
 		      Discard all information about what packages are
 		      <quote>new</quote> (empty the <quote>New Packages</quote> tree).
+		    </entry>
+		  </row>
+
+		  <row>
+		    <entry>&actions-cancel;</entry>
+
+		    <entry>
+		      Cancel all pending installations, removals,
+		      upgrades, and holds.  This is equivalent to
+		      executing the <link
+		      linkend='pkgCmdKeep'>Keep</link> command on
+		      every package in the package database.
 		    </entry>
 		  </row>
 
@@ -2627,7 +2642,7 @@ Abort.</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/views-tab-bar.png' format='PNG'/>
+	      <imagedata fileref='images/views-tab-bar.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -2687,7 +2702,7 @@ GNU C Library: Shared libraries and Timezone data</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/become-root-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/become-root-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3071,7 +3086,7 @@ Th+-------------------------------------------------------------------------+
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/info-snapshot.png' format='PNG'/>
+		<imagedata fileref='images/info-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -3381,7 +3396,7 @@ i A 0.5.25
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/broken-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/broken-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3426,7 +3441,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/solution-screen-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/solution-screen-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3472,7 +3487,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/solution-explanation-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/solution-explanation-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3541,7 +3556,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/solution-reject-and-approve-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/solution-reject-and-approve-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3615,7 +3630,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	<screenshot>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref='images/solution-story-snapshot.png' format='PNG'/>
+	      <imagedata fileref='images/solution-story-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	    </imageobject>
 
 	    <textobject role='text'>
@@ -3797,7 +3812,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	  <screenshot>
 	    <mediaobject>
 	      <imageobject>
-		<imagedata fileref='images/trust-snapshot.png' format='PNG'/>
+		<imagedata fileref='images/trust-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	      </imageobject>
 
 	      <textobject role='text'>
@@ -6890,7 +6905,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	  <title>Customizable styles in &aptitude;</title>
 
 	  <informaltable>
-	    <tgroup cols='2'>
+	    <tgroup cols='3'>
 	      <thead>
 		<row>
 		  <entry>Style</entry>
@@ -8354,6 +8369,26 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      </seg>
 	    </seglistitem>
 
+	    <seglistitem id='configLockFile'>
+	      <seg><literal>Aptitude::LockFile</literal></seg>
+
+	      <seg><literal>/var/lock/aptitude</literal></seg>
+
+	      <seg>
+		A file that will be fcntl-locked to ensure that at
+		most one &aptitude; process can modify the cache at
+		once.  In normal circumstances, you should never need
+		to modify this; it may be useful for debugging.
+		<emphasis>Note</emphasis>: if &aptitude; complains
+		that it cannot acquire a lock, this is
+		<emphasis>not</emphasis> because the lock file needs
+		to be deleted.  fcntl locks are managed by the kernel
+		and will be destroyed when the program terminates;
+		failure to acquire the lock means that another running
+		program is using it!
+	      </seg>
+	    </seglistitem>
+
 	    <seglistitem id='configLog'>
 	      <seg><literal>Aptitude::Log</literal></seg>
 
@@ -8371,6 +8406,24 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		root</literal> will cause the log to be emailed to
 		&root;.  To log to multiple files or commands, you may
 		set this option to a list of log targets.
+	      </seg>
+	    </seglistitem>
+
+	    <seglistitem id='configParseDescriptionBullets'>
+	      <seg><literal>Aptitude::Parse-Description-Bullets</literal></seg>
+
+	      <seg><literal>false</literal></seg>
+
+	      <seg>
+		If this option is enabled, &aptitude; will attempt
+		to automatically detect bulleted lists in package
+		descriptions. <!-- TODO: add an appendix describing
+		the grammar? -->  This will generally improve how
+		descriptions are displayed, but it is not entirely
+		backwards-compatible; some descriptions might be
+		formatted less attractively when this option is
+		<literal>true</literal> than when it is
+		<literal>false</literal>.
 	      </seg>
 	    </seglistitem>
 
@@ -9082,6 +9135,19 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      </seg>
 	    </seglistitem>
 
+	    <seglistitem id='viewTabs'>
+	      <seg><literal>Aptitude::UI::ViewTabs</literal></seg>
+
+	      <seg><literal>true</literal></seg>
+
+	      <seg>
+		If this option is set to <literal>false</literal>,
+		&aptitude; will not display <quote>tabs</quote>
+		describing the currently active views at the top of
+		the screen.
+	      </seg>
+	    </seglistitem>
+
 	    <seglistitem id='suppressReadOnlyWarning'>
 	      <seg><literal>Aptitude::Suppress-Read-Only-Warning</literal></seg>
 
@@ -9185,7 +9251,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <screenshot>
 		<mediaobject>
 		  <imageobject>
-		    <imagedata fileref='images/dselect-theme.png' format='PNG'/>
+		    <imagedata fileref='images/dselect-theme.png' format='PNG' width='100%' scalefit='1'/>
 		  </imageobject>
 
 		  <textobject role='text'>
@@ -9235,7 +9301,7 @@ others, and the text of several common licenses in use on Debian systems.
 	      <screenshot>
 		<mediaobject>
 		  <imageobject>
-		    <imagedata fileref='images/vertical-split-theme.png' format='PNG'/>
+		    <imagedata fileref='images/vertical-split-theme.png' format='PNG' width='100%' scalefit='1'/>
 		  </imageobject>
 
 		  <textobject role='text'>
@@ -9286,7 +9352,7 @@ Utilities for using ACPI power management</screen>
       <screenshot>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref='images/mine-snapshot.png' format='PNG'/>
+	    <imagedata fileref='images/mine-snapshot.png' format='PNG' width='100%' scalefit='1'/>
 	  </imageobject>
 
 	  <textobject role='text'>
@@ -9338,7 +9404,7 @@ Minesweeper                                              10/10 mines  13 seconds
       <screenshot>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref='images/mine-snapshot2.png' format='PNG'/>
+	    <imagedata fileref='images/mine-snapshot2.png' format='PNG' width='100%' scalefit='1'/>
 	  </imageobject>
 
 	  <textobject role='text'>
@@ -9389,7 +9455,7 @@ Minesweeper                                             10/10 mines  387 seconds
       <screenshot>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref='images/mine-snapshot3.png' format='PNG'/>
+	    <imagedata fileref='images/mine-snapshot3.png' format='PNG' width='100%' scalefit='1'/>
 	  </imageobject>
 
 	  <textobject role='text'>
@@ -9438,7 +9504,7 @@ Minesweeper                                              9/10 mines  961 seconds
       <screenshot>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref='images/mine-snapshot4.png' format='PNG'/>
+	    <imagedata fileref='images/mine-snapshot4.png' format='PNG' width='100%' scalefit='1'/>
 	  </imageobject>
 
 	  <textobject role='text'>
@@ -9479,7 +9545,7 @@ Minesweeper                                              9/10 mines  2290 second
       <screenshot>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref='images/mine-snapshot5.png' format='PNG'/>
+	    <imagedata fileref='images/mine-snapshot5.png' format='PNG' width='100%' scalefit='1'/>
 	  </imageobject>
 
 	  <textobject role='text'>

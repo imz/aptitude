@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(aptitude, 0.4.1)
+AC_INIT(aptitude, 0.4.2)
 AC_CONFIG_SRCDIR([src/main.cc])
 AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
@@ -10,6 +10,13 @@ AC_LANG([C++])
 dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_RANLIB
+dnl Checks for programs.
+AC_PATH_PROG(PO4A, po4a)
+if test "x$PO4A" = "x" ; then
+  AM_CONDITIONAL(USE_PO4A, false)
+else
+  AM_CONDITIONAL(USE_PO4A, true)
+fi
 
 dnl C++ has const and inline!!!
 ac_cv_c_const=yes
@@ -32,7 +39,7 @@ AC_CHECK_LIB(rpm, main,
       HAVE_RPM=1,
               AC_MSG_ERROR([Can't find the rpm library -- please install librpm-devel package]))
 
-ALL_LINGUAS="ar bs ca cs da de el es eu fi fr gl it ja lt nb nl nn pl pt pt_BR ro ru sk sv tl tr vi zh_CN zh_TW"
+ALL_LINGUAS="ar bs ca cs da de el es eu fi fr gl hu it ja lt nb nl nn pl pt pt_BR ro ru sk sv tl tr vi zh_CN zh_TW"
 AM_GNU_GETTEXT([external])
 
 dnl Old sigc:
@@ -222,6 +229,16 @@ AC_ARG_ENABLE(package-state-loc,
 	fi,
 	STATEDIR="/var/lib/aptitude")
 
+AC_ARG_ENABLE(lock-loc,
+	AS_HELP_STRING([--with-lock-loc], [use the given location for storing state (default /var/lock/aptitude)]),
+	if test x$enableval = xyes
+	then
+	  [AC_MSG_ERROR([--with-lock-loc needs an argument])]
+	else
+	  LOCKFILE="$enableval"
+	fi,
+	LOCKFILE="/var/lock/aptitude")
+
 AC_ARG_ENABLE(aptitude,
 	AS_HELP_STRING([--disable-aptitude], [don't compile the program itself]),
 	if test x$enableval=xno
@@ -246,6 +263,7 @@ AC_SUBST(SRCDIRS)
 AC_SUBST(DOCDIRS)
 
 AC_DEFINE_UNQUOTED(STATEDIR, "$STATEDIR", [The location of aptitude's state files])
+AC_DEFINE_UNQUOTED(LOCKFILE, "$LOCKFILE", [The location of the lock to prevent simultaneous aptitude instances])
 AC_SUBST(STATEDIR)
 AC_SUBST(WERROR)
 
@@ -254,11 +272,13 @@ AC_TYPE_SIZE_T
 dnl Checks for library functions.
 AC_CHECK_FUNCS(strdup)
 
-FC_EXPAND_DIR(HELPDIR, "$datadir/aptitude")
-AC_DEFINE_UNQUOTED(HELPDIR, "$HELPDIR", [The location in which the online help data is placed])
+CPPFLAGS="$CPPFLAGS -DHELPDIR=\\\"\$(datadir)/aptitude\\\""
+CPPFLAGS="$CPPFLAGS -DPKGDATADIR=\\\"\$(datadir)/aptitude\\\""
+dnl FC_EXPAND_DIR(HELPDIR, [$datadir/aptitude])
+dnl AC_DEFINE_UNQUOTED(HELPDIR, "$HELPDIR", [The location in which the online help data is placed])
 
-FC_EXPAND_DIR(PKGDATADIR, "$datadir/aptitude")
-AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR", [The location in which the program data is placed])
+dnl FC_EXPAND_DIR(PKGDATADIR, [$datadir/aptitude])
+dnl AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR", [The location in which the program data is placed])
 
 AC_CONFIG_FILES([
 	Doxyfile
@@ -273,6 +293,11 @@ AC_CONFIG_FILES([
 	doc/fi/images/Makefile
 	doc/fr/Makefile
 	doc/fr/images/Makefile
+	doc/ja/Makefile
+	doc/ja/images/Makefile
+	doc/po4a/Makefile
+	doc/po4a/po/Makefile
+	doc/po4a/add_fr/Makefile
 	m4/Makefile
 	po/Makefile.in
 	src/Makefile

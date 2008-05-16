@@ -1,6 +1,6 @@
 // ui.cc
 //
-//   Copyright 2000-2005 Daniel Burrows <dburrows@debian.org>
+//   Copyright 2000-2006 Daniel Burrows <dburrows@debian.org>
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -680,15 +680,15 @@ static void do_help_readme()
 {
   char buf[512];
 
-  snprintf(buf, 512, HELPDIR "/%s", _("README")); // README can be translated..
+  snprintf(buf, 512, HELPDIR "/%s", _("README")); // README can be translated...
 
-  const char *encoding=P_("Encoding of README|UTF-8");
+  const char *encoding=P_("Encoding of README|ISO_8859-1");
 
   // Deal with missing localized docs.
   if(access(buf, R_OK)!=0)
     {
       strncpy(buf, HELPDIR "/README", 512);
-      encoding="UTF-8";
+      encoding="ISO_8859-1";
     }
 
   vs_table_ref t      = vs_table::create();
@@ -698,6 +698,11 @@ static void do_help_readme()
   p->line_changed.connect(sigc::mem_fun(s.unsafe_get_ref(), &vs_scrollbar::set_slider));
   s->scrollbar_interaction.connect(sigc::mem_fun(p.unsafe_get_ref(), &vs_pager::scroll_page));
   p->scroll_top(); // Force a scrollbar update.
+
+  p->connect_key("Search", &global_bindings,
+		 sigc::bind(sigc::ptr_fun(&pager_search), p.weak_ref()));
+  p->connect_key("ReSearch", &global_bindings,
+		 sigc::bind(sigc::ptr_fun(&pager_repeat_search), p.weak_ref()));
 
   t->add_widget_opts(p, 0, 0, 1, 1,
 		     vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK,
@@ -984,6 +989,22 @@ static void do_show_preview()
       eassert(active_preview.valid());
       active_preview->show();
     }
+}
+
+static void do_keep_all()
+{
+  auto_ptr<undo_group> undo(new apt_undo_group);
+
+  (*apt_cache_file)->begin_action_group();
+
+  for(pkgCache::PkgIterator i=(*apt_cache_file)->PkgBegin();
+      !i.end(); ++i)
+    (*apt_cache_file)->mark_keep(i, true, false, undo.get());
+
+  (*apt_cache_file)->end_action_group(undo.get());
+
+  if(!undo.get()->empty())
+    apt_undos->add_item(undo.release());
 }
 
 //  Huge FIXME: the preview interacts badly with the menu.  This can be solved
@@ -1309,10 +1330,20 @@ vs_menu_info actions_menu[]={
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Update package list"), "UpdatePackageList",
 	       N_("Check for new versions of packages"), sigc::ptr_fun(do_update_lists), sigc::ptr_fun(can_start_download)),
 
+  VS_MENU_SEPARATOR,
+
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Mark ^Upgradable"), "MarkUpgradable",
+	       N_("Mark all upgradable packages which are not held for upgrade"),
+	       sigc::ptr_fun(do_mark_upgradable), sigc::ptr_fun(do_mark_upgradable_enabled)),
+
   // FIXME: this is a bad name for the menu item.
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Forget new packages"), "ForgetNewPackages",
 	       N_("Forget which packages are \"new\""),
 	       sigc::ptr_fun(do_forget_new), sigc::ptr_fun(forget_new_enabled)),
+
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Canc^el pending actions"), NULL,
+	       N_("Cancel all pending installations, removals, holds, and upgrades."),
+	       sigc::ptr_fun(do_keep_all)),
 
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Clean package cache"), NULL,
 	       N_("Delete package files which were previously downloaded"),
@@ -1322,12 +1353,7 @@ vs_menu_info actions_menu[]={
 	       N_("Delete package files which can no longer be downloaded"),
 	       sigc::ptr_fun(do_autoclean), sigc::ptr_fun(do_autoclean_enabled)),
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Mark ^Upgradable"), "MarkUpgradable",
-	       N_("Mark all upgradable packages which are not held for upgrade"),
-	       sigc::ptr_fun(do_mark_upgradable), sigc::ptr_fun(do_mark_upgradable_enabled)),
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Play Minesweeper"), NULL,
-	       N_("Waste time trying to find mines"), sigc::ptr_fun(do_sweep)),
+  VS_MENU_SEPARATOR,
 
 #ifdef WITH_RELOAD_CACHE
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Reload package cache"), NULL,
@@ -1335,7 +1361,13 @@ vs_menu_info actions_menu[]={
 	       sigc::ptr_fun(do_reload_cache)),
 #endif
 
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Play Minesweeper"), NULL,
+	       N_("Waste time trying to find mines"), sigc::ptr_fun(do_sweep)),
+
   VS_MENU_SEPARATOR,
+
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Become root"), NULL,
+	       N_("Run 'su' to become root; this will restart the program, but your settings will be preserved"), sigc::bind(sigc::ptr_fun(do_su_to_root), ""), sigc::ptr_fun(su_to_root_enabled)),
 
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Quit"), "QuitProgram",
 	       N_("Exit the program"), sigc::ptr_fun(do_quit)),
@@ -1487,7 +1519,7 @@ vs_menu_info help_menu_info[]={
 	       N_("View a list of frequently asked questions"),
 	       sigc::ptr_fun(do_help_faq)),
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^NEWS"), NULL,
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^News"), NULL,
 	       N_("View the important changes made in each version of " PACKAGE),
 	       sigc::ptr_fun(do_help_news)),
 
@@ -1564,13 +1596,26 @@ static vs_menu_ref add_menu(vs_menu_info *info, const std::string &name,
   return menu;
 }
 
+static void do_update_show_tabs(vs_multiplex &mp)
+{
+  mp.set_show_tabs(aptcfg->FindB(PACKAGE "::UI::ViewTabs", true));
+}
+
 // argh
 class help_bar:public vs_label
 {
-public:
+protected:
   help_bar(const wstring &txt, const style &st):vs_label(txt, st)
   {
     set_visibility();
+  }
+public:
+  static
+  ref_ptr<help_bar> create(const wstring &txt, const style &st)
+  {
+    ref_ptr<help_bar> rval(new help_bar(txt, st));
+    rval->decref();
+    return rval;
   }
 
   inline void set_visibility()
@@ -1578,6 +1623,7 @@ public:
     set_visible(aptcfg->FindB(PACKAGE "::UI::HelpBar", true));
   }
 };
+typedef ref_ptr<help_bar> help_bar_ref;
 
 void ui_init()
 {
@@ -1669,14 +1715,16 @@ void ui_init()
 			update_key.c_str(),
 			install_key.c_str());
 
-  help_bar *help_label=new help_bar(helptext, get_style("Header"));
+  help_bar_ref help_label(help_bar::create(helptext, get_style("Header")));
   main_table->add_widget_opts(help_label, 0, 0, 1, 1,
 			      vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK,
 			      vs_table::ALIGN_CENTER);
   aptcfg->connect(string(PACKAGE "::UI::HelpBar"),
-		  sigc::mem_fun(*help_label, &help_bar::set_visibility));
+		  sigc::mem_fun(help_label.unsafe_get_ref(), &help_bar::set_visibility));
 
-  main_multiplex=vs_multiplex::create(true);
+  main_multiplex=vs_multiplex::create(aptcfg->FindB(PACKAGE "::UI::ViewTabs", true));
+  aptcfg->connect(string(PACKAGE "::UI::ViewTabs"),
+		  sigc::bind(sigc::ptr_fun(&do_update_show_tabs), main_multiplex.weak_ref()));
   main_table->add_widget_opts(main_multiplex, 1, 0, 1, 1,
 			      vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK,
 			      vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK);

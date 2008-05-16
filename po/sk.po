@@ -2,24 +2,26 @@
 # Copyright (C) 2005 THE aptitude'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Aptitude package.
 # Stanislav Valášek <valasek@fastmail.fm>, 2005.
+# Peter Mann <Peter.Mann@tuke.sk>, 2006.
 # 
 # 
-#: src/view_changelog.cc:226
 msgid ""
 msgstr ""
 "Project-Id-Version: aptitude\n"
-"Report-Msgid-Bugs-To: submit@bugs.debian.org\n"
-"POT-Creation-Date: 2005-12-07 20:59-0800\n"
-"PO-Revision-Date: 2005-11-16 22:30+0100\n"
-"Last-Translator: Stanislav Valášek <valasek@fastmail.fm>\n"
+"Report-Msgid-Bugs-To: aptitude@packages.debian.org\n"
+"POT-Creation-Date: 2006-07-31 18:06-0700\n"
+"PO-Revision-Date: 2006-03-11 19:41+0100\n"
+"Last-Translator: Peter Mann <Peter.Mann@tuke.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: src/apt_options.cc:110
 msgid "Display some available commands at the top of the screen"
-msgstr "Zobraziť vybrané príkazy hore na obrazovke"
+msgstr "Zobraziť dostupné príkazy hore na obrazovke"
 
 #: src/apt_options.cc:112
 msgid "Hide the menubar when it is not being used"
@@ -27,7 +29,7 @@ msgstr "Skryť menu, pokiaľ sa nepoužíva"
 
 #: src/apt_options.cc:114
 msgid "Use a minibuffer-style prompt when possible"
-msgstr "Kde je možné, používať výzvy v štýle 'minibufferu'"
+msgstr "Používať výzvy v štýle 'minibufferu', ak je to možné"
 
 #: src/apt_options.cc:116
 msgid "Show partial search results (incremental search)"
@@ -59,7 +61,7 @@ msgstr "Vždy"
 
 #: src/apt_options.cc:128
 msgid "Use a 'status-line' download indicator for all downloads"
-msgstr "Použiť pre všetky sťahovania iba indikátor v stavovom riadku"
+msgstr "Pre všetky sťahovania použiť indikátor v stavovom riadku"
 
 #: src/apt_options.cc:130
 msgid "Display the extended description area by default"
@@ -67,11 +69,11 @@ msgstr "Štandardne zobrazovať rozšírenú oblasť na popis"
 
 #: src/apt_options.cc:132
 msgid "Advance to the next item after changing the state of a package"
-msgstr "Pri zmene stavu balíku automaticky prejsť na ďalšiu položku"
+msgstr "Pri zmene stavu balíka automaticky prejsť na ďalšiu položku"
 
 #: src/apt_options.cc:134
 msgid "Automatically show why packages are broken"
-msgstr "Automaticky zobrazí, prečo sú balíky porušené"
+msgstr "Automaticky zobrazí, prečo sú balíky poškodené"
 
 #: src/apt_options.cc:136
 msgid "The default grouping method for package views"
@@ -83,15 +85,15 @@ msgstr "Štandardné obmedzenie na zobrazenie balíkov"
 
 #: src/apt_options.cc:140
 msgid "The display format for package views"
-msgstr "Formát na zobrazenie balíkov"
+msgstr "Formát zobrazenia balíkov"
 
 #: src/apt_options.cc:143
 msgid "The display format for the status line"
-msgstr "Formát na zobrazenie stavového riadku"
+msgstr "Formát zobrazenia stavového riadku"
 
 #: src/apt_options.cc:146
 msgid "The display format for the header line"
-msgstr "Formát na zobrazenie hlavičky"
+msgstr "Formát zobrazenia hlavičky"
 
 #: src/apt_options.cc:155
 msgid "Automatically upgrade installed packages"
@@ -113,7 +115,7 @@ msgstr "Pred vlastnou akciou zobraziť, čo sa bude vykonávať"
 msgid ""
 "Forget which packages are \"new\" whenever the package lists are updated"
 msgstr ""
-"Zabudnúť zoznam \"nových\" balíkov pri každej aktualizácií zoznamu balíkov"
+"Zabudnúť zoznam \"nových\" balíkov pri každej aktualizácii zoznamu balíkov"
 
 #: src/apt_options.cc:168
 msgid ""
@@ -122,9 +124,9 @@ msgstr "Zabudnúť zoznam \"nových\" balíkov pri každej (od)inštalácií bal
 
 #: src/apt_options.cc:171
 msgid ""
-"Do not display a warning when the first change is made in read-only mode."
+"Do not display a warning when the first change is made in read-only mode"
 msgstr ""
-"Nezobrazovať varovanie, ak je prvá zmena vykonaná v režime iba na čítanie."
+"Nezobrazovať varovanie, ak je prvá zmena vykonaná v režime iba na čítanie"
 
 #: src/apt_options.cc:174
 msgid "Warn when attempting to perform a privileged action as a non-root user"
@@ -137,7 +139,7 @@ msgstr "Súbor na zaznamenávanie akcií"
 
 #: src/apt_options.cc:184
 msgid "Automatically resolve dependencies of a package when it is selected"
-msgstr "Pri výbere balíku automaticky vyriešiť jeho závislosti"
+msgstr "Pri výbere balíka automaticky vyriešiť jeho závislosti"
 
 #: src/apt_options.cc:186
 msgid "Automatically fix broken packages before installing or removing"
@@ -146,7 +148,7 @@ msgstr ""
 
 #: src/apt_options.cc:188
 msgid "Install Recommended packages automatically"
-msgstr "Automaticky inštalovať Doporučené balíky"
+msgstr "Automaticky inštalovať Odporúčané balíky"
 
 #: src/apt_options.cc:190
 msgid "Remove unused packages automatically"
@@ -176,7 +178,7 @@ msgstr "%s: Vyskúšať"
 #: src/broken_indicator.cc:126
 #, c-format
 msgid "%s: Apply"
-msgstr "%s: POužiť"
+msgstr "%s: Použiť"
 
 #: src/broken_indicator.cc:129
 #, c-format
@@ -190,7 +192,7 @@ msgstr "%s: Predchádzajúci"
 
 #: src/broken_indicator.cc:226
 msgid "Unable to resolve dependencies."
-msgstr "Nemožnosť zistiť závislosti."
+msgstr "Nedajú sa vyriešiť závislosti."
 
 #: src/broken_indicator.cc:240
 #, c-format
@@ -200,56 +202,55 @@ msgstr "[%d(%d)/...] Riešenie závislostí"
 #: src/broken_indicator.cc:273 src/solution_dialog.cc:126
 #: src/solution_screen.cc:522
 msgid "Internal error: unexpected null solution."
-msgstr "Interná chyba: neočakávané null riešenie"
+msgstr "Interná chyba: neočakávané prázdne riešenie."
 
-#: src/broken_indicator.cc:326
-msgid "Suggest "
-msgstr "Navrhuje"
-
-#: src/broken_indicator.cc:331
+#: src/broken_indicator.cc:330
 #, c-format
-msgid "%d installs"
-msgstr "%d inštalovaných"
+msgid "%d install"
+msgid_plural "%d installs"
+msgstr[0] "%d inštalovaný"
+msgstr[1] "%d inštalované"
+msgstr[2] "%d inštalovaných"
 
-#: src/broken_indicator.cc:334
-msgid "1 install"
-msgstr "1 iinštalovaný"
-
-#: src/broken_indicator.cc:337
+#: src/broken_indicator.cc:336
 #, c-format
-msgid "%d removals"
-msgstr "%d odstránení"
+msgid "%d removal"
+msgid_plural "%d removals"
+msgstr[0] "%d odstránenie"
+msgstr[1] "%d odstránenia"
+msgstr[2] "%d odstránení"
 
-#: src/broken_indicator.cc:340
-msgid "1 removal"
-msgstr "1 odstránenie"
-
-#: src/broken_indicator.cc:343
+#: src/broken_indicator.cc:342
 #, c-format
-msgid "%d keeps"
-msgstr "%d ponechaní"
+msgid "%d keep"
+msgid_plural "%d keeps"
+msgstr[0] "%d ponechanie"
+msgstr[1] "%d ponechania"
+msgstr[2] "%d ponechaní"
 
-#: src/broken_indicator.cc:346
-msgid "1 keep"
-msgstr "1 ponechanie"
-
-#: src/broken_indicator.cc:349
+#: src/broken_indicator.cc:348
 #, c-format
-msgid "%d upgrades"
-msgstr "%d aktualizácií"
-
-#: src/broken_indicator.cc:351
-msgid "1 upgrade"
-msgstr "1 aktualizácia"
+msgid "%d upgrade"
+msgid_plural "%d upgrades"
+msgstr[0] "%d aktualizácia"
+msgstr[1] "%d aktualizácie"
+msgstr[2] "%d aktualizácií"
 
 #: src/broken_indicator.cc:354
 #, c-format
-msgid "%d downgrades"
-msgstr "%d degradovaných"
+msgid "%d downgrade"
+msgid_plural "%d downgrades"
+msgstr[0] "%d degradovaný"
+msgstr[1] "%d degradované"
+msgstr[2] "%d degradovaných"
 
-#: src/broken_indicator.cc:356
-msgid "1 downgrade"
-msgstr "1 degradovaný"
+#. ForTranslators: %F is replaced with a comma separated list such as
+#. "n1 installs, n2 removals", ...
+#.
+#: src/broken_indicator.cc:362
+#, fuzzy, c-format
+msgid "Suggest %F"
+msgstr "Navrhuje"
 
 #: src/cmdline/cmdline_action.cc:37
 #, c-format
@@ -286,7 +287,7 @@ msgstr "\"%s\" je virtuálny balík poskytovaný:\n"
 #: src/cmdline/cmdline_action.cc:71
 #, c-format
 msgid "You must choose one to install.\n"
-msgstr "Na inštaláciu musíte vybrať jeden z nich.\n"
+msgstr "Na inštaláciu si z nich musíte jeden zvoliť.\n"
 
 #: src/cmdline/cmdline_action.cc:76
 #, c-format
@@ -294,18 +295,18 @@ msgid ""
 "Note: selecting \"%s\" instead of the\n"
 "      virtual package \"%s\"\n"
 msgstr ""
-"Pozn: vyberám \"%s\" miesto\n"
-"      virtuálneho balíku \"%s\"\n"
+"Poznámka: vyberá sa \"%s\" namiesto\n"
+"          virtuálneho balíka \"%s\"\n"
 
 #: src/cmdline/cmdline_action.cc:94
 #, c-format
 msgid "%s is already installed at the requested version (%s)\n"
-msgstr "%s je už inštalovaný v požadovanej verzií (%s)\n"
+msgstr "%s je už inštalovaný v požadovanej verzii (%s)\n"
 
 #: src/cmdline/cmdline_action.cc:100
 #, c-format
 msgid "%s is not currently installed, so it will not be reinstalled.\n"
-msgstr "%s nie je nainštalovaný, preto nebude nainštalovaný.\n"
+msgstr "%s nie je nainštalovaný, preto nebude preinštalovaný.\n"
 
 #: src/cmdline/cmdline_action.cc:107 src/cmdline/cmdline_action.cc:113
 #, c-format
@@ -320,12 +321,13 @@ msgstr "Balík %s nie je nainštalovaný, nemožno teda zakázať aktualizáciu\
 #: src/cmdline/cmdline_action.cc:133
 #, c-format
 msgid "Package %s is not upgradable, cannot forbid an upgrade\n"
-msgstr "Balík %s nie je aktualizovateľný, nemožno teda zakázať aktualizáciu\n"
+msgstr ""
+"Balík %s sa nedá aktualizovať, nemožno teda zakázať jeho aktualizáciu\n"
 
 #: src/cmdline/cmdline_action.cc:214
 #, c-format
 msgid "Note: selecting the task \"%s: %s\" for installation\n"
-msgstr "Pozn: vyberám na inštaláciu úlohu \"%s: %s\"\n"
+msgstr "Poznámka: na inštaláciu je zvolená úloha \"%s: %s\"\n"
 
 #: src/cmdline/cmdline_action.cc:244
 #, c-format
@@ -333,13 +335,13 @@ msgid ""
 "You can only specify a package version with an 'install' command or a "
 "'forbid-version' command.\n"
 msgstr ""
-"Verziu balíku môžete zadať iba 'install' príkazom alebo príkazom 'forbid-"
+"Verziu balíka môžete zadať iba príkazom 'install' alebo príkazom 'forbid-"
 "version'.\n"
 
 #: src/cmdline/cmdline_action.cc:252
 #, c-format
 msgid "You can only specify a package archive with an 'install' command.\n"
-msgstr "Archív balíku môžete zadať iba s príkazom 'install'.\n"
+msgstr "Archív balíka môžete zadať iba s príkazom 'install'.\n"
 
 #: src/cmdline/cmdline_action.cc:286
 #, c-format
@@ -347,7 +349,7 @@ msgid ""
 "Couldn't find package \"%s\", and more than 40\n"
 "packages contain \"%s\" in their name.\n"
 msgstr ""
-"Nemohol som nájsť balík \"%s\" a viac než 40\n"
+"Nenašiel sa balík \"%s\" a viac než 40\n"
 "balíkov obsahuje \"%s\" vo svojom názve.\n"
 
 #: src/cmdline/cmdline_action.cc:289
@@ -356,14 +358,13 @@ msgid ""
 "Couldn't find package \"%s\".  However, the following\n"
 "packages contain \"%s\" in their name:\n"
 msgstr ""
-"Nemohol som nájsť balík \"%s\", ale nasledujúce balíky\n"
+"Nenašiel sa balík \"%s\", ale nasledujúce balíky\n"
 "obsahujú \"%s\" vo svojom názve:\n"
 
 #: src/cmdline/cmdline_action.cc:313
 #, c-format
 msgid "Couldn't find any package whose name or description matched \"%s\"\n"
-msgstr ""
-"Nemohol som nájsť balík, ktorého názov alebo popis sa zhoduje s \"%s\"\n"
+msgstr "Nenašiel sa balík, ktorého názov alebo popis sa zhoduje s \"%s\"\n"
 
 #: src/cmdline/cmdline_action.cc:315
 #, c-format
@@ -371,7 +372,7 @@ msgid ""
 "Couldn't find any package matching \"%s\", and more than 40\n"
 "packages contain \"%s\" in their description.\n"
 msgstr ""
-"Nemohol som nájsť balík vyhovujúci \"%s\" a viac než 40\n"
+"Nenašiel sa balík vyhovujúci \"%s\" a viac než 40\n"
 "balíkov obsahuje \"%s\" vo svojom popise.\n"
 
 #: src/cmdline/cmdline_action.cc:318
@@ -380,7 +381,7 @@ msgid ""
 "Couldn't find any package matching \"%s\".  However, the following\n"
 "packages contain \"%s\" in their description:\n"
 msgstr ""
-"Nemohol som nájsť balík vyhovujúci \"%s\", ale nasledujúce balíky\n"
+"Nenašiel sa balík vyhovujúci \"%s\", ale nasledujúce balíky\n"
 "obsahujú \"%s\" vo svojom popise:\n"
 
 #: src/cmdline/cmdline_action.cc:437
@@ -388,54 +389,54 @@ msgstr ""
 msgid "Bad action character '%c'\n"
 msgstr "Chybná akcia '%c'\n"
 
-#: src/cmdline/cmdline_changelog.cc:196
+#: src/cmdline/cmdline_changelog.cc:207
 msgid "Can't execute sensible-pager, is this a working Debian system?"
-msgstr "Nemôžem spustiť sensible-pager - je tento Debian vôbec funkčný?"
+msgstr "Nedá sa spustiť sensible-pager - je tento Debian vôbec funkčný?"
 
-#: src/cmdline/cmdline_changelog.cc:246
+#: src/cmdline/cmdline_changelog.cc:263
 #, c-format
 msgid "%s is not an official Debian package, cannot display its changelog."
-msgstr "%s nie je oficiálny Debian balík, nemôžem zobraziť jeho zoznam zmien."
+msgstr "%s nie je oficiálny Debian balík, nedá sa zobraziť jeho zoznam zmien."
 
-#: src/cmdline/cmdline_changelog.cc:317
+#: src/cmdline/cmdline_changelog.cc:341
 #, c-format
 msgid "Couldn't find a changelog for %s"
-msgstr "Nemôžem nájsť zoznam zmien balíku %s"
+msgstr "Nedá sa nájsť zoznam zmien balíka %s"
 
 #: src/cmdline/cmdline_clean.cc:52
 #, c-format
 msgid "Del %s* %spartial/*\n"
-msgstr "Vymaže %s* %spartial/*\n"
+msgstr "Zmaže %s* %spartial/*\n"
 
 #: src/cmdline/cmdline_clean.cc:80
 #, c-format
 msgid "Del %s %s [%sB]\n"
-msgstr "Zmažl %s %s [%sB]\n"
+msgstr "Zmazaný %s %s [%sB]\n"
 
 #: src/cmdline/cmdline_clean.cc:136
 #, c-format
 msgid "Would free %sB of disk space\n"
-msgstr "Uvoľní %sB miesta na disku\n"
+msgstr "Na disku sa uvoľní %sB\n"
 
 #: src/cmdline/cmdline_clean.cc:139
 #, c-format
 msgid "Freed %sB of disk space\n"
-msgstr "Uvoľnilo sa %sB miesta na disku\n"
+msgstr "Na disku sa uvoľnilo %sB\n"
 
 #: src/cmdline/cmdline_do_action.cc:73
 #, c-format
 msgid "Invalid operation %s"
-msgstr "Neplatná operácia %s"
+msgstr "Nesprávna operácia %s"
 
 #: src/cmdline/cmdline_do_action.cc:143
 msgid "Unexpected pattern argument following \"keep-all\""
-msgstr "Neočakávaný argument vzoru nasledujúci za \"ponechať všetko\""
+msgstr "Neočakávaný vzor nasledujúci za \"keep-all\""
 
 #: src/cmdline/cmdline_do_action.cc:236 src/cmdline/cmdline_simulate.cc:31
 #: src/cmdline/cmdline_upgrade.cc:104 src/main.cc:520
 #, c-format
 msgid "Abort.\n"
-msgstr "Preruš.\n"
+msgstr "Prerušené.\n"
 
 #: src/cmdline/cmdline_download.cc:30
 #, c-format
@@ -445,12 +446,12 @@ msgstr "stiahnutie: musíte zadať aspoň jeden balík na stiahnutie\n"
 #: src/cmdline/cmdline_download.cc:42
 #: src/generic/apt/download_install_manager.cc:76
 msgid "Couldn't read source list"
-msgstr "Nemôžem čítať zoznam zdrojov"
+msgstr "Nedá sa načítať zoznam zdrojov"
 
 #: src/cmdline/cmdline_download.cc:70
 #, c-format
 msgid "Can't find a package named \"%s\""
-msgstr "Nemôžem nájsť balík nazvaný \"%s\""
+msgstr "Nedá sa nájsť balík nazvaný \"%s\""
 
 #: src/cmdline/cmdline_download.cc:80
 #, c-format
@@ -458,7 +459,7 @@ msgid ""
 "No downloadable files for %s version %s; perhaps it is a local or obsolete "
 "package?"
 msgstr ""
-"Balík %s verzia %s sa nedá stiahnuť. Pravdepodobne sa jedná o lokálny alebo "
+"Balík %s verzie %s sa nedá stiahnuť. Pravdepodobne sa jedná o lokálny alebo "
 "zastaraný balík?"
 
 #: src/cmdline/cmdline_forget_new.cc:44
@@ -501,7 +502,7 @@ msgstr "Dobre, vyhral si.\n"
 #: src/cmdline/cmdline_moo.cc:42
 #, c-format
 msgid "What is it?  It's an elephant being eaten by a snake, of course.\n"
-msgstr "Čo to je? Čo by to bolo! Predsa had žerúci slona.\n"
+msgstr "Čo to je? Čo by to bolo! Predsa slon jedený hadom.\n"
 
 #: src/cmdline/cmdline_prompt.cc:33
 msgid "Unexpected end-of-file on standard input"
@@ -509,7 +510,7 @@ msgstr "Neočakávaný koniec súboru na štandardnom vstupe"
 
 #: src/cmdline/cmdline_prompt.cc:52
 msgid "Couldn't read list of sources"
-msgstr "Nemôžem čítať zoznam zdrojov"
+msgstr "Nedá sa načítať zoznam zdrojov"
 
 #: src/cmdline/cmdline_prompt.cc:234 src/cmdline/cmdline_show_broken.cc:73
 #, c-format
@@ -547,7 +548,7 @@ msgstr "Nasledujúce balíky sú POŠKODENÉ:"
 
 #: src/cmdline/cmdline_prompt.cc:264
 msgid "The following packages are unused and will be REMOVED:"
-msgstr "Nasledujúce balíky sú nepoužívané a budú ODSTRÁNENÉ:"
+msgstr "Nasledujúce balíky sa nepoužívajú a budú ODSTRÁNENÉ:"
 
 #: src/cmdline/cmdline_prompt.cc:265
 msgid "The following packages have been automatically kept back:"
@@ -571,7 +572,7 @@ msgstr "Nasledujúce balíky sú podržané v aktuálnom stave:"
 
 #: src/cmdline/cmdline_prompt.cc:270
 msgid "The following packages will be REINSTALLED:"
-msgstr "Nasledujúce balíky budú reinštalované:"
+msgstr "Nasledujúce balíky budú preinštalované:"
 
 #: src/cmdline/cmdline_prompt.cc:271
 msgid "The following NEW packages will be installed:"
@@ -593,7 +594,7 @@ msgstr "Nasledujúce NUTNÉ balíky budú ODSTRÁNENÉ!\n"
 #: src/cmdline/cmdline_prompt.cc:337
 #, c-format
 msgid "The following ESSENTIAL packages will be BROKEN by this action:\n"
-msgstr "Nasledujúce NUTNÉ balíky budú touto akciou PORUŠENÉ:\n"
+msgstr "Nasledujúce NUTNÉ balíky budú touto akciou POŠKODENÉ:\n"
 
 #: src/cmdline/cmdline_prompt.cc:347
 #, c-format
@@ -601,12 +602,12 @@ msgid ""
 "WARNING: Performing this action will probably cause your system to break!\n"
 "         Do NOT continue unless you know EXACTLY what you are doing!\n"
 msgstr ""
-"VAROVANIE: Vykonaním tejto akcie pravdepodobne poškodíte systém!\n"
-"          Ak PRESNE neviete, čo robíte, NEPOKRAČUJTE!\n"
+"UPOZORNENIE: Vykonaním tejto akcie pravdepodobne poškodíte systém!\n"
+"             Ak PRESNE neviete, čo robíte, NEPOKRAČUJTE!\n"
 
 #: src/cmdline/cmdline_prompt.cc:349
 msgid "I am aware that this is a very bad idea"
-msgstr "Som si vedomý, že to je zlý nápad"
+msgstr "Som si vedomý, že je to zlý nápad"
 
 #: src/cmdline/cmdline_prompt.cc:352
 #, c-format
@@ -623,11 +624,11 @@ msgid ""
 "this is what you want to do.\n"
 "\n"
 msgstr ""
-"VAROVANIE: nainštalované budú nasledovné verzie nedôveryhodných balíčkov!\n"
+"UPOZORNENIE: nainštalujú sa nasledovné verzie nedôveryhodných balíčkov!\n"
 "\n"
 "Nedôveryhodné balíčky môžu ohroziť  bezpečnosť Vášho systému.\n"
 "S inštaláciou by ste mali pokračovať iba vtedy, ak ste si istý\n"
-"s tým čo chcete urobiť.\n"
+"tým, čo chcete urobiť.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:406
@@ -636,8 +637,8 @@ msgid ""
 "*** WARNING ***   Ignoring these trust violations because\n"
 "                  %s::CmdLine::Ignore-Trust-Violations is 'true'!\n"
 msgstr ""
-"***·VAROVANIE·***···Ignorujem uvedené pravidlá dôvery, pretože\n"
-"··················%s::CmdLine::Ignore-Trust-Violations·je·'zapnuté'!\n"
+"*** UPOZORNENIE ***   Ignorujú sa uvedené pravidlá dôvery, pretože\n"
+"                      %s::CmdLine::Ignore-Trust-Violations je 'zapnuté'!\n"
 
 #: src/cmdline/cmdline_prompt.cc:413 src/vscreen/vs_util.cc:177
 #: src/vscreen/vs_util.cc:215
@@ -652,22 +653,22 @@ msgstr "Nie"
 #: src/cmdline/cmdline_prompt.cc:417
 #, c-format
 msgid "Do you want to ignore this warning and proceed anyway?\n"
-msgstr "Chcete ignorovať toto varovanie a napriek tomu pokračovať?\n"
+msgstr "Chcete ignorovať toto upozornenie a napriek tomu pokračovať?\n"
 
 #: src/cmdline/cmdline_prompt.cc:418
 #, c-format
 msgid "To continue, enter \"%s\"; to abort, enter \"%s\": "
-msgstr "Na pokračovanie napíšte frázu \"%s\"; na ukončenie, zadajte \"%s\": "
+msgstr "Na pokračovanie napíšte frázu \"%s\"; na ukončenie zadajte \"%s\": "
 
 #: src/cmdline/cmdline_prompt.cc:432
 #, c-format
 msgid "Unrecognized input.  Enter either \"%s\" or \"%s\".\n"
-msgstr "Nerozoznaný vstup. Zadajte buď  \"%s\" alebo \"%s\".\n"
+msgstr "Nerozoznaný vstup.  Zadajte buď  \"%s\" alebo \"%s\".\n"
 
 #: src/cmdline/cmdline_prompt.cc:534
 #, c-format
 msgid "The following packages are RECOMMENDED but will NOT be installed:\n"
-msgstr "Nasledujúce balíky sú DOPORUČENÉ, ale NEBUDÚ inštalované:\n"
+msgstr "Nasledujúce balíky sú ODPORÚČANÉ, ale NEBUDÚ inštalované:\n"
 
 #: src/cmdline/cmdline_prompt.cc:540
 #, c-format
@@ -687,37 +688,37 @@ msgstr "%lu balíkov aktualizovaných, %lu novo inštalovaných, "
 #: src/cmdline/cmdline_prompt.cc:551
 #, c-format
 msgid "%lu reinstalled, "
-msgstr "%lu reinštalované, "
+msgstr "%lu preinštalovaných, "
 
 #: src/cmdline/cmdline_prompt.cc:553
 #, c-format
 msgid "%lu downgraded, "
-msgstr "%lu degradované, "
+msgstr "%lu degradovaných, "
 
 #: src/cmdline/cmdline_prompt.cc:555
 #, c-format
 msgid "%lu to remove and %lu not upgraded.\n"
-msgstr "%lu k odstránenie a %lu neaktualizované.\n"
+msgstr "%lu na odstránenie a %lu neaktualizované.\n"
 
 #: src/cmdline/cmdline_prompt.cc:562
 #, c-format
 msgid "Need to get %sB/%sB of archives. "
-msgstr "Potrebujem stiahnuť %sB/%sB archívov. "
+msgstr "Treba stiahnuť %sB/%sB archívov. "
 
 #: src/cmdline/cmdline_prompt.cc:565
 #, c-format
 msgid "Need to get %sB of archives. "
-msgstr "Potrebujem stiahnuť %sB archívov. "
+msgstr "Treba stiahnuť %sB archívov. "
 
 #: src/cmdline/cmdline_prompt.cc:572
 #, c-format
 msgid "After unpacking %sB will be used.\n"
-msgstr "Po rozbalení bude použitých %sB.\n"
+msgstr "Po rozbalení sa použije %sB.\n"
 
 #: src/cmdline/cmdline_prompt.cc:575
 #, c-format
 msgid "After unpacking %sB will be freed.\n"
-msgstr "Po rozbalení bude uvoľnených %sB.\n"
+msgstr "Po rozbalení sa uvoľní %sB.\n"
 
 #: src/cmdline/cmdline_prompt.cc:613
 #, c-format
@@ -731,7 +732,7 @@ msgstr "Na pokračovanie stlačte Enter."
 #: src/cmdline/cmdline_prompt.cc:641
 #, c-format
 msgid "No packages found -- enter the package names on the line after 'c'.\n"
-msgstr "Žiadne balíky nenájdené -- zadajte názvy balíkov na riadok za 'c'.\n"
+msgstr "Nenašli sa žiadne balíky -- zadajte názvy balíkov na riadok za 'c'.\n"
 
 #: src/cmdline/cmdline_prompt.cc:645
 msgid "Press Return to continue"
@@ -755,15 +756,15 @@ msgid ""
 "show information about one or more packages; the package names should follow "
 "the 'i'"
 msgstr ""
-"zobraziť informácie o jednom alebo viacerých balíčkoch; mená balíčkov by "
-"mali nasledovať za 'i'"
+"zobraziť informácie o jednom alebo viacerých balíkoch; mená balíkov by mali "
+"nasledovať za 'i'"
 
 #: src/cmdline/cmdline_prompt.cc:682
 msgid ""
 "show the Debian changelogs of one or more packages; the package names should "
 "follow the 'c'"
 msgstr ""
-"zobraziť Debian changelogy jedného alebo viacerých balíčkov; mená balíčkov "
+"zobraziť Debian zoznamy zmien jedného alebo viacerých balíkov; mená balíkov "
 "by mali nasledovať za 'c'"
 
 #: src/cmdline/cmdline_prompt.cc:684
@@ -789,40 +790,39 @@ msgid ""
 "patterns).  The action will be applied to all the packages that you list.  "
 "The following actions are available:"
 msgstr ""
-"Môžete tiež špecifikovať modifikáciu akcií, ktoré budú vykonané. Na "
-"dosiahnutie tohto, zadajte znak reprezentujúci akciu, nasledovaný jedným "
-"alebo viac názvami balíčkov (alebo vzorov).  Akcia sa vykoná na všetkých "
-"balíčkoch, ktoré ste uviedli. Nasledujúce akcie sú dostupné:"
+"Môžete tiež určiť zmenu akcií, ktoré sa vykonajú. Na spustenie zadajte znak "
+"reprezentujúci akciu, nasledovaný jedným alebo viacerými názvami balíkov "
+"(alebo vzorov).  Akcia sa vykoná na všetkých balíkoch, ktoré zadáte. "
+"Dostupné sú nasledujúce akcie:"
 
 #: src/cmdline/cmdline_prompt.cc:696 src/cmdline/cmdline_resolver.cc:184
 msgid "'+' to install packages"
-msgstr "'+' na inštaláciu balíčkov"
+msgstr "'+' na inštaláciu balíkov"
 
 #: src/cmdline/cmdline_prompt.cc:698 src/cmdline/cmdline_resolver.cc:186
 msgid ""
 "'+M' to install packages and immediately flag them as automatically installed"
 msgstr ""
-"'+M' na inštaláciu balíčkov a ich okamžité označenie ako automaticky "
+"'+M' na inštaláciu balíkov a ich okamžité označenie ako automaticky "
 "inštalované"
 
 #: src/cmdline/cmdline_prompt.cc:700 src/cmdline/cmdline_resolver.cc:188
 msgid "'-' to remove packages"
-msgstr "'-' na odstránenie balíčkov"
+msgstr "'-' na odstránenie balíkov"
 
 #: src/cmdline/cmdline_prompt.cc:702 src/cmdline/cmdline_resolver.cc:190
 msgid "'_' to purge packages"
-msgstr "'_' na zabudnutie balíčkov"
+msgstr "'_' na zabudnutie balíkov"
 
 #: src/cmdline/cmdline_prompt.cc:704 src/cmdline/cmdline_resolver.cc:192
 msgid "'=' to place packages on hold"
-msgstr "'=' na nastavenie balíka na stav podržať"
+msgstr "'=' na podržanie balíkov v aktuálnej verzii"
 
 #: src/cmdline/cmdline_prompt.cc:706 src/cmdline/cmdline_resolver.cc:194
 msgid ""
 "':' to keep packages in their current state without placing them on hold"
 msgstr ""
-"':' na uchovanie balíčkov v ich aktuálnom stave bez zmeny ich stavu na "
-"Podržať"
+"':' na uchovanie balíkov v ich aktuálnom stave bez zmeny ich stavu na Podržať"
 
 #: src/cmdline/cmdline_prompt.cc:708 src/cmdline/cmdline_resolver.cc:196
 msgid "'&M' to mark packages as automatically installed"
@@ -830,7 +830,7 @@ msgstr "'&M' na označenie balíkov ako automatiky inštalovaných"
 
 #: src/cmdline/cmdline_prompt.cc:710 src/cmdline/cmdline_resolver.cc:198
 msgid "'&m' to mark packages as manually installed"
-msgstr "'&m' na označenie balíky, ako manuálne inštalovaných"
+msgstr "'&m' na označenie balíkov ako manuálne inštalovaných"
 
 #: src/cmdline/cmdline_prompt.cc:712
 msgid "Commands:"
@@ -848,7 +848,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Informácie o závislostiach budú zobrazené.\n"
+"Zobrazia sa informácie o závislostiach.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:794
@@ -859,7 +859,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Informácie o závislostiach nebudú zobrazené.\n"
+"Informácie o závislostiach sa nezobrazia.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:800
@@ -870,7 +870,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Verzie budú zobrazené.\n"
+"Verzie sa zobrazia.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:802
@@ -881,7 +881,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Verzie nebudú zobrazené.\n"
+"Verzie sa nezobrazia.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:807
@@ -892,7 +892,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Zmeny veľkostí budú zobrazené.\n"
+"Zobrazia sa zmeny veľkostí.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:809
@@ -903,19 +903,20 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Zmeny veľkostí nebudú zobrazené.\n"
+"Zmeny veľkostí sa nezobrazia.\n"
 "\n"
 
 #: src/cmdline/cmdline_prompt.cc:832
 #, c-format
 msgid "Invalid response.  Please enter a valid command or '?' for help.\n"
-msgstr "Chybná odpoveď. Zadajte platný príkaz alebo '?' na pomoc.\n"
+msgstr ""
+"Chybná odpoveď. Zadajte platný príkaz alebo '?' na zobrazenie nápovedy.\n"
 
 #: src/cmdline/cmdline_resolver.cc:124 src/cmdline/cmdline_resolver.cc:597
 #: src/generic/apt/apt.cc:200
 #, c-format
 msgid "Unable to open %s for writing"
-msgstr "Nemôžem otvoriť %s na zápis"
+msgstr "%s sa nedá otvoriť na zápis"
 
 #: src/cmdline/cmdline_resolver.cc:130 src/cmdline/cmdline_resolver.cc:602
 #, c-format
@@ -968,7 +969,7 @@ msgid ""
 "reject the given package versions; don't display any solutions in which they "
 "occur."
 msgstr ""
-"zamietnuť ponúknuté verzie balíkov;nezobrazovať žiadne riešenia, v ktorých "
+"zamietnuť ponúknuté verzie balíkov; nezobrazovať žiadne riešenia, v ktorých "
 "sa vyskytujú"
 
 #: src/cmdline/cmdline_resolver.cc:180
@@ -981,34 +982,34 @@ msgstr ""
 
 #: src/cmdline/cmdline_resolver.cc:182
 msgid "adjust the state of the listed packages, where ACTION is one of:"
-msgstr "uprav stav uvedených balíčkov tam, kde je AKCIA jedna z:"
+msgstr "upraviť stav uvedených balíkov tam, kde je AKCIA jedna z:"
 
 #: src/cmdline/cmdline_resolver.cc:200
 msgid ""
 "Adjustments will cause the current solution to be discarded and recalculated "
 "as necessary."
 msgstr ""
-"Úprava spôsobí, že súčasné riešenie bude zahodené a nutná rekalkulácia."
+"Úprava spôsobí, že súčasné riešenie sa zahodí a bude nutná rekalkulácia."
 
 #: src/cmdline/cmdline_resolver.cc:214
 #, c-format
 msgid "The version %s is available in the following archives:"
-msgstr "Verzia·%s·je dostupná iba v nasledovných archívoch:"
+msgstr "Verzia %s je dostupná iba v nasledovných archívoch:"
 
 #: src/cmdline/cmdline_resolver.cc:222
 #, c-format
 msgid "Select the version of %s that should be used: "
-msgstr "Vyberte verziu %s ktorá má byť použitá: "
+msgstr "Zvoľte verziu %s, ktorá sa má použiť: "
 
 #: src/cmdline/cmdline_resolver.cc:229
 #, c-format
 msgid "Invalid response.  Please enter an integer between 1 and %d."
-msgstr "Chybná odpoveď. Prosím zadajte číslo v rozsahu 1 až %d."
+msgstr "Chybná odpoveď.  Prosím zadajte číslo v rozsahu 1 až %d."
 
 #: src/cmdline/cmdline_resolver.cc:244
 #, c-format
 msgid "Expected at least one package/version pair following '%c'"
-msgstr "Očakávaný je minimálne jeden pár balík/verzia·nasledujúci '%c'"
+msgstr "Očakávaný je aspoň jeden pár balík/verzia nasledujúci '%c'"
 
 #: src/cmdline/cmdline_resolver.cc:258
 #, c-format
@@ -1023,7 +1024,7 @@ msgstr "Neexistuje balík \"%s\""
 #: src/cmdline/cmdline_resolver.cc:284
 #, c-format
 msgid "%s has no version named \"%s\""
-msgstr "%s·nemá žiadnu verziu nazvanú \"%s\""
+msgstr "%s nemá žiadnu verziu nazvanú \"%s\""
 
 #: src/cmdline/cmdline_resolver.cc:301
 #, c-format
@@ -1033,7 +1034,7 @@ msgstr "Povoľovanie odstránenia %s"
 #: src/cmdline/cmdline_resolver.cc:304
 #, c-format
 msgid "Allowing the installation of %s version %s (%s)"
-msgstr "Povoľovanie  inštalácie %s verzie %s (%s)"
+msgstr "Povoľovanie inštalácie %s verzie %s (%s)"
 
 #: src/cmdline/cmdline_resolver.cc:314
 #, c-format
@@ -1043,7 +1044,7 @@ msgstr "Zakazovanie odstránenia %s"
 #: src/cmdline/cmdline_resolver.cc:317
 #, c-format
 msgid "Rejecting the installation of %s version %s (%s)"
-msgstr "Zamietanie inštalácie %s·verzie·%s·(%s)"
+msgstr "Zamietanie inštalácie %s verzie %s (%s)"
 
 #: src/cmdline/cmdline_resolver.cc:330
 #, c-format
@@ -1053,7 +1054,7 @@ msgstr "Dlhšie nepožadované odstránenie %s"
 #: src/cmdline/cmdline_resolver.cc:333
 #, c-format
 msgid "No longer requiring the installation of %s version %s (%s)"
-msgstr "Dlhšie nepožadovaná inštalácia %s·verzie·%s·(%s)"
+msgstr "Dlhšie nepožadovaná inštalácia %s verzie %s (%s)"
 
 #: src/cmdline/cmdline_resolver.cc:342
 #, c-format
@@ -1063,12 +1064,12 @@ msgstr "Požadovanie odstránenia %s"
 #: src/cmdline/cmdline_resolver.cc:345
 #, c-format
 msgid "Requiring the installation of %s version %s (%s)"
-msgstr "Požadovanie inštalácie %s·verzie·%s·(%s)"
+msgstr "Požadovanie inštalácie %s verzie %s (%s)"
 
 #: src/cmdline/cmdline_resolver.cc:464 src/solution_screen.cc:495
 #, c-format
 msgid "open: %d; closed: %d; defer: %d; conflict: %d"
-msgstr "otvorené:·%d;·uzavreté:·%d;·odložené:·%d;·konfliktné:·%d"
+msgstr "otvorené: %d; uzavreté: %d; odložené: %d; konfliktné: %d"
 
 #: src/cmdline/cmdline_resolver.cc:510
 msgid "The following actions will resolve these dependencies:"
@@ -1076,9 +1077,9 @@ msgstr "Nasledujúce akcie vyriešia tieto závislosti:"
 
 #: src/cmdline/cmdline_resolver.cc:525
 msgid "Accept this solution? [Y/n/q/?] "
-msgstr "Potvrdiť toto riešenie? [Y/n/q/?] "
+msgstr "Schváliť toto riešenie? [Y/n/q/?] "
 
-#: src/cmdline/cmdline_resolver.cc:552 src/cmdline/cmdline_resolver.cc:647
+#: src/cmdline/cmdline_resolver.cc:552 src/cmdline/cmdline_resolver.cc:648
 msgid "Abandoning all efforts to resolve these dependencies."
 msgstr "Ukončovanie všetkého úsilia na vyriešenie týchto závislostí."
 
@@ -1097,25 +1098,24 @@ msgstr "Chybná odpoveď; prosím zadajte jeden z nasledujúcich príkazov:"
 #: src/cmdline/cmdline_resolver.cc:622
 msgid "No solution found within the allotted time.  Try harder? [Y/n]"
 msgstr ""
-"Počas prideleného času nebolo nájdené žiadne riešenie. Skúsiť dôkladnejšie? "
-"[Y/n]"
+"Počas prideleného času sa nenašlo žiadne riešenie. Skúsiť dôkladnejšie? [Y/n]"
 
-#: src/cmdline/cmdline_resolver.cc:650
+#: src/cmdline/cmdline_resolver.cc:651
 msgid "Invalid response; please enter 'y' or 'n'."
 msgstr "Chybná odpoveď; prosím zadajte 'y' alebo 'n'."
 
-#: src/cmdline/cmdline_resolver.cc:659
+#: src/cmdline/cmdline_resolver.cc:660
 msgid "Unable to resolve dependencies!  Giving up..."
 msgstr "Nemožnosť vyriešenia závislostí! Vzdávam sa..."
 
-#: src/cmdline/cmdline_resolver.cc:665
+#: src/cmdline/cmdline_resolver.cc:666
 msgid "*** No more solutions available ***"
 msgstr "*** Žiadne ďalšie riešenia ***"
 
 #: src/cmdline/cmdline_search.cc:100
 #, c-format
 msgid "iconv of %s failed.\n"
-msgstr "iconv·%s·zlyhal.\n"
+msgstr "iconv %s zlyhal.\n"
 
 #: src/cmdline/cmdline_search.cc:116
 #, c-format
@@ -1127,211 +1127,221 @@ msgstr "hľadanie: Musíte zadať aspoň jeden hľadaný výraz\n"
 msgid "The following packages have unmet dependencies:\n"
 msgstr "Nasledujúce balíky majú nesplnené závislosti:\n"
 
-#: src/cmdline/cmdline_show.cc:122 src/cmdline/cmdline_show.cc:308
+#: src/cmdline/cmdline_show.cc:122 src/cmdline/cmdline_show.cc:359
 #: src/solution_fragment.cc:56
 msgid "<NULL>"
 msgstr "<NULL>"
 
-#: src/cmdline/cmdline_show.cc:141
+#: src/cmdline/cmdline_show.cc:139 src/cmdline/cmdline_show.cc:144
 msgid "not installed"
 msgstr "nenainštalovaný"
 
-#: src/cmdline/cmdline_show.cc:143 src/pkg_columnizer.cc:233
+#: src/cmdline/cmdline_show.cc:146 src/pkg_columnizer.cc:233
 #: src/pkg_ver_item.cc:228
 msgid "unpacked"
 msgstr "rozbalený"
 
-#: src/cmdline/cmdline_show.cc:145
+#: src/cmdline/cmdline_show.cc:148
 msgid "partially configured"
 msgstr "čiastočne skonfigurovaný"
 
-#: src/cmdline/cmdline_show.cc:147
+#: src/cmdline/cmdline_show.cc:150
 msgid "partially installed"
 msgstr "čiastočne nainštalovaný"
 
-#: src/cmdline/cmdline_show.cc:149
+#: src/cmdline/cmdline_show.cc:152
 msgid "not installed (configuration files remain)"
 msgstr "nenainštalovaný (ponechané konfiguračné súbory)"
 
-#: src/cmdline/cmdline_show.cc:151 src/pkg_columnizer.cc:241
+#: src/cmdline/cmdline_show.cc:154 src/pkg_columnizer.cc:241
 #: src/pkg_ver_item.cc:236
 msgid "installed"
 msgstr "nainštalovaný"
 
-#: src/cmdline/cmdline_show.cc:160
-msgid "not a real package"
-msgstr "nie je skutočný balík"
-
-#: src/cmdline/cmdline_show.cc:173
-msgid " [held]"
-msgstr " [podržaný]"
-
-#: src/cmdline/cmdline_show.cc:182
-#, c-format
-msgid "%s; version %s will be installed"
-msgstr "%s; bude inštalovaná verzia %s"
-
-#: src/cmdline/cmdline_show.cc:186
-#, c-format
-msgid "%s; version %s will be installed automatically"
-msgstr "%s; automaticky bude inštalovaná verzia %s"
-
-#: src/cmdline/cmdline_show.cc:192 src/cmdline/cmdline_show.cc:207
-#, c-format
-msgid "%s; will be purged"
-msgstr "%s; bude vyčistený"
-
-#: src/cmdline/cmdline_show.cc:205
+#: src/cmdline/cmdline_show.cc:177
 #, c-format
 msgid "%s; will be purged because nothing depends on it"
 msgstr "%s; bude vyčistený, pretože na ňom nič nezávisí"
 
-#: src/cmdline/cmdline_show.cc:212
+#: src/cmdline/cmdline_show.cc:179 src/cmdline/cmdline_show.cc:275
+#, c-format
+msgid "%s; will be purged"
+msgstr "%s; bude vyčistený"
+
+#: src/cmdline/cmdline_show.cc:184
 #, c-format
 msgid "%s; will be removed because nothing depends on it"
 msgstr "%s; bude odstránený, pretože na ňom nič nezávisí"
 
-#: src/cmdline/cmdline_show.cc:214
+#: src/cmdline/cmdline_show.cc:186
 #, c-format
 msgid "%s; will be removed"
 msgstr "%s; bude odstránený"
 
-#: src/cmdline/cmdline_show.cc:228
+#: src/cmdline/cmdline_show.cc:204
 #, c-format
 msgid "%s%s; will be downgraded [%s -> %s]"
 msgstr "%s%s; bude degradovaný [%s -> %s]"
 
-#: src/cmdline/cmdline_show.cc:231
+#: src/cmdline/cmdline_show.cc:207
 #, c-format
 msgid "%s%s; will be upgraded [%s -> %s]"
 msgstr "%s%s; bude aktualizovaný [%s -> %s]"
 
-#: src/cmdline/cmdline_show.cc:243 src/cmdline/cmdline_show.cc:264
+#: src/cmdline/cmdline_show.cc:216
+msgid "not a real package"
+msgstr "nie je skutočný balík"
+
+#: src/cmdline/cmdline_show.cc:229
+msgid " [held]"
+msgstr " [podržaný]"
+
+#: src/cmdline/cmdline_show.cc:243
+#, fuzzy, c-format
+msgid "%s; will be installed"
+msgstr "%B%s%b bude inštalovaný."
+
+#: src/cmdline/cmdline_show.cc:245
+#, fuzzy, c-format
+msgid "%s; will be installed automatically"
+msgstr "%s; automaticky bude inštalovaná verzia %s"
+
+#: src/cmdline/cmdline_show.cc:265
+#, c-format
+msgid "%s; version %s will be installed"
+msgstr "%s; bude inštalovaná verzia %s"
+
+#: src/cmdline/cmdline_show.cc:269
+#, c-format
+msgid "%s; version %s will be installed automatically"
+msgstr "%s; automaticky bude inštalovaná verzia %s"
+
+#: src/cmdline/cmdline_show.cc:294 src/cmdline/cmdline_show.cc:315
 msgid "Package: "
 msgstr "Balík: "
 
-#: src/cmdline/cmdline_show.cc:244 src/cmdline/cmdline_show.cc:272
+#: src/cmdline/cmdline_show.cc:295 src/cmdline/cmdline_show.cc:323
 #: src/pkg_columnizer.cc:89
 msgid "State"
 msgstr "Stav"
 
-#: src/cmdline/cmdline_show.cc:245 src/cmdline/cmdline_show.cc:328
+#: src/cmdline/cmdline_show.cc:296 src/cmdline/cmdline_show.cc:379
 #: src/generic/apt/matchers.cc:1663
 msgid "Provided by"
 msgstr "Poskytovaný"
 
-#: src/cmdline/cmdline_show.cc:266 src/pkg_info_screen.cc:107
+#: src/cmdline/cmdline_show.cc:317 src/pkg_info_screen.cc:107
 msgid "Essential: "
 msgstr "Nutný: "
 
-#: src/cmdline/cmdline_show.cc:266 src/cmdline/cmdline_show.cc:270
-#: src/cmdline/cmdline_show.cc:281 src/pkg_info_screen.cc:107
+#: src/cmdline/cmdline_show.cc:317 src/cmdline/cmdline_show.cc:321
+#: src/cmdline/cmdline_show.cc:332 src/pkg_info_screen.cc:107
 msgid "yes"
 msgstr "ano"
 
-#: src/cmdline/cmdline_show.cc:270
+#: src/cmdline/cmdline_show.cc:321
 msgid "New"
 msgstr "Nový"
 
-#: src/cmdline/cmdline_show.cc:275
+#: src/cmdline/cmdline_show.cc:326
 msgid "Forbidden version"
 msgstr "Zakázaná verzia"
 
-#: src/cmdline/cmdline_show.cc:279
+#: src/cmdline/cmdline_show.cc:330
 msgid "Automatically installed"
 msgstr "Automaticky inštalovaný"
 
-#: src/cmdline/cmdline_show.cc:281
+#: src/cmdline/cmdline_show.cc:332
 msgid "no"
 msgstr "nie"
 
-#: src/cmdline/cmdline_show.cc:283
+#: src/cmdline/cmdline_show.cc:334
 msgid "Version: "
 msgstr "Verzia: "
 
-#: src/cmdline/cmdline_show.cc:284 src/pkg_info_screen.cc:115
+#: src/cmdline/cmdline_show.cc:335 src/pkg_info_screen.cc:115
 msgid "Priority: "
 msgstr "Priorita: "
 
-#: src/cmdline/cmdline_show.cc:285 src/cmdline/cmdline_show.cc:287
-#: src/cmdline/cmdline_show.cc:296
+#: src/cmdline/cmdline_show.cc:336 src/cmdline/cmdline_show.cc:338
+#: src/cmdline/cmdline_show.cc:347
 msgid "N/A"
 msgstr "N/A"
 
-#: src/cmdline/cmdline_show.cc:286 src/pkg_info_screen.cc:116
+#: src/cmdline/cmdline_show.cc:337 src/pkg_info_screen.cc:116
 msgid "Section: "
 msgstr "Sekcia: "
 
-#: src/cmdline/cmdline_show.cc:288 src/pkg_info_screen.cc:117
+#: src/cmdline/cmdline_show.cc:339 src/pkg_info_screen.cc:117
 msgid "Maintainer: "
 msgstr "Správca: "
 
-#: src/cmdline/cmdline_show.cc:291
+#: src/cmdline/cmdline_show.cc:342
 msgid "Uncompressed Size: "
 msgstr "Veľkosť po rozbalení: "
 
-#: src/cmdline/cmdline_show.cc:295
+#: src/cmdline/cmdline_show.cc:346
 msgid "Architecture: "
 msgstr "Architektúra: "
 
-#: src/cmdline/cmdline_show.cc:297
+#: src/cmdline/cmdline_show.cc:348
 msgid "Compressed Size: "
 msgstr "Komprimovaná veľkosť: "
 
-#: src/cmdline/cmdline_show.cc:299
+#: src/cmdline/cmdline_show.cc:350
 msgid "Filename: "
 msgstr "Názov súboru: "
 
-#: src/cmdline/cmdline_show.cc:301
+#: src/cmdline/cmdline_show.cc:352
 msgid "MD5sum: "
 msgstr "MD5 súčet: "
 
-#: src/cmdline/cmdline_show.cc:305 src/cmdline/cmdline_show.cc:308
+#: src/cmdline/cmdline_show.cc:356 src/cmdline/cmdline_show.cc:359
 msgid "Archive"
 msgstr "Archív"
 
-#: src/cmdline/cmdline_show.cc:313
+#: src/cmdline/cmdline_show.cc:364
 msgid "Depends"
 msgstr "Závisí na"
 
-#: src/cmdline/cmdline_show.cc:315
+#: src/cmdline/cmdline_show.cc:366
 msgid "PreDepends"
 msgstr "Predzávisí na"
 
-#: src/cmdline/cmdline_show.cc:317
+#: src/cmdline/cmdline_show.cc:368
 msgid "Recommends"
 msgstr "Doporučuje"
 
-#: src/cmdline/cmdline_show.cc:319
+#: src/cmdline/cmdline_show.cc:370
 msgid "Suggests"
 msgstr "Navrhuje"
 
-#: src/cmdline/cmdline_show.cc:321
+#: src/cmdline/cmdline_show.cc:372
 msgid "Conflicts"
 msgstr "Koliduje s"
 
-#: src/cmdline/cmdline_show.cc:323
+#: src/cmdline/cmdline_show.cc:374
 msgid "Replaces"
 msgstr "Nahrádza"
 
-#: src/cmdline/cmdline_show.cc:325
+#: src/cmdline/cmdline_show.cc:376
 msgid "Obsoletes"
 msgstr "Zastaráva"
 
-#: src/cmdline/cmdline_show.cc:327 src/generic/apt/matchers.cc:1617
+#: src/cmdline/cmdline_show.cc:378 src/generic/apt/matchers.cc:1617
 msgid "Provides"
 msgstr "Poskytuje"
 
-#: src/cmdline/cmdline_show.cc:331 src/pkg_info_screen.cc:95
+#: src/cmdline/cmdline_show.cc:382 src/pkg_info_screen.cc:95
 msgid "Description: "
 msgstr "Popis: "
 
-#: src/cmdline/cmdline_show.cc:424
+#: src/cmdline/cmdline_show.cc:479
 #, c-format
 msgid "Unable to locate package %s"
 msgstr "Nemôžem nájsť balík %s"
 
-#: src/cmdline/cmdline_show.cc:437
+#: src/cmdline/cmdline_show.cc:492
 #, c-format
 msgid "Unable to parse pattern %s"
 msgstr "Nemôžem pársovať vzor %s"
@@ -1355,27 +1365,32 @@ msgstr "Vymazávam staré stiahnuté súbory\n"
 msgid "E: The update command takes no arguments\n"
 msgstr "E: Príkaz update neakceptuje žiadne argumenty\n"
 
-#: src/cmdline/cmdline_util.cc:87
+#: src/cmdline/cmdline_util.cc:93
 #, c-format
 msgid "No candidate version found for %s\n"
 msgstr "K balíku %s nebola nájdená kandidátska verzia\n"
 
-#: src/cmdline/cmdline_util.cc:101
+#: src/cmdline/cmdline_util.cc:95
+#, fuzzy, c-format
+msgid "No current or candidate version found for %s\n"
+msgstr "K balíku %s nebola nájdená kandidátska verzia\n"
+
+#: src/cmdline/cmdline_util.cc:110
 #, c-format
 msgid "Unable to find an archive \"%s\" for the package \"%s\"\n"
 msgstr "Nemôžem nájsť archív \"%s\" balíku \"%s\"\n"
 
-#: src/cmdline/cmdline_util.cc:111
+#: src/cmdline/cmdline_util.cc:120
 #, c-format
 msgid "Unable to find a version \"%s\" for the package \"%s\"\n"
 msgstr "Nemôžem nájsť verziu \"%s\" balíku \"%s\"\n"
 
-#: src/cmdline/cmdline_util.cc:117
+#: src/cmdline/cmdline_util.cc:126
 #, c-format
 msgid "Internal error: invalid value %i passed to cmdline_find_ver!\n"
 msgstr "Vnútorná chyba: cmdline_find_ver bola poslaná neplatná hodnota %i!\n"
 
-#: src/cmdline/cmdline_util.cc:147
+#: src/cmdline/cmdline_util.cc:156
 #, c-format
 msgid "You cannot specify both an archive and a version for a package\n"
 msgstr "Nemôžete naraz zadať archív a verzií balíku\n"
@@ -1388,7 +1403,7 @@ msgstr "NESPLNENÝ"
 msgid "UNAVAILABLE"
 msgstr "NEDOSTUPNÝ"
 
-#: src/desc_parse.cc:274
+#: src/desc_parse.cc:275
 msgid "Tags"
 msgstr "Značky"
 
@@ -1482,8 +1497,9 @@ msgid "No hierarchy information to edit"
 msgstr "Neexistujú žiadne informácie o hierarchii"
 
 #: src/edit_pkg_hier.cc:286
-msgid "Couldn't open for writing"
-msgstr "Nemôžem otvoriť na zápis"
+#, c-format
+msgid "Couldn't open \"%s\" for writing"
+msgstr "\"%s\" sa nedá otvoriť na zápis"
 
 #: src/edit_pkg_hier.cc:331
 msgid "Unable to look up your home directory, saving to /tmp/function_pkgs!"
@@ -1560,7 +1576,7 @@ msgstr "zlyhalo odstránenie %s"
 #: src/generic/apt/aptcache.cc:628
 #, c-format
 msgid "failed to rename %s to %s"
-msgstr "zlyhalo premenovanie %s·na·%s"
+msgstr "zlyhalo premenovanie %s na %s"
 
 #: src/generic/apt/aptcache.cc:636
 #, c-format
@@ -1595,12 +1611,12 @@ msgstr ""
 msgid "Unable to replace %s with new configuration file"
 msgstr "Nemôžem nahradiť %s novým konfiguračným súborom"
 
-#: src/generic/apt/apt.cc:300
+#: src/generic/apt/apt.cc:306
 msgid ""
 "Could not lock the cache file.  Opening in read-only mode; any changes you "
 "make to the states of packages will NOT be preserved!"
 msgstr ""
-"Nemôžem uzamknúť dočasný súbor cache. Otváram v móde ina na čítanie;·všetky "
+"Nemôžem uzamknúť dočasný súbor cache. Otváram v móde ina na čítanie; všetky "
 "zmeny, stavov ktoré u balíkov spravíte NEBUDÚ uchované!"
 
 #: src/generic/apt/download_install_manager.cc:53
@@ -1887,7 +1903,7 @@ msgstr "Zle zformulovaný výraz"
 msgid "Unexpected ')'"
 msgstr "Neočakávaná ')'"
 
-#: src/generic/apt/pkg_acqfile.cc:86
+#: src/generic/apt/pkg_acqfile.cc:50
 #, c-format
 msgid ""
 "I wasn't able to locate a file for the %s package. This might mean you need "
@@ -1896,14 +1912,14 @@ msgstr ""
 "Nemôžem nájsť súbor príslušný balíku %s. To môže znamenať, že budete musieť "
 "balík opraviť ručne (kvôli chýbajúcej architektúre)"
 
-#: src/generic/apt/pkg_acqfile.cc:134
+#: src/generic/apt/pkg_acqfile.cc:99
 #, c-format
 msgid ""
 "The package index files are corrupted. No Filename: field for package %s."
 msgstr ""
 "Súbory s indexmi balíkov sú poškodené. Chýba pole Filename: na balík %s."
 
-#: src/generic/apt/pkg_changelog.cc:146 src/view_changelog.cc:149
+#: src/generic/apt/pkg_changelog.cc:151 src/view_changelog.cc:149
 #, c-format
 msgid "ChangeLog of %s"
 msgstr "Súbor zmien %s"
@@ -2508,17 +2524,19 @@ msgstr "-u a -i nemôžu byť použité spoločne s príkazom"
 msgid "Unknown command \"%s\"\n"
 msgstr "Neznámy príkaz \"%s\"\n"
 
-#: src/main.cc:525 src/main.cc:568
+#: src/main.cc:525 src/main.cc:574
 #, c-format
 msgid "Uncaught exception: %s\n"
 msgstr "Neodchytená výnimka: %s\n"
 
-#: src/main.cc:529 src/main.cc:572
+#: src/main.cc:529 src/main.cc:578
 #, c-format
 msgid ""
 "Backtrace:\n"
 "%s"
 msgstr ""
+"Výpis:\n"
+"%s"
 
 #: src/menu_text_layout.cc:36 src/menu_tree.cc:204 src/view_changelog.cc:55
 msgid "Search for: "
@@ -2526,9 +2544,9 @@ msgstr "Hľadať: "
 
 #: src/menu_text_layout.cc:68 src/menu_tree.cc:221 src/view_changelog.cc:67
 msgid "Search backwards for: "
-msgstr "Spätne hľadaj:"
+msgstr "Hľadať predchádzajúce: "
 
-#: src/mine/cmine.cc:106 src/mine/cmine.cc:148 src/ui.cc:1423
+#: src/mine/cmine.cc:106 src/mine/cmine.cc:148 src/ui.cc:1444
 msgid "Minesweeper"
 msgstr "Hľadanie mín"
 
@@ -2548,7 +2566,7 @@ msgstr "sekúnd"
 #: src/mine/cmine.cc:120
 #, c-format
 msgid "    %s in %d %s"
-msgstr "    %s in %d %s"
+msgstr "    %s za %d %s"
 
 #: src/mine/cmine.cc:121
 msgid "Won"
@@ -2561,20 +2579,20 @@ msgstr "Prehral"
 #: src/mine/cmine.cc:165 src/mine/cmine.cc:209
 #, c-format
 msgid "Could not open file \"%s\""
-msgstr "Nemôžem otvoriť súbor \"%s\""
+msgstr "Nedá sa otvoriť súbor \"%s\""
 
 #: src/mine/cmine.cc:180
 #, c-format
 msgid "Could not load game from %s"
-msgstr "Nemôžem nahrať hru z %s"
+msgstr "Nedá sa nahrať hra z %s"
 
 #: src/mine/cmine.cc:247
 msgid "The board height must be a positive integer"
-msgstr "Výška dosky musí byť kladné číslo"
+msgstr "Výška dosky musí byť celé kladné číslo"
 
 #: src/mine/cmine.cc:259
 msgid "The board width must be a positive integer"
-msgstr "Šírka dosky musí byť kladné číslo"
+msgstr "Šírka dosky musí byť celé kladné číslo"
 
 #: src/mine/cmine.cc:271
 msgid "Invalid mine count; please enter a positive integer"
@@ -2629,8 +2647,8 @@ msgid "You die...  --More--"
 msgstr "Umieraš...  --Viac--"
 
 #: src/mine/cmine.cc:478
-msgid "The spikes were poisoned!  The poison was deadly..  --More--"
-msgstr "Bodce sú otrávené! Otrava je smrteľná...  --Viac--"
+msgid "The spikes were poisoned!  The poison was deadly...  --More--"
+msgstr "Bodce boli otrávené!  Otrava bola smrteľná...  --Viac--"
 
 #: src/mine/cmine.cc:481
 msgid "You land on a set of sharp iron spikes!  --More--"
@@ -2734,7 +2752,7 @@ msgstr "Kódovanie mine-help.txt|UTF-8"
 msgid "30 6 6 1 1 40 10 10 11 10 35 9 10 2 1 1 10 12 30 15 15"
 msgstr "30 6 6 1 1 40 10 10 11 10 35 9 10 2 1 1 10 12 30 15 15"
 
-#: src/pkg_columnizer.cc:86 src/ui.cc:2295
+#: src/pkg_columnizer.cc:86 src/ui.cc:2338
 msgid "Package"
 msgstr "Balík"
 
@@ -2892,22 +2910,27 @@ msgstr "nič"
 msgid "Unknown"
 msgstr "Neznáma"
 
+#. ForTranslators: Imp = Important
 #: src/pkg_columnizer.cc:338 src/pkg_ver_item.cc:354
 msgid "Imp"
 msgstr "Imp"
 
+#. ForTranslators: Req = Required
 #: src/pkg_columnizer.cc:340 src/pkg_ver_item.cc:357
 msgid "Req"
 msgstr "Req"
 
+#. ForTranslators: Std = Standard
 #: src/pkg_columnizer.cc:342 src/pkg_ver_item.cc:360
 msgid "Std"
 msgstr "Std"
 
+#. ForTranslators: Opt = Optional
 #: src/pkg_columnizer.cc:344 src/pkg_ver_item.cc:363
 msgid "Opt"
 msgstr "Vol"
 
+#. ForTranslators: Xtr = Extra
 #: src/pkg_columnizer.cc:346 src/pkg_ver_item.cc:366
 msgid "Xtr"
 msgstr "Xtr"
@@ -2936,6 +2959,7 @@ msgstr "Na disku sa uvoľní %sB"
 msgid "DL Size: %sB"
 msgstr "Stiahnem: %sB"
 
+#. ForTranslators: Hostname
 #: src/pkg_columnizer.cc:478
 msgid "HN too long"
 msgstr "Príliš dlhé meno"
@@ -3003,7 +3027,7 @@ msgstr ""
 
 #: src/pkg_grouppolicy.cc:169
 msgid ""
-"Programs for faxmodems and other communications devices\n"
+"Programs for faxmodems and other communication devices\n"
 " Packages in the 'comm' section are used to control modems and other "
 "hardware communications devices. This includes software to control faxmodems "
 "(for instance, PPP for dial-up internet connections and programs originally "
@@ -3011,12 +3035,11 @@ msgid ""
 "control cellular phones, interface with FidoNet, and run a BBS."
 msgstr ""
 "Programy na faxmodemy a iné komunikačné zariadenia\n"
-" Balíčky zo sekcie 'comm' sa používajú k ovládaniu modemov a ďalších "
-"komunikačných zariadení. To zahŕňa softvér na ovládanie faxmodemov "
-"(napríkad, PPP na vytáčané pripojenie k Internetu a programy pôvodne "
-"napísané pre ten účel, ako napr. zmodem/kermit), taktiž ako programy na "
-"ovládanie mobilných telefónov, rozhranie k FidoNetu, alebo prevádzkovanie "
-"BBS."
+" Balíky zo sekcie 'comm' sa používajú na ovládanie modemov a ďalších "
+"komunikačných zariadení. To zahŕňa softvér na ovládanie faxmodemov (napr. "
+"PPP na vytáčané pripojenie k Internetu a programy pôvodne napísané pre ten "
+"účel, ako napr. zmodem/kermit), a taktiež aj programy na ovládanie mobilných "
+"telefónov, rozhranie k FidoNetu, alebo prevádzkovanie BBS."
 
 #: src/pkg_grouppolicy.cc:170
 msgid ""
@@ -3877,7 +3900,7 @@ msgstr ""
 msgid "Reconfiguring %s\n"
 msgstr "Prekonfigurovávám %s\n"
 
-#: src/pkg_item.cc:434 src/ui.cc:1041
+#: src/pkg_item.cc:434 src/ui.cc:1046
 msgid "Press return to continue.\n"
 msgstr "Na pokračovanie stlačte enter.\n"
 
@@ -4451,54 +4474,55 @@ msgid "README"
 msgstr "README.sk"
 
 #: src/ui.cc:886
-msgid "Encoding of README|UTF-8"
+#, fuzzy
+msgid "Encoding of README|ISO_8859-1"
 msgstr "Kódovanie README|UTF-8"
 
-#: src/ui.cc:912
+#: src/ui.cc:917
 msgid "User's Manual"
 msgstr "Požívateľský Manuál"
 
-#: src/ui.cc:912
+#: src/ui.cc:917
 msgid "Read the full user's manual of aptitude"
 msgstr "Prečítajte si plný požívateľský manuál aptitude"
 
-#: src/ui.cc:912
+#: src/ui.cc:917
 msgid "Manual"
 msgstr "Ručne"
 
-#: src/ui.cc:946
+#: src/ui.cc:951
 #, c-format
 msgid "Unable to stat \"%s\""
 msgstr "Nemôžem otvoriť \"%s\""
 
-#: src/ui.cc:952
+#: src/ui.cc:957
 #, c-format
 msgid "Unable to remove \"%s\""
 msgstr "Nemôžem odstrániť \"%s\""
 
-#: src/ui.cc:962
+#: src/ui.cc:967
 #, c-format
 msgid "Unable to list files in \"%s\""
 msgstr "Nemôžem zobraziť súbory v \"%s\""
 
-#: src/ui.cc:975
+#: src/ui.cc:980
 #, c-format
 msgid "Failure closing directory \"%s\""
 msgstr "Chyba pri zatváraní adresára \"%s\""
 
-#: src/ui.cc:981
+#: src/ui.cc:986
 #, c-format
 msgid "Unable to remove directory \"%s\""
 msgstr "Nemôžem odstrániť adresár \"%s\""
 
-#: src/ui.cc:991
+#: src/ui.cc:996
 #, c-format
 msgid ""
 "Unable to remove the old temporary directory; you should remove %s by hand."
 msgstr ""
 "Nemôžem odstrániť starý dočasný adresár; mali by ste odstrániť %s ručne."
 
-#: src/ui.cc:996
+#: src/ui.cc:1001
 #, c-format
 msgid ""
 "Will not remove %s; you should examine the files in it and remove them by "
@@ -4507,7 +4531,7 @@ msgstr ""
 "Nebude odstránený %s; mali by ste preskúmať súbory, ktoré obsahuje a "
 "odstrániť ich ručne."
 
-#: src/ui.cc:1022
+#: src/ui.cc:1027
 #, c-format
 msgid ""
 "It appears that a previous version of aptitude left files behind in %s.  "
@@ -4520,19 +4544,19 @@ msgstr ""
 "odstrániť tento adresár a celý jeho obsah?  Ak vyberiete \"No/Nie\", táto "
 "správa sa už nebude zobrazovať."
 
-#: src/ui.cc:1064
+#: src/ui.cc:1069
 msgid "Downloading packages"
 msgstr "Sťahujem balíky"
 
-#: src/ui.cc:1065
+#: src/ui.cc:1070
 msgid "View the progress of the package download"
 msgstr "Zobrazí priebeh sťahovania balíkov"
 
-#: src/ui.cc:1066
+#: src/ui.cc:1071
 msgid "Package Download"
 msgstr "Stiahnutie Balíčka "
 
-#: src/ui.cc:1099
+#: src/ui.cc:1104
 msgid ""
 "%BWARNING%b: untrusted versions of the following packages will be installed!%"
 "n%nUntrusted packages could %Bcompromise your system's security%b.  You "
@@ -4544,39 +4568,39 @@ msgstr ""
 "systému%b.  S inštaláciou by ste mali pokračovať iba v prípade, ak ste si "
 "istý s tým, čo chcete spraviť.%n%n"
 
-#: src/ui.cc:1105
+#: src/ui.cc:1110
 msgid "  %S*%N %s [version %s]%n"
 msgstr "  %S*%N %s [verzia %s]%n"
 
-#: src/ui.cc:1111
+#: src/ui.cc:1116
 msgid "Really Continue"
 msgstr "Skutočne Pokračovať"
 
-#: src/ui.cc:1113
+#: src/ui.cc:1118
 msgid "Abort Installation"
 msgstr "Zrušiť Inštaláciu"
 
-#: src/ui.cc:1175
+#: src/ui.cc:1180
 msgid "Preview of package installation"
 msgstr "Náhľad inštalácie balíkov"
 
-#: src/ui.cc:1176
+#: src/ui.cc:1181
 msgid "View and/or adjust the actions that will be performed"
 msgstr "Zobrazí a/alebo upraví akcie, ktoré sa majú vykonať"
 
-#: src/ui.cc:1177
+#: src/ui.cc:1182
 msgid "Preview"
 msgstr "Náhľad"
 
-#: src/ui.cc:1219
+#: src/ui.cc:1240
 msgid "Some packages were broken and have been fixed:"
 msgstr "Niektoré balíky boli poškodené a podarilo sa ich opraviť:"
 
-#: src/ui.cc:1227
+#: src/ui.cc:1248
 msgid "No solution to these dependency problems exists!"
 msgstr "Na tieto problémy so závislosťami neexistuje žiadne riešenie!"
 
-#: src/ui.cc:1233
+#: src/ui.cc:1254
 #, c-format
 msgid ""
 "Ran out of time while trying to resolve dependencies (press \"%s\" to try "
@@ -4585,7 +4609,7 @@ msgstr ""
 "Počas riešenia závislostí som presiahol čas (stlačte \"%s\" na dôkladnejšie "
 "hľadanie)"
 
-#: src/ui.cc:1279
+#: src/ui.cc:1300
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
 "currently do not have."
@@ -4593,24 +4617,24 @@ msgstr ""
 "Inštalácia/odobranie balíkov vyžaduje administrátorské práva, ktoré "
 "momentálne nemáte."
 
-#: src/ui.cc:1282 src/ui.cc:1411
+#: src/ui.cc:1303 src/ui.cc:1432
 msgid "Become root"
 msgstr "Stať sa rootom"
 
-#: src/ui.cc:1284 src/ui.cc:1413
+#: src/ui.cc:1305 src/ui.cc:1434
 msgid "Don't become root"
 msgstr "Nestať sa rootom"
 
-#: src/ui.cc:1289 src/ui.cc:1418
+#: src/ui.cc:1310 src/ui.cc:1439
 msgid "A package-list update or install run is already taking place."
 msgstr "Aktualizácia zoznamu balíkov alebo ich inštalácia už prebieha."
 
-#: src/ui.cc:1316
+#: src/ui.cc:1337
 msgid "No packages are scheduled to be installed, removed, or upgraded."
 msgstr ""
 "Žiadne balíky nie sú označené na inštaláciu, aktualizáciu alebo odstránenie."
 
-#: src/ui.cc:1322
+#: src/ui.cc:1343
 msgid ""
 "No packages will be installed, removed or upgraded.  Some packages could be "
 "upgraded, but you have not chosen to upgrade them.  Type \"U\" to prepare an "
@@ -4620,23 +4644,23 @@ msgstr ""
 "balíky síce môžu byť aktualizované, ale vybrali ste, že sa nemajú "
 "aktualizovať.  Aktualizáciu môžete pripraviť klávesou \"U\"."
 
-#: src/ui.cc:1380 src/ui.cc:1493
+#: src/ui.cc:1401 src/ui.cc:1514
 msgid "Deleting obsolete downloaded files"
 msgstr "Vymazávam staré stiahnuté súbory"
 
-#: src/ui.cc:1395
+#: src/ui.cc:1416
 msgid "Updating package lists"
 msgstr "Aktualizujem zoznamy balíkov"
 
-#: src/ui.cc:1396
+#: src/ui.cc:1417
 msgid "View the progress of the package list update"
 msgstr "Zobrazí priebeh aktualizácie zoznamu balíkov"
 
-#: src/ui.cc:1397
+#: src/ui.cc:1418
 msgid "List Update"
 msgstr "Aktualizovať Zoznam"
 
-#: src/ui.cc:1408
+#: src/ui.cc:1429
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
 "currently do not have."
@@ -4644,124 +4668,141 @@ msgstr ""
 "Aktualizácia zoznamu balíkov vyžaduje administrátorské práva, ktoré "
 "momentálne nemáte."
 
-#: src/ui.cc:1423 src/ui.cc:1930
+#: src/ui.cc:1444 src/ui.cc:1965
 msgid "Waste time trying to find mines"
 msgstr "Zabiť čas hľadaním mín."
 
-#: src/ui.cc:1430 src/ui.cc:1490
+#: src/ui.cc:1451 src/ui.cc:1511
 msgid "Cleaning while a download is in progress is not allowed"
 msgstr "Čistenie počas sťahovania nie je dovolené"
 
-#: src/ui.cc:1433
+#: src/ui.cc:1454
 msgid "Deleting downloaded files"
 msgstr "Vymazávam stiahnuté súbory"
 
-#: src/ui.cc:1447
+#: src/ui.cc:1468
 msgid "Downloaded package files have been deleted"
 msgstr "Stiahnuté balíky boli vymazané"
 
-#: src/ui.cc:1487
+#: src/ui.cc:1508
 msgid "The apt cache file is not available; cannot auto-clean."
 msgstr ""
 "Vyrovnávacia pamäť apt nie je k dispozícií; nedokážem automaticky čistiť."
 
-#: src/ui.cc:1513
+#: src/ui.cc:1534
 #, c-format
 msgid ""
 "Obsolete downloaded package files have been deleted, freeing %sB of disk "
 "space."
 msgstr "Staré stiahnuté balíky boli vymazané, uvoľnilo sa %sB miesta na disku."
 
-#: src/ui.cc:1610
+#: src/ui.cc:1631
 msgid "No more solutions."
 msgstr "Žiadne ďalšie riešenia."
 
-#: src/ui.cc:1798
+#: src/ui.cc:1819
 msgid "Unable to find a solution to apply."
 msgstr "Nemôžem nájsť potvrdené riešenie"
 
-#: src/ui.cc:1804
+#: src/ui.cc:1825
 msgid "Ran out of time while trying to find a solution."
 msgstr "Vypšal čas počas hľadania riešenia."
 
-#: src/ui.cc:1847 src/ui.cc:1849
+#: src/ui.cc:1868 src/ui.cc:1870
 msgid "Resolve Dependencies"
 msgstr "Riešiť Závislosti"
 
-#: src/ui.cc:1848
+#: src/ui.cc:1869
 msgid "Search for solutions to unsatisfied dependencies"
 msgstr "Hľadať riešenia nesplnených závislostí"
 
-#: src/ui.cc:1860
+#: src/ui.cc:1881
 #, c-format
 msgid "Unable to open %ls"
 msgstr "Nemôžem otvoriť %ls"
 
-#: src/ui.cc:1866
+#: src/ui.cc:1887
 msgid "Error while dumping resolver state"
 msgstr "Nastala chyba pri ukladaní stavu riešenia"
 
-#: src/ui.cc:1876
+#: src/ui.cc:1897
 msgid "File to which the resolver state should be dumped:"
 msgstr "Súbor, do ktorého má byť stav riešenia uložený:"
 
-#: src/ui.cc:1906
+#: src/ui.cc:1927
 msgid "^Install/remove packages"
 msgstr "^Inštalovať/odstrániť balíky"
 
-#: src/ui.cc:1907
+#: src/ui.cc:1928
 msgid "Perform all pending installs and removals"
 msgstr "Vykoná všetky nevykonané inštalácie a odstraňovania"
 
-#: src/ui.cc:1909
+#: src/ui.cc:1930
 msgid "^Update package list"
 msgstr "^Aktualizovať zoznam balíkov"
 
-#: src/ui.cc:1910
+#: src/ui.cc:1931
 msgid "Check for new versions of packages"
 msgstr "Zistí, či nie sú k dispozícii novšie verzie balíkov"
 
-#: src/ui.cc:1913
-msgid "^Forget new packages"
-msgstr "^Zabudnúť nové balíky"
-
-#: src/ui.cc:1914
-msgid "Forget which packages are \"new\""
-msgstr "Zabudne, ktoré balíky sú \"nové\""
-
-#: src/ui.cc:1917
-msgid "^Clean package cache"
-msgstr "Vyčistiť ^cache s balíkmi"
-
-#: src/ui.cc:1918
-msgid "Delete package files which were previously downloaded"
-msgstr "Vymaže stiahnuté súbory (balíky) z /var/cache/apt"
-
-#: src/ui.cc:1921
-msgid "Clean ^obsolete files"
-msgstr "Vyčistiť staré súb^ory"
-
-#: src/ui.cc:1922
-msgid "Delete package files which can no longer be downloaded"
-msgstr "Vymaže súbory, ktoré sa už nedajú stiahnuť"
-
-#: src/ui.cc:1925
+#: src/ui.cc:1935
 msgid "Mark ^Upgradable"
 msgstr "Označiť aktualizovateľné"
 
-#: src/ui.cc:1926
+#: src/ui.cc:1936
 msgid "Mark all upgradable packages which are not held for upgrade"
 msgstr "Označí všetky aktualizovateľné balíky, ktoré nie sú podržané"
 
-#: src/ui.cc:1929
+#: src/ui.cc:1940
+msgid "^Forget new packages"
+msgstr "^Zabudnúť nové balíky"
+
+#: src/ui.cc:1941
+msgid "Forget which packages are \"new\""
+msgstr "Zabudne, ktoré balíky sú \"nové\""
+
+#: src/ui.cc:1944
+msgid "Canc^el pending actions"
+msgstr "Zrušiť čakajúce akcie"
+
+#: src/ui.cc:1945
+msgid "Cancel all pending installations, removals, holds, and upgrades."
+msgstr ""
+"Zruší všetky čakajúce inštalácie, odstránenia, podržania a aktualizácie."
+
+#: src/ui.cc:1948
+msgid "^Clean package cache"
+msgstr "Vyčistiť ^cache s balíkmi"
+
+#: src/ui.cc:1949
+msgid "Delete package files which were previously downloaded"
+msgstr "Vymaže stiahnuté súbory (balíky) z /var/cache/apt"
+
+#: src/ui.cc:1952
+msgid "Clean ^obsolete files"
+msgstr "Vyčistiť staré súb^ory"
+
+#: src/ui.cc:1953
+msgid "Delete package files which can no longer be downloaded"
+msgstr "Vymaže súbory, ktoré sa už nedajú stiahnuť"
+
+#: src/ui.cc:1959
+msgid "^Reload package cache"
+msgstr "Znovu načítať cache"
+
+#: src/ui.cc:1960
+msgid "Reload the package cache"
+msgstr "Znovu načítať obsah cache"
+
+#: src/ui.cc:1964
 msgid "^Play Minesweeper"
 msgstr "Zahrať si mínové ^pole"
 
-#: src/ui.cc:1932
+#: src/ui.cc:1969
 msgid "^Become root"
 msgstr "Stať sa rootom"
 
-#: src/ui.cc:1933
+#: src/ui.cc:1970
 msgid ""
 "Run 'su' to become root; this will restart the program, but your settings "
 "will be preserved"
@@ -4769,69 +4810,61 @@ msgstr ""
 "Na prepnutie na užívateľa root spusťte 'su'; toto  reštartuje program, ale "
 "Vaše nastavenia budú zachované"
 
-#: src/ui.cc:1936
-msgid "^Reload package cache"
-msgstr "Znovu načítať cache"
-
-#: src/ui.cc:1937
-msgid "Reload the package cache"
-msgstr "Znovu načítať obsah cache"
-
-#: src/ui.cc:1943
+#: src/ui.cc:1972
 msgid "^Quit"
 msgstr "Koniec"
 
-#: src/ui.cc:1944
+#: src/ui.cc:1973
 msgid "Exit the program"
 msgstr "Ukončí program"
 
-#: src/ui.cc:1950 src/ui.cc:2294
+#: src/ui.cc:1979 src/ui.cc:2337
 msgid "Undo"
 msgstr "Späť"
 
-#: src/ui.cc:1951
+#: src/ui.cc:1980
 msgid "Undo the last package operation or group of operations"
 msgstr "Vrátí späť poslední operaci alebo skupinu operácií s balíky"
 
-#: src/ui.cc:1959
+#: src/ui.cc:1988
 msgid "^Install"
 msgstr "^Inštalovať"
 
-#: src/ui.cc:1960
+#: src/ui.cc:1989
 msgid "Flag the currently selected package for installation or upgrade"
 msgstr "Označí aktuálny vybraný balík na inštaláciu alebo aktualizáciu"
 
-#: src/ui.cc:1963
+#: src/ui.cc:1992
 msgid "^Remove"
 msgstr "Odst^rániť"
 
-#: src/ui.cc:1964
+#: src/ui.cc:1993
 msgid "Flag the currently selected package for removal"
 msgstr "Označí aktuálny vybraný balík na odstránenie"
 
-#: src/ui.cc:1967
+#: src/ui.cc:1996
 msgid "^Purge"
 msgstr "Vyčistiť"
 
-#: src/ui.cc:1968
+#: src/ui.cc:1997
 msgid ""
 "Flag the currently selected package and its configuration files for removal"
 msgstr ""
 "Označí aktuálny vybraný balík na odstránenie vrátane konfiguračných súborov"
 
-#: src/ui.cc:1971
+#: src/ui.cc:2000
 msgid "^Keep"
 msgstr "Ponechať"
 
-#: src/ui.cc:1972
+#: src/ui.cc:2001
 msgid "Cancel any action on the selected package"
 msgstr "Na vybranom balíku zruší všetky akcie"
 
-#: src/ui.cc:1975
+#: src/ui.cc:2004
 msgid "^Hold"
 msgstr "Podržať"
 
-#: src/ui.cc:1976
+#: src/ui.cc:2005
 msgid ""
 "Cancel any action on the selected package, and protect it from future "
 "upgrades"
@@ -4839,11 +4872,11 @@ msgstr ""
 "Na vybranom balíku zruší všetky akcie a ochráni ho pred budúcimi "
 "aktualizáciami."
 
-#: src/ui.cc:1979
+#: src/ui.cc:2008
 msgid "Mark ^Auto"
 msgstr "Označiť ^automaticky"
 
-#: src/ui.cc:1980
+#: src/ui.cc:2009
 msgid ""
 "Mark the selected package as having been automatically installed; it will "
 "automatically be removed if no other packages depend on it"
@@ -4851,11 +4884,11 @@ msgstr ""
 "Označí vybraný balík, ako inštalovaný automaticky; ak na ňom nebudú závisieť "
 "iné balíky, bude automaticky odstránený"
 
-#: src/ui.cc:1983
+#: src/ui.cc:2012
 msgid "Mark ^Manual"
 msgstr "Označiť ručne"
 
-#: src/ui.cc:1984
+#: src/ui.cc:2013
 msgid ""
 "Mark the selected package as having been manually installed; it will not be "
 "removed unless you manually remove it"
@@ -4863,11 +4896,11 @@ msgstr ""
 "Označí vybraný balík, ako by bol nainštalovaný ručne; nebude odstránený, "
 "pokiaľ ho neodstránite sami"
 
-#: src/ui.cc:1987
+#: src/ui.cc:2016
 msgid "^Forbid Version"
 msgstr "Zakázať ^verziu"
 
-#: src/ui.cc:1988
+#: src/ui.cc:2017
 msgid ""
 "Forbid the candidate version of the selected package from being installed; "
 "newer versions of the package will be installed as usual"
@@ -4875,67 +4908,67 @@ msgstr ""
 "Zakázať, aby sa kandidátska verzia balíku nainštalovala; novšie verzie "
 "balíku sa budú inštalovať ako zvyčajne"
 
-#: src/ui.cc:1992
+#: src/ui.cc:2021
 msgid "I^nformation"
 msgstr "I^nformácie"
 
-#: src/ui.cc:1993
+#: src/ui.cc:2022
 msgid "Display more information about the selected package"
 msgstr "Na vybraný balík zobrazí ďalšie informácie"
 
-#: src/ui.cc:1996
+#: src/ui.cc:2025
 msgid "^Changelog"
 msgstr "^Changelog"
 
-#: src/ui.cc:1997
+#: src/ui.cc:2026
 msgid "Display the Debian changelog of the selected package"
 msgstr "U vybraného balíku zobrazí zoznam zmien vykonaných správcom balíku"
 
-#: src/ui.cc:2004
+#: src/ui.cc:2033
 msgid "^Examine Solution"
 msgstr "^Vyskúšať Riešenie"
 
-#: src/ui.cc:2005
+#: src/ui.cc:2034
 msgid "Examine the currently selected solution to the dependency problems."
 msgstr "Preskúšať aktuálne označené riešenie problémov so závislosťami."
 
-#: src/ui.cc:2008
+#: src/ui.cc:2037
 msgid "Apply ^Solution"
 msgstr "Použiť ^Riešenie"
 
-#: src/ui.cc:2009
+#: src/ui.cc:2038
 msgid "Perform the actions contained in the currently selected solution."
 msgstr "Vykonaj akcie, ktoré sú zahrnuté v aktuálne vybranom riešení."
 
-#: src/ui.cc:2012
+#: src/ui.cc:2041
 msgid "^Next Solution"
 msgstr "Ďalšie Rieše^nia"
 
-#: src/ui.cc:2013
+#: src/ui.cc:2042
 msgid "Select the next solution to the dependency problems."
 msgstr "Vybrať ďalšie riešenie problémov so závislosťami."
 
-#: src/ui.cc:2016
+#: src/ui.cc:2045
 msgid "^Previous Solution"
 msgstr "^Predchádzajúce Riešenie"
 
-#: src/ui.cc:2017
+#: src/ui.cc:2046
 msgid "Select the previous solution to the dependency problems."
 msgstr "Vyber predchádzajúce riešenie problémov so závislosťami."
 
-#: src/ui.cc:2020
+#: src/ui.cc:2049
 msgid "^First Solution"
 msgstr "^Prvé Riešenie"
 
-#: src/ui.cc:2021
+#: src/ui.cc:2050
 msgid "Select the first solution to the dependency problems."
 msgstr "Vybrať prvé riešenie problémov so závislosťami."
 
-#: src/ui.cc:2024
+#: src/ui.cc:2053
 msgid "^Last Solution"
 msgstr "^Posledné Riešenie"
 
-#: src/ui.cc:2025
+#: src/ui.cc:2054
 msgid ""
 "Select the last solution to the dependency problems that has been generated "
 "so far."
@@ -4943,147 +4976,147 @@ msgstr ""
 "Vybrať posledné riešenie problémov so závislosťami, ktoré bolo doteraz "
 "vygenerované."
 
-#: src/ui.cc:2031
+#: src/ui.cc:2060
 msgid "Toggle ^Rejected"
 msgstr "Prepnúť ^Zamietnuté"
 
-#: src/ui.cc:2032
+#: src/ui.cc:2061
 msgid "Toggle whether the currently selected action is rejected."
 msgstr "Prepnúť, či je aktuálne vybraná akcia zamietnutá."
 
-#: src/ui.cc:2036
+#: src/ui.cc:2065
 msgid "Toggle ^Approved"
 msgstr "Prepnúť ^Schválené"
 
-#: src/ui.cc:2037
+#: src/ui.cc:2066
 msgid "Toggle whether the currently selected action is approved."
 msgstr "Prepnúť, či je aktuálne vybraná akcia schválená."
 
-#: src/ui.cc:2041
+#: src/ui.cc:2070
 msgid "^View Target"
 msgstr "^Zobraziť Cieľ"
 
-#: src/ui.cc:2042
+#: src/ui.cc:2071
 msgid "View the package which will be affected by the selected action"
 msgstr "Zobraziť balíky, ktoré budú dotknuté vybranou akciou"
 
-#: src/ui.cc:2050
+#: src/ui.cc:2079
 msgid "^Find"
 msgstr "Hľadať"
 
-#: src/ui.cc:2051
+#: src/ui.cc:2080
 msgid "Search forwards"
 msgstr "Hľadať dopredu"
 
-#: src/ui.cc:2054
+#: src/ui.cc:2083
 msgid "^Find Backwards"
 msgstr "^Hľadaj Spätne"
 
-#: src/ui.cc:2055
+#: src/ui.cc:2084
 msgid "Search backwards"
 msgstr "Hľadať spätne "
 
-#: src/ui.cc:2058
+#: src/ui.cc:2087
 msgid "Find ^Again"
 msgstr "Hľadať znova"
 
-#: src/ui.cc:2059
+#: src/ui.cc:2088
 msgid "Repeat the last search"
 msgstr "Zopakuje posledné hľadanie"
 
-#: src/ui.cc:2063
+#: src/ui.cc:2092
 msgid "^Limit Display"
 msgstr "Obmedziť zobrazenie"
 
-#: src/ui.cc:2064
+#: src/ui.cc:2093
 msgid "Apply a filter to the package list"
 msgstr "Na zoznam balíkov aplikuje výberový filter"
 
-#: src/ui.cc:2067
+#: src/ui.cc:2096
 msgid "^Un-Limit Display"
 msgstr "Zrušiť obmedzenie"
 
-#: src/ui.cc:2068
+#: src/ui.cc:2097
 msgid "Remove the filter from the package list"
 msgstr "Odstráni filter aplikovaný na zoznam balíkov"
 
-#: src/ui.cc:2072
+#: src/ui.cc:2101
 msgid "Find ^Broken"
 msgstr "Hľadať porušené"
 
-#: src/ui.cc:2073
+#: src/ui.cc:2102
 msgid "Find the next package with unsatisfied dependencies"
 msgstr "Hľadá ďalší balík s nesplnenými závislosťami"
 
-#: src/ui.cc:2080
+#: src/ui.cc:2109
 msgid "^UI options"
 msgstr "Nastavenie zobrazenia"
 
-#: src/ui.cc:2081
+#: src/ui.cc:2110
 msgid "Change the settings which affect the user interface"
 msgstr "Zmení nastavenia, ktoré ovplyvňujú užívateľské rozhranie"
 
-#: src/ui.cc:2084
+#: src/ui.cc:2113
 msgid "^Dependency handling"
 msgstr "Správa závislostí"
 
-#: src/ui.cc:2085
+#: src/ui.cc:2114
 msgid "Change the settings which affect how package dependencies are handled"
 msgstr "Zmení nastavenia, ktoré ovplyvňujú spôsob riešenia závislostí"
 
-#: src/ui.cc:2088
+#: src/ui.cc:2117
 msgid "^Miscellaneous"
 msgstr "Rôzne"
 
-#: src/ui.cc:2089
+#: src/ui.cc:2118
 msgid "Change miscellaneous program settings"
 msgstr "Zmení rôzne nastavenia programu"
 
-#: src/ui.cc:2094
+#: src/ui.cc:2123
 msgid "^Revert options"
 msgstr "Pôvodné nastavenia"
 
-#: src/ui.cc:2095
+#: src/ui.cc:2124
 msgid "Reset all settings to the system defaults"
 msgstr "Vráti všetky nastavenia do pôvodného stavu"
 
-#: src/ui.cc:2106
+#: src/ui.cc:2135
 msgid "^Next"
 msgstr "Ďalší"
 
-#: src/ui.cc:2107
+#: src/ui.cc:2136
 msgid "View next display"
 msgstr "Zobrazí ďalší pohľad"
 
-#: src/ui.cc:2110
+#: src/ui.cc:2139
 msgid "^Prev"
 msgstr "^Predchádzajúce"
 
-#: src/ui.cc:2111
+#: src/ui.cc:2140
 msgid "View previous display"
 msgstr "Zobrazí predchádzajúci pohľad"
 
-#: src/ui.cc:2114
+#: src/ui.cc:2143
 msgid "^Close"
 msgstr "Zavrieť"
 
-#: src/ui.cc:2115
+#: src/ui.cc:2144
 msgid "Close this display"
 msgstr "Zavrie tento pohľad"
 
-#: src/ui.cc:2120
+#: src/ui.cc:2149
 msgid "New Package ^View"
 msgstr "No^vý pohľad na balíky"
 
-#: src/ui.cc:2121
+#: src/ui.cc:2150
 msgid "Create a new default package view"
 msgstr "Vytvorí nový štandardný pohľad na balíky"
 
-#: src/ui.cc:2124
+#: src/ui.cc:2153
 msgid "Audit ^Recommendations"
 msgstr "Audit ^Odporúčania"
 
-#: src/ui.cc:2125
+#: src/ui.cc:2154
 msgid ""
 "View packages which it is recommended that you install, but which are not "
 "currently installed."
@@ -5091,103 +5124,103 @@ msgstr ""
 "Zobraziť balíky, ktoré je odporúčané inštalovať ale aktuálne nie sú "
 "nainštalované."
 
-#: src/ui.cc:2128
+#: src/ui.cc:2157
 msgid "New ^Flat Package List"
 msgstr "Nový ^Plochý Zoznam Balíkov"
 
-#: src/ui.cc:2129
+#: src/ui.cc:2158
 msgid "View all the packages on the system in a single uncategorized list"
 msgstr "Zobraziť všetky balíky v systéme ako jeden nekategorizovaný zoznam"
 
-#: src/ui.cc:2132
+#: src/ui.cc:2161
 msgid "New ^Debtags Browser"
 msgstr "Nový ^Debtags Prehliadač"
 
-#: src/ui.cc:2134
+#: src/ui.cc:2163
 msgid "Browse packages using Debtags data"
 msgstr "Prehliadať balíky s použitím debtags"
 
-#: src/ui.cc:2137
+#: src/ui.cc:2166
 msgid "New Categorical ^Browser"
 msgstr "Nový prehliadač kategorií"
 
-#: src/ui.cc:2139
+#: src/ui.cc:2168
 msgid "Browse packages by category"
 msgstr "Prehliada balíky podľa kategorií"
 
-#: src/ui.cc:2147
+#: src/ui.cc:2176
 msgid "^About"
 msgstr "O progr^ame"
 
-#: src/ui.cc:2148
+#: src/ui.cc:2177
 msgid "View information about this program"
 msgstr "Zobrazí informácie o programe"
 
-#: src/ui.cc:2151
+#: src/ui.cc:2180
 msgid "^Help"
 msgstr "Pomoc"
 
-#: src/ui.cc:2152
+#: src/ui.cc:2181
 msgid "View the on-line help"
 msgstr "Zobrazí on-line pomoc"
 
-#: src/ui.cc:2154
+#: src/ui.cc:2183
 msgid "User's ^Manual"
 msgstr "Užívatelský ^manuál"
 
-#: src/ui.cc:2155
+#: src/ui.cc:2184
 msgid "View the detailed program manual"
 msgstr "Zobrazí podrobný manuál tohto programu"
 
-#: src/ui.cc:2158
+#: src/ui.cc:2187
 msgid "^FAQ"
 msgstr "^FAQ"
 
-#: src/ui.cc:2159
+#: src/ui.cc:2188
 msgid "View a list of frequently asked questions"
 msgstr "Zobrazí zoznam často kladených otázok"
 
-#: src/ui.cc:2162
-msgid "^NEWS"
-msgstr "^NOVINKY"
+#: src/ui.cc:2191
+msgid "^News"
+msgstr "^Novinky"
 
-#: src/ui.cc:2163
+#: src/ui.cc:2192
 msgid "View the important changes made in each version of "
 msgstr "Zobraziť dôležité zmeny v každej verzií programu"
 
-#: src/ui.cc:2166
+#: src/ui.cc:2195
 msgid "^License"
 msgstr "^Licencia"
 
-#: src/ui.cc:2167
+#: src/ui.cc:2196
 msgid "View the terms under which you may copy the program"
 msgstr "Zobrazí podmienky, za ktorých môžete program šíriť"
 
-#: src/ui.cc:2293
+#: src/ui.cc:2336
 msgid "Actions"
 msgstr "Akcie"
 
-#: src/ui.cc:2296
+#: src/ui.cc:2339
 msgid "Resolver"
 msgstr "Odstraňovač"
 
-#: src/ui.cc:2297
+#: src/ui.cc:2340
 msgid "Search"
 msgstr "Hľadat"
 
-#: src/ui.cc:2298
+#: src/ui.cc:2341
 msgid "Options"
 msgstr "Voľby"
 
-#: src/ui.cc:2299
+#: src/ui.cc:2342
 msgid "Views"
 msgstr "Pohľady"
 
-#: src/ui.cc:2300
+#: src/ui.cc:2343
 msgid "Help"
 msgstr "Pomoc"
 
-#: src/ui.cc:2365
+#: src/ui.cc:2408
 #, c-format
 msgid ""
 "%ls: Menu  %ls: Help  %ls: Quit  %ls: Update  %ls: Download/Install/Remove "
@@ -5196,11 +5229,11 @@ msgstr ""
 "%ls: Menu  %ls: Pomoc  %ls: Koniec  %ls: Aktualizácia  %ls: Stiahnutie/"
 "Inštalácia/Odstránenie"
 
-#: src/ui.cc:2706 src/vscreen/vscreen.cc:724
+#: src/ui.cc:2751 src/vscreen/vscreen.cc:724
 msgid "yes_key"
 msgstr "ano_key"
 
-#: src/ui.cc:2707 src/vscreen/vscreen.cc:725
+#: src/ui.cc:2752 src/vscreen/vscreen.cc:725
 msgid "no_key"
 msgstr "ne_key"
 
@@ -5254,16 +5287,16 @@ msgstr "Neznámy formátovací kód '%lc'"
 msgid "Bad format parameter"
 msgstr "Nesprávny formát parametra"
 
-#: src/vscreen/config/keybindings.cc:332
+#: src/vscreen/config/keybindings.cc:333
 #, c-format
 msgid "Cannot parse key description: %ls"
 msgstr "Nemôžem spársovať popis kľúča : %ls"
 
-#: src/vscreen/config/keybindings.cc:342
+#: src/vscreen/config/keybindings.cc:343
 msgid "Invalid null keybinding"
 msgstr "Nesprávne null prepojenie klávesy"
 
-#: src/vscreen/config/keybindings.cc:350
+#: src/vscreen/config/keybindings.cc:351
 msgid "Sorry, control modifiers may not be used with unprintable characters"
 msgstr ""
 "Prepáčte, kontrolné modifikátory nesmú byť použité s netlačiteľnými znakmi"
@@ -5288,7 +5321,7 @@ msgstr "Au! Dostal ma SIGABRT, umieram..\n"
 msgid "Ouch!  Got SIGQUIT, dying..\n"
 msgstr "Au! Dostal ma SIGQUIT, umieram..\n"
 
-#: src/vscreen/vs_pager.cc:435
+#: src/vscreen/vs_pager.cc:439
 #, c-format
 msgid ""
 "Unable to load filename: the string %ls has no multibyte representation."
@@ -5296,9 +5329,36 @@ msgstr ""
 "Nemôžem nahrať meno súboru: reťazec %ls nemá žiadnu multibajtovú "
 "reprezentáciu."
 
-#: src/vscreen/vs_tree.cc:930
+#: src/vscreen/vs_tree.cc:942
 msgid "TOP LEVEL"
 msgstr "NAJVYŠŠIA ÚROVEŃ"
+
+#~ msgid "^NEWS"
+#~ msgstr "^NOVINKY"
+
+#~ msgid ""
+#~ "\n"
+#~ "Zobrazia sa verzie.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Verzie budú zobrazené.\n"
+#~ "\n"
+
+#~ msgid "1 install"
+#~ msgstr "1 iinštalovaný"
+
+#~ msgid "1 removal"
+#~ msgstr "1 odstránenie"
+
+#~ msgid "1 keep"
+#~ msgstr "1 ponechanie"
+
+#~ msgid "1 upgrade"
+#~ msgstr "1 aktualizácia"
+
+#~ msgid "1 downgrade"
+#~ msgstr "1 degradovaný"
 
 #~ msgid "Search backwards for:"
 #~ msgstr "Spätne hľadaj:"

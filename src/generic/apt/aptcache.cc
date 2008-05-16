@@ -1,6 +1,6 @@
 // aptcache.cc
 //
-//  Copyright 1999-2005 Daniel Burrows
+//  Copyright 1999-2006 Daniel Burrows
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -228,7 +228,7 @@ bool aptitudeDepCache::build_selection_list(OpProgress &Prog, bool WithLock,
 
   if(WithLock && lock==-1)
     {
-      lock=GetLock(statedir+"lock");
+      lock = GetLock(aptcfg->Find("Aptitude::LockFile", LOCKFILE));
 
       if(_error->PendingError())
 	{
@@ -358,7 +358,7 @@ bool aptitudeDepCache::build_selection_list(OpProgress &Prog, bool WithLock,
 
 	  // FIXME: should I check this for "unknown" packages as well?
 	  // Does that even make sense??
-	  if(!estate.candver.empty() && estate.upgrade)
+	  if(!estate.candver.empty())
 	    {
 	      for(pkgCache::VerIterator ver=i.VersionList(); !ver.end(); ++ver)
 		if(ver.VerStr()==estate.candver &&

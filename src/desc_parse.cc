@@ -24,6 +24,9 @@
 #include "aptitude.h"
 #include "ui.h"
 
+#include <generic/apt/apt.h>
+#include <generic/apt/config_signal.h>
+
 #include <vscreen/fragment.h>
 #include <vscreen/transcode.h>
 #include <vscreen/config/colors.h>
@@ -67,7 +70,8 @@ using namespace std;
 static fragment *make_level_fragment(const wstring &desc,
 				     unsigned int level,
 				     wstring::size_type indent,
-				     wstring::size_type &start)
+				     wstring::size_type &start,
+				     bool recognize_bullets)
 {
   vector<fragment*> fragments;
   bool first=true;
@@ -117,29 +121,25 @@ static fragment *make_level_fragment(const wstring &desc,
 		++nspaces2;
 	      }
 
-	    if(loc2<desc.size() &&
+	    if(recognize_bullets &&
+	       loc2 + 1 < desc.size() &&
 	       (desc[loc2] == L'+' ||
 		desc[loc2] == L'-' ||
-		desc[loc2] == L'*'))
+		desc[loc2] == L'*') &&
+	       desc[loc2 + 1] == L' ')
 	      {
 		// Start a list item (i.e., an indented region).
 
 		wstring bullet;
 		bullet+=(L"*+-"[level%3]);
 
-		start = loc2+1;
-		int indent_beyond_bullet = 0;
-
-		while(start < desc.size() && (desc[start] == L' ' || desc[start] == L'\t'))
-		  {
-		    ++start;
-		    ++indent_beyond_bullet;
-		  }
+		start = loc2 + 2;
 
 		fragment *item_contents=make_level_fragment(desc,
 							    level+1,
-							    nspaces2 + 1 + indent_beyond_bullet,
-							    start);
+							    nspaces2 + 2,
+							    start,
+							    recognize_bullets);
 
 		fragments.push_back(style_fragment(text_fragment(bullet),
 						   get_style("Bullet")));
@@ -243,6 +243,8 @@ fragment *make_desc_fragment(const wstring &desc)
   wstring::size_type loc=0;
   vector<fragment*> fragments;
 
-  return make_level_fragment(desc, 0, 1, loc);
+  return make_level_fragment(desc, 0, 1, loc,
+			     aptcfg->FindB(PACKAGE "::Parse-Description-Bullets",
+					   true));
 }
 

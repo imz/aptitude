@@ -1,6 +1,6 @@
 // vs_menubar.cc
 //
-//   Copyright (C) 2000-2005 Daniel Burrows
+//   Copyright (C) 2000-2006 Daniel Burrows
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -311,7 +311,7 @@ int vs_menubar::width_request()
   // Expand the width as needed to account for active menus.
   for(activemenulist::iterator i=active_menus.begin();
       i!=active_menus.end();
-      i++)
+      ++i)
     {
       int menux=0;
 
@@ -347,7 +347,7 @@ int vs_menubar::height_request(int w)
 
   for(activemenulist::iterator i=active_menus.begin();
       i!=active_menus.end();
-      i++)
+      ++i)
     h=max(h, 1+(*i)->height_request(w));
 
   if(subwidget.valid())
