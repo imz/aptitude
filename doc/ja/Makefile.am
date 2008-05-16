@@ -1,7 +1,7 @@
 # automake doesn't play nicely with DocBook :(
 
 SUBDIRS=images
-EXTRA_DIST=aptitude.xml manpage.xml aptitude-html-ja.xsl aptitude-man-ja.xsl
+EXTRA_DIST=aptitude-html-ja.xsl aptitude-man-ja.xsl
 
 LANGCODE=ja
 MANPAGE=aptitude.$(LANGCODE).8
@@ -16,7 +16,11 @@ htmldir=$(docdir)/html/$(LANGCODE)
 
 IMAGES = $(wildcard images/*.png)
 
+if USE_PO4A
 all-local: doc-stamp
+else
+all-local:
+endif
 
 clean-local:
 	-rm -fr output-html/ output-txt/ output-man/
@@ -36,6 +40,12 @@ install-data-hook:
 doc-stamp: doc-html-stamp doc-css-stamp $(README) $(MANPAGE)
 	touch doc-stamp
 
+aptitude.xml: $(srcdir)/../en/aptitude.xml $(srcdir)/../po4a/po/$(LANGCODE).po 
+	po4a-translate -M utf-8 -f docbook -m $(srcdir)/../en/aptitude.xml -p $(srcdir)/../po4a/po/$(LANGCODE).po -l aptitude.xml -k 50
+
+manpage.xml: $(srcdir)/../en/manpage.xml $(srcdir)/../po4a/po/$(LANGCODE).po
+	po4a-translate -M utf-8 -f docbook -m $(srcdir)/../en/manpage.xml -p $(srcdir)/../po4a/po/$(LANGCODE).po -l manpage.xml
+
 db2latex: doc-db2latex-stamp
 
 $(MANPAGE): $(XMLSOURCES) aptitude-man-$(LANGCODE).xsl $(srcdir)/../aptitude-man.xsl
@@ -48,14 +58,17 @@ $(README): $(XMLSOURCES) $(srcdir)/../aptitude-txt.xsl $(srcdir)/../aptitude-com
 	xsltproc -o output-txt/index.html $(srcdir)/../aptitude-txt.xsl $(srcdir)/aptitude.xml
 	html2text -width 80 -ascii -nobs -rcfile $(srcdir)/../aptitude-txt.style output-txt/index.html | sed 's/&#8212/--/g' > $(README)
 
-doc-db2latex-stamp: $(XMLSOURCES) $(srcdir)/../aptitude-db2latex.xsl $(srcdir)/../aptitude-common.xsl $(IMAGES)
-	-rm -fr output-db2latex
-	mkdir output-db2latex
+doc-db2latex-stamp: output-db2latex/aptitude.tex $(IMAGES)
 	ln -s ../images output-db2latex/images
-	xsltproc -o output-db2latex/aptitude.tex $(srcdir)/../aptitude-db2latex.xsl $(srcdir)/aptitude.xml
 # Run pdflatex 3 times just to be extra sure that it converges.
 	cd output-db2latex && pdflatex -interaction nonstopmode aptitude.tex && pdflatex -interaction nonstopmode aptitude.tex && pdflatex -interaction nonstopmode aptitude.tex
 	touch doc-db2latex-stamp
+
+output-db2latex/aptitude.tex: $(XMLSOURCES) $(srcdir)/../aptitude-db2latex.xsl $(srcdir)/../aptitude-common.xsl
+	-rm -fr output-db2latex
+	mkdir output-db2latex
+	xsltproc -o output-db2latex/aptitude.tex $(srcdir)/../aptitude-db2latex.xsl $(srcdir)/aptitude.xml
+
 
 doc-css-stamp: doc-html-stamp $(srcdir)/../aptitude.css
 	rm -f output-html/aptitude.css

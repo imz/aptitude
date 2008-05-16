@@ -17,6 +17,7 @@
 
 #include <vscreen/fragment.h>
 #include <vscreen/vscreen.h>
+#include <vscreen/transcode.h>
 
 #include <apt-pkg/algorithms.h>
 #include <apt-pkg/error.h>
@@ -81,7 +82,8 @@ static string reason_string_list(set<reason> &reasons)
 	  first=false;
 	}
 
-      s+=const_cast<pkgCache::DepIterator &>(why->dep).DepType()[0];
+      string dep_type = const_cast<pkgCache::DepIterator &>(why->dep).DepType();
+      s += transcode(transcode(dep_type).substr(0, 1));
       s+=": ";
       s+=why->pkg.Name();
     }
@@ -758,7 +760,7 @@ bool cmdline_do_prompt(bool as_upgrade,
 		case '=':
 		case ':':
 		  cmdline_parse_action(response, to_install, to_hold,
-				       to_remove, verbose);
+				       to_remove, verbose, true);
 		  break;
 		case 'E':
 		  ui_preview();

@@ -1,6 +1,6 @@
 // download_install_manager.cc
 //
-//   Copyright (C) 2005 Daniel Burrows
+//   Copyright (C) 2005-2006 Daniel Burrows
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -29,6 +29,9 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
+
+#include <pthread.h>
+#include <signal.h>
 
 using namespace std;
 
@@ -113,6 +116,7 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
 	continue;
 
       failed=true;
+      _error->Error(_("Failed to fetch %s: %s"), (*i)->DescURI().c_str(), (*i)->ErrorText.c_str());
       break;
     }
 
@@ -133,7 +137,14 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
 
   result rval = success;
 
+  sigset_t allsignals;
+  sigset_t oldsignals;
+  sigfillset(&allsignals);
+
+  pthread_sigmask(SIG_UNBLOCK, &allsignals, &oldsignals);
   pkgPackageManager::OrderResult pmres = pm->DoInstall();
+  pthread_sigmask(SIG_SETMASK, &oldsignals, NULL);
+
   switch(pmres)
     {
     case pkgPackageManager::Failed:

@@ -78,6 +78,7 @@
 	<arg choice='plain'>reinstall</arg>
 	<arg choice='plain'>remove</arg>
 	<arg choice='plain'>show</arg>
+	<arg choice='plain'>unhold</arg>
 	<arg choice='plain'>unmarkauto</arg>
       </group>
 
@@ -284,7 +285,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><literal>remove</literal>, <literal>purge</literal>, <literal>hold</literal>, <literal>keep</literal>, <literal>reinstall</literal></term>
+	<term><literal>remove</literal>, <literal>purge</literal>, <literal>hold</literal>, <literal>unhold</literal>, <literal>keep</literal>, <literal>reinstall</literal></term>
 
 	<listitem>
 	  <para>
@@ -298,7 +299,10 @@
 	    will cause a package to be ignored by future
 	    <literal>upgrade</literal> commands, while
 	    <literal>keep</literal> merely cancels any scheduled
-	    actions on the package.
+	    actions on the package.  <literal>unhold</literal> will
+	    cause a package to be upgraded by future
+	    <literal>upgrade</literal> commands, without otherwise
+	    altering its state.
 	  </para>
 
 	  <para>
@@ -453,7 +457,7 @@
 
 	  <para>
 	    Unless you pass the <link
-	    linkend='cmdlineOptionFormat'><option>-F</option></link> option, the output of
+	    linkend='cmdlineOptionFormat'><literal>-F</literal></link> option, the output of
 	    <literal>aptitude search</literal> will look something
 	    like this:
 	  </para>

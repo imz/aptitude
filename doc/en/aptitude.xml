@@ -2405,8 +2405,8 @@ Abort.</screen>
 		      Display a dialog box in which you can set
 		      options pertaining to how dependencies are
 		      treated: for instance, whether to automatically
-		      installed packages which are recommended by
-		      other packages.  <!-- TODO: See <xref
+		      install packages which are recommended by other
+		      packages.  <!-- TODO: See <xref
 		      linkend='secOptionsDep'/>. -->
 		    </entry>
 		  </row>
@@ -2797,10 +2797,10 @@ Th+-------------------------------------------------------------------------+
 	      The four characters on the left-hand side of the
 	      synopsis show that the package is not installed
 	      (<quote>p</quote>), that it is going to be installed
-	      (<quote>i</quote>), that it was automatically installed
-	      (<quote>A</quote>), and that it is untrusted
-	      (<quote>U</quote>).  On the right-hand side of the
-	      synopsis, the current version and the most recent
+	      (<quote>i</quote>), that it was automatically chosen to
+	      be installed (<quote>A</quote>), and that it is
+	      untrusted (<quote>U</quote>).  On the right-hand side of
+	      the synopsis, the current version and the most recent
 	      available version are displayed, along with an
 	      indication of how much space will be used by the
 	      upgrade.
@@ -2824,7 +2824,7 @@ Th+-------------------------------------------------------------------------+
 	      installed</emphasis> (see <xref
 	      linkend='secAutoInstall'/>), and the fourth character
 	      indicates whether the package is trusted (see <xref
-	      linkend='secTrust'/>.
+	      linkend='secTrust'/>).
 	    </para>
 
 	    <para>
@@ -5010,8 +5010,9 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <seg>
 		If the scheduled actions will alter the amount of
 		space used on the disk, outputs a description of the
-		change in disk space; for instance, <quote><computeroutput>Will use
-		100M of disk space.</computeroutput></quote>
+		change in disk space; for instance,
+		<quote><computeroutput>Will use 100MB of disk
+		space.</computeroutput></quote>
 	      </seg>
 	    </seglistitem>
 
@@ -5038,7 +5039,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		installed if &package-install; were issued on the
 		package, or
 		<computeroutput>&lt;none&gt;</computeroutput> if the
-		package is not currently installed.
+		package is not currently available.
 	      </seg>
 	    </seglistitem>
 
@@ -5583,7 +5584,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>Commit</literal></entry>
-		<entry>N</entry>
+		<entry><literal>N</literal></entry>
 		<entry>
 		  In the <!-- TODO: <link linkend='secHier'>
 		  -->hierarchy editor, stores the hierarchy location
@@ -5594,7 +5595,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>Confirm</literal></entry>
-		<entry>enter</entry>
+		<entry><literal>enter</literal></entry>
 		<entry>
 		  In dialog boxes, this is equivalent to pressing
 		  <quote><guilabel>Ok</guilabel></quote>; when interacting with a
@@ -5781,7 +5782,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>ExpandAll</literal></entry>
-		<entry>[</entry>
+		<entry><literal>[</literal></entry>
 		<entry>
 		  Expands the selected tree and all its children in a
 		  hierarchical list.
@@ -5807,7 +5808,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>ForbidUpgrade</literal></entry>
-		<entry>F</entry>
+		<entry><literal>F</literal></entry>
 		<entry>
 		  <link linkend='pkgCmdForbid'>Forbids</link> a
 		  package from being upgraded to the currently
@@ -5817,7 +5818,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>ForgetNewPackages</literal></entry>
-		<entry>f</entry>
+		<entry><literal>f</literal></entry>
 		<entry>
 		  Discards all information about which packages are
 		  <quote>new</quote> (causes the list of <quote>new</quote> packages to become
@@ -5984,7 +5985,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>MineUncoverSweepSquare</literal></entry>
-		<entry>enter</entry>
+		<entry><literal>enter</literal></entry>
 		<entry>
 		  Uncovers the current square in <link
 		  linkend='secMinesweeper'>Minesweeper</link> if it is
@@ -6205,7 +6206,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>ToggleExpanded</literal></entry>
-		<entry>entry</entry>
+		<entry><literal>enter</literal></entry>
 		<entry>
 		  Expands or collapses the currently selected tree in
 		  a hierarchical list.
@@ -6214,7 +6215,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <row>
 		<entry><literal>ToggleMenuActive</literal></entry>
-		<entry>C-m,f10,C-space</entry>
+		<entry><literal>C-m,f10,C-space</literal></entry>
 		<entry>
 		  Activates or deactivates the main menu.
 		</entry>
@@ -6402,7 +6403,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      </row>
 
 	      <row>
-		<entry>find</entry>
+		<entry><literal>find</literal></entry>
 		<entry>The Find key.</entry>
 	      </row>
 
@@ -6916,7 +6917,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <tbody>
 		<row>
-		  <entry>Bullet</entry>
+		  <entry><literal>Bullet</literal></entry>
 		  <entry><literal>fg yellow; set bold;</literal></entry>
 		  <entry>
 		    The style of the bullets in bulleted lists.
@@ -6924,7 +6925,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		</row>
 
 		<row>
-		  <entry>ChangelogNewerVersion</entry>
+		  <entry><literal>ChangelogNewerVersion</literal></entry>
 		  <entry><literal>set bold;</literal></entry>
 		  <entry>
 		    The style of newer versions of the package in the
@@ -7244,8 +7245,8 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		  <entry><literal>PkgToUpgradeHighlighted</literal></entry>
 		  <entry><literal>fg cyan;</literal></entry>
 		  <entry>
-		    The style of packages in the package list which
-		    will be upgraded.
+		    The style of highlighted packages in the package
+		    list which will be upgraded.
 		  </entry>
 		</row>
 
@@ -7286,7 +7287,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 		<row id='colorTreeBackground'>
 		  <entry><literal>TreeBackground</literal></entry>
-		  <entry><literal></literal></entry>
+		  <entry></entry>
 		  <entry>
 		    The basic color of all visual lists and trees.
 		  </entry>
@@ -7475,11 +7476,13 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	  <para>
 	    In the event that there is not enough space, every row and
 	    column whose widgets <emphasis>all</emphasis> have their
-	    <link linkend='layoutRowShrink'>RowShrink</link> or <link
-	    linkend='layoutColShrink'>ColShrink</link> options set to
-	    <literal>true</literal> will be shrunk.  If this is not
-	    enough, all rows and columns are shrunk to fit into the
-	    available space.
+	    <literal><link
+	    linkend='layoutRowShrink'>RowShrink</link></literal> or
+	    <literal><link
+	    linkend='layoutColShrink'>ColShrink</link></literal>
+	    options set to <literal>true</literal> will be shrunk.  If
+	    this is not enough, all rows and columns are shrunk to fit
+	    into the available space.
 	  </para>
 
 	  <para>
@@ -9934,7 +9937,7 @@ Minesweeper                                   Minesweeper    Lost in 2388 second
   </chapter>
 
   <reference id='secReference'>
-    <title>&aptitude; command-line reference</title>
+    <title>Command-Line Reference</title>
 
     &manpage;
   </reference>

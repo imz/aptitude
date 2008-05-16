@@ -21,7 +21,8 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
 			 pkgset &to_remove,
 			 int verbose,
 			 cmdline_version_source source,
-			 const string &sourcestr)
+			 const string &sourcestr,
+			 bool allow_auto)
 {
   // Handle virtual packages.
   if(!pkg.ProvidesList().end())
@@ -137,7 +138,7 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
 	break;
 
       (*apt_cache_file)->set_candidate_version(ver, NULL);
-      (*apt_cache_file)->mark_install(pkg, aptcfg->FindB(PACKAGE "::Auto-Install", true),
+      (*apt_cache_file)->mark_install(pkg, allow_auto && aptcfg->FindB(PACKAGE "::Auto-Install", true),
 				      action == cmdline_reinstall, NULL);
       if(action == cmdline_installauto)
 	(*apt_cache_file)->mark_auto_installed(pkg, true, NULL);
@@ -152,11 +153,7 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
       (*apt_cache_file)->mark_keep(pkg, false, false, NULL);
       break;
     case cmdline_unhold:
-      if(pkg->CurrentState==pkgCache::State::Installed)
-	(*apt_cache_file)->mark_install(pkg, aptcfg->FindB(PACKAGE "::Auto-Install", true),
-					false, NULL);
-      else
-	(*apt_cache_file)->mark_keep(pkg, false, false, NULL);
+      (*apt_cache_file)->get_ext_state(pkg).selection_state = pkgCache::State::Install;
       break;
     case cmdline_markauto:
       (*apt_cache_file)->mark_auto_installed(pkg, true, NULL);
@@ -187,7 +184,8 @@ bool cmdline_applyaction(string s,
 			 cmdline_pkgaction_type action,
 			 pkgset &to_install, pkgset &to_hold,
 			 pkgset &to_remove,
-			 int verbose)
+			 int verbose,
+			 bool allow_auto)
 {
   bool rval=true;
 
@@ -289,7 +287,7 @@ bool cmdline_applyaction(string s,
       rval=cmdline_applyaction(action, pkg,
 			       to_install, to_hold, to_remove,
 			       verbose, source,
-			       sourcestr);
+			       sourcestr, allow_auto);
     }
   else
     {
@@ -309,7 +307,7 @@ bool cmdline_applyaction(string s,
 	    rval=cmdline_applyaction(action, pkg,
 				     to_install, to_hold, to_remove,
 				     verbose, source,
-				     sourcestr) && rval;
+				     sourcestr, allow_auto) && rval;
 	}
 
       delete m;
@@ -379,7 +377,8 @@ static bool parse_action_str(const string &s,
 void cmdline_parse_action(string s,
 			  pkgset &to_install, pkgset &to_hold,
 			  pkgset &to_remove,
-			  int verbose)
+			  int verbose,
+			  bool allow_auto)
 {
   string::size_type loc=0;
 
@@ -413,7 +412,7 @@ void cmdline_parse_action(string s,
 	      if(!cmdline_applyaction(pkgname, action,
 				      to_install, to_hold,
 				      to_remove,
-				      verbose))
+				      verbose, allow_auto))
 		return;
 	    }
 	}
