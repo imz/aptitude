@@ -1366,9 +1366,6 @@ vs_menu_info actions_menu[]={
 
   VS_MENU_SEPARATOR,
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Become root"), NULL,
-	       N_("Run 'su' to become root; this will restart the program, but your settings will be preserved"), sigc::bind(sigc::ptr_fun(do_su_to_root), ""), sigc::ptr_fun(su_to_root_enabled)),
-
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Quit"), "QuitProgram",
 	       N_("Exit the program"), sigc::ptr_fun(do_quit)),
 
