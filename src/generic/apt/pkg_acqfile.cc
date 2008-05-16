@@ -1,6 +1,6 @@
 // pkg_acqfile.cc
 //
-//  Copyright 2002, 2005 Daniel Burrows
+//  Copyright 2002 Daniel Burrows
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,9 +35,45 @@
 #include <sys/stat.h>
 
 #include <apt-pkg/error.h>
+#include <apt-pkg/configuration.h>
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
+
+pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, string URI,
+			       string Description, string ShortDesc,
+			       string filename):
+  Item(Owner)
+{
+  Retries=_config->FindI("Acquire::Retries",0);
+  DestFile=filename;
+
+  Desc.URI=URI;
+  Desc.Description=Description;
+  Desc.Owner=this;
+  Desc.ShortDesc=ShortDesc;
+
+  QueueURI(Desc);
+}
+
+// Straight from acquire-item.cc
+/* Here we try other sources */
+void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
+{
+  ErrorText = LookupTag(Message,"Message");
+
+  // This is the retry counter
+  if (Retries != 0 &&
+      Cnf->LocalOnly == false &&
+      StringToBool(LookupTag(Message,"Transient-Failure"),false) == true)
+    {
+      Retries--;
+      QueueURI(Desc);
+      return;
+    }
+
+  Item::Failed(Message,Cnf);
+}
 
 // Mostly copied from pkgAcqArchive.
 bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
@@ -93,8 +129,7 @@ bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
       if (_error->PendingError() == true)
          return false;
 
-      const string PkgFile = Parse.FileName();
-      const string MD5     = Parse.MD5Hash();
+      string PkgFile = Parse.FileName();
       if (PkgFile.empty() == true)
          return _error->Error(_("The package index files are corrupted. No Filename: "
                               "field for package %s."),
@@ -103,13 +138,9 @@ bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
       string DestFile = directory + "/" + flNotDir(StoreFilename);
 
       // Create the item
-      new pkgAcqFile(Owner,
-		     Index->ArchiveURI(PkgFile),
-		     MD5,
-		     Version->Size,
-		     Index->ArchiveInfo(Version),
-		     Version.ParentPkg().Name(),
-		     "", DestFile);
+      new pkgAcqFileSane(Owner, Index->ArchiveURI(PkgFile),
+			 Index->ArchiveInfo(Version),
+			 Version.ParentPkg().Name(), DestFile);
 
       Vf++;
       return true;
