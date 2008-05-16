@@ -1,6 +1,6 @@
 // colors.cc   -*-c++-*-
 //
-//  Copyright 1999-2001, 2003-2005 Daniel Burrows
+//  Copyright 1999-2001, 2003-2006 Daniel Burrows
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,8 @@ void init_colors()
 
   if(colors < 8)
     return;
+  else
+    colors = std::min(colors, 8);
 
   colors_avail=true;
   default_colors_avail = (use_default_colors() != ERR);
@@ -45,6 +47,8 @@ void init_colors()
   for(short fg = 0; fg < colors; ++fg)
     for(short bg = 0; bg < colors; ++bg)
       {
+	eassert(fg * colors + bg < COLOR_PAIRS);
+
 	if(default_colors_avail && fg == bg)
 	  init_pair(fg * colors + bg, fg, -1);
 	else if(fg == 0 && bg == 0)

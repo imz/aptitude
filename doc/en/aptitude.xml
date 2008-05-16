@@ -7,7 +7,7 @@
   <!ENTITY dselect '<command>dselect</command>'>
   <!ENTITY apt-get '<command>apt-get</command>'>
   <!ENTITY root '<systemitem class="username">root</systemitem>'>
-  <!ENTITY VERSION '0.4.2'>
+  <!ENTITY VERSION '0.4.3'>
 
   <!-- Shortcuts for menu commands: -->
 
@@ -49,7 +49,7 @@
   <!ENTITY search-find-back "<menuchoice><shortcut><keycap>\</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Backwards</guimenuitem></menuchoice>">
   <!ENTITY search-refind "<menuchoice><shortcut><keycap>n</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Again</guimenuitem></menuchoice>">
   <!ENTITY search-limit "<menuchoice><shortcut><keycap>l</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Limit Display</guimenuitem></menuchoice>">
-  <!ENTITY search-unlimit "<menuchoice><shortcut><keycap>l</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Un-Limit Display</guimenuitem></menuchoice>">
+  <!ENTITY search-unlimit "<menuchoice><guimenu>Search</guimenu><guimenuitem>Un-Limit Display</guimenuitem></menuchoice>">
   <!ENTITY search-find-broken "<menuchoice><shortcut><keycap>b</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Broken</guimenuitem></menuchoice>">
 
   <!ENTITY options-ui "<menuchoice><guimenu>Options</guimenu><guimenuitem>UI options</guimenuitem></menuchoice>">
@@ -8103,7 +8103,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	    <seglistitem id='configCmdLine-Request-Strictness'>
 	      <seg><literal>Aptitude::CmdLine::Request-Strictness</literal></seg>
-	      <seg><literal>0</literal></seg>
+	      <seg><literal>10000</literal></seg>
 	      <seg>
 		When run in command-line mode, if dependency problems
 		are encountered, &aptitude; will add this value to the
@@ -9877,6 +9877,16 @@ Minesweeper                                   Minesweeper    Lost in 2388 second
 	<listitem>
 	  <para>
 	    Jordi Malloch, Ruben Porras
+	  </para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term>Swedish translation</term>
+
+	<listitem>
+	  <para>
+	    Daniel Nylander
 	  </para>
 	</listitem>
       </varlistentry>

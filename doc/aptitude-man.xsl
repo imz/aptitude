@@ -9,11 +9,12 @@
 
 <xsl:param name="chunker.output.method" select="'text'"/>
 <xsl:param name="chunker.output.encoding" select="'UTF-8'"/>
+<xsl:param name="man.charmap.use.subset" select="0"/>
 
 <xsl:output method="text" encoding="UTF-8" indent="no"/>
 
 <xsl:template match='replaceable'>
-  <xsl:text>\fI&lt;</xsl:text><xsl:apply-templates/><xsl:text>&gt;\fR</xsl:text>
+  <xsl:text>&lt;</xsl:text><xsl:apply-imports/><xsl:text>&gt;</xsl:text>
 </xsl:template>
 
 
