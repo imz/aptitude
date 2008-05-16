@@ -24,11 +24,6 @@ pkgCache::VerIterator cmdline_find_ver(pkgCache::PkgIterator pkg,
  */
 void ui_preview();
 
-/** Starts up the visual UI with the solution screen visible, exiting
- *  when the UI shuts down.
- */
-void ui_solution_screen();
-
 /** Splits the given input string into a package name/pattern and a
  *  version source.  If the input string is an output string, the
  *  function will still behave sanely.

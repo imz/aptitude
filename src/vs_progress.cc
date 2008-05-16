@@ -37,7 +37,8 @@ void vs_progress::paint(const style &st)
 
   if(!Op.empty())
     {
-      eassert(Percent>=0 && Percent<=100);
+      if ( Percent > 100 )
+        Percent = 100;
       barsize=int(Percent*width/100.0);
 
       snprintf(percent_string, 50, ": %i%%", int(Percent));

@@ -34,9 +34,4 @@ class fragment;
  */
 fragment *make_desc_fragment(const std::wstring &desc);
 
-/** \return a fragment listing the tags of the given package, or \b
- *  NULL if there are no tags.
- */
-fragment *make_tags_fragment(const pkgCache::PkgIterator &pkg);
-
 #endif

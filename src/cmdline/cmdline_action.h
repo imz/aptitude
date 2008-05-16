@@ -10,7 +10,7 @@
 bool cmdline_applyaction(cmdline_pkgaction_type action,
 			 pkgCache::PkgIterator pkg,
 			 pkgset &to_install, pkgset &to_hold,
-			 pkgset &to_remove, pkgset &to_purge,
+			 pkgset &to_remove,
 			 int verbose,
 			 cmdline_version_source source,
 			 const string &sourcestr);
@@ -18,7 +18,7 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
 bool cmdline_applyaction(string s,
 			 cmdline_pkgaction_type action,
 			 pkgset &to_install, pkgset &to_hold,
-			 pkgset &to_remove, pkgset &to_purge,
+			 pkgset &to_remove,
 			 int verbose);
 
 /** Parses a list of actions and executes them.  If there is a
@@ -27,7 +27,7 @@ bool cmdline_applyaction(string s,
  */
 void cmdline_parse_action(string s,
 			  pkgset &to_install, pkgset &to_hold,
-			  pkgset &to_remove, pkgset &to_purge,
+			  pkgset &to_remove,
 			  int verbose);
 
 #endif // CMDLINE_ACTION_H

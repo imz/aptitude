@@ -22,7 +22,6 @@
 #include "aptitude.h"
 
 #include "desc_parse.h"
-#include "edit_pkg_hier.h"
 #include "menu_redirect.h"
 #include "pkg_columnizer.h"
 #include "reason_fragment.h"
@@ -182,12 +181,6 @@ public:
 
     fragment *frag=make_desc_fragment(newdesc);
 
-    fragment *tags=make_tags_fragment(pkg);
-    if(tags != NULL)
-      tags = fragf("%n%n%F", tags);
-    else
-      tags = fragf("");
-
     fragment *untrusted_frag;
 
     if(pkg.end() || ver.end())
@@ -196,9 +189,9 @@ public:
       untrusted_frag=make_untrusted_warning(ver);
 
     if(untrusted_frag == NULL)
-      set_fragment(fragf("%F%F", frag, tags));
+      set_fragment(fragf("%F", frag));
     else
-      set_fragment(fragf("%F%n%F%F", untrusted_frag, frag, tags));
+      set_fragment(fragf("%F%n%F", untrusted_frag, frag));
   }
 };
 
@@ -216,7 +209,6 @@ typedef ref_ptr<pkg_description_widget> pkg_description_widget_ref;
 // This is still rather gross, and a better way would be nice.
 class info_area_multiplex:public vs_multiplex
 {
-  vs_hier_editor_ref editor;
   pkg_description_widget_ref description;
   vs_table_ref description_table;
   vs_text_layout_ref reasons;
@@ -234,13 +226,11 @@ class info_area_multiplex:public vs_multiplex
   vs_widget_ref autoswitch;
 
 protected:
-  info_area_multiplex(const vs_hier_editor_ref &_editor,
-		      const pkg_description_widget_ref &_description,
+  info_area_multiplex(const pkg_description_widget_ref &_description,
 		      const vs_table_ref &_description_table,
 		      const vs_text_layout_ref &_reasons,
 		      const vs_table_ref &_reasons_table)
     :vs_multiplex(false),
-     editor(_editor),
      description(_description), description_table(_description_table),
      reasons(_reasons), reasons_table(_reasons_table),
      hadBreakage(false), autoswitch(NULL)
@@ -251,14 +241,13 @@ protected:
 
 public:
   static ref_ptr<info_area_multiplex>
-  create(const vs_hier_editor_ref &editor,
-	 const pkg_description_widget_ref &description,
+  create(const pkg_description_widget_ref &description,
 	 const vs_table_ref &description_table,
 	 const vs_text_layout_ref &reasons,
 	 const vs_table_ref &reasons_table)
   {
     ref_ptr<info_area_multiplex>
-      rval(new info_area_multiplex(editor, description, description_table,
+      rval(new info_area_multiplex(description, description_table,
 				   reasons, reasons_table));
     rval->decref();
     return rval;
@@ -297,7 +286,6 @@ public:
 
     description->set_package(pkg, ver);
     reasons->set_fragment(reason_fragment(pkg, hasBreakage));
-    editor->set_package(pkg, ver);
 
     // autoswitch if a package is newly broken, or if we have just
     // moved to a broken package.
@@ -430,14 +418,12 @@ vs_widget_ref make_package_view(list<package_view_item> &format,
 	  break;
 	case PACKAGE_VIEW_DESCRIPTION:
 	  {
-	    vs_hier_editor_ref e=vs_hier_editor::create();
 	    pkg_description_widget_ref w=pkg_description_widget::create();
 	    vs_text_layout_ref l=vs_text_layout::create();
 
 	    vs_table_ref wt=vs_table::create();
 	    vs_table_ref lt=vs_table::create();
-	    info_area_multiplex_ref m=info_area_multiplex::create(e,
-								  w, wt,
+	    info_area_multiplex_ref m=info_area_multiplex::create(w, wt,
 								  l, lt);
 	    vs_scrollbar_ref ws=vs_scrollbar::create(vs_scrollbar::VERTICAL);
 	    vs_scrollbar_ref ls=vs_scrollbar::create(vs_scrollbar::VERTICAL);
@@ -450,9 +436,6 @@ vs_widget_ref make_package_view(list<package_view_item> &format,
 
 	    lt->add_widget_opts(l, 0, 0, 1, 1, vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK, vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK);
 	    lt->add_widget_opts(ls, 0, 1, 1, 1, vs_table::ALIGN_RIGHT, vs_table::EXPAND | vs_table::ALIGN_CENTER | vs_table::FILL);
-
-	    // HACK: speaks for itself
-	    vs_tree_ref thetree=mainwidget.dyn_downcast<vs_tree>();
 
 	    i->widget=m;
 
@@ -476,23 +459,7 @@ vs_widget_ref make_package_view(list<package_view_item> &format,
 	    mainwidget->connect_key("DescriptionCycle", &global_bindings,
 				    sigc::mem_fun(*m.unsafe_get_ref(),
 						  &info_area_multiplex::cycle));
-	    mainwidget->connect_key("EditHier", &global_bindings,
-				    sigc::mem_fun(*e.unsafe_get_ref(),
-						  &vscreen_widget::show));
-	    mainwidget->connect_key("EditHier", &global_bindings,
-				    sigc::mem_fun(*m.unsafe_get_ref(),
-						  &vscreen_widget::show));
-	    mainwidget->connect_key("EditHier", &global_bindings,
-				    sigc::bind(sigc::mem_fun(*rval.unsafe_get_ref(), &vs_table::focus_widget_bare),
-					       m.weak_ref()));
 
-	    e->hidden_sig.connect(sigc::bind(sigc::mem_fun(*rval.unsafe_get_ref(), &vs_table::focus_widget_bare),
-					     mainwidget.weak_ref()));
-
-	    if(thetree.valid())
-	      e->commit_changes.connect(sigc::mem_fun(*thetree.unsafe_get_ref(), &vs_tree::line_down));
-
-	    m->add_visible_widget(e, false);
 	    m->add_visible_widget(wt, true);
 	    m->add_visible_widget(lt, true);
 

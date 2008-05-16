@@ -50,14 +50,10 @@
 
 #include "apt_config_widgets.h"
 #include "apt_options.h"
-#include "broken_indicator.h"
 #include "defaults.h"
 #include "load_config.h"
 #include "load_grouppolicy.h"
 #include "load_pkgview.h"
-#include "solution_dialog.h"
-#include "solution_fragment.h"
-#include "solution_screen.h"
 
 #include <vscreen/curses++.h>
 #include <vscreen/fragment.h>
@@ -85,15 +81,11 @@
 
 #include <generic/apt/apt.h>
 #include <generic/apt/apt_undo_group.h>
-#include <generic/apt/aptitude_resolver_universe.h>
 #include <generic/apt/config_signal.h>
 #include <generic/apt/download_install_manager.h>
 #include <generic/apt/download_update_manager.h>
 #include <generic/apt/download_signal_log.h>
-#include <generic/apt/resolver_manager.h>
-
-#include <generic/problemresolver/exceptions.h>
-#include <generic/problemresolver/solution.h>
+#include <generic/apt/matchers.h>
 
 #include <generic/util/temp.h>
 #include <generic/util/util.h>
@@ -113,8 +105,6 @@
 #include "vs_progress.h"
 
 using namespace std;
-
-typedef generic_solution<aptitude_universe> aptitude_solution;
 
 static vs_menubar_ref main_menu;
 static vs_menu_ref views_menu;
@@ -152,7 +142,6 @@ sigc::signal0<void> package_states_changed;
 sigc::signal0<bool, accumulate_or> package_menu_enabled;
 sigc::signal0<bool, accumulate_or> package_forbid_enabled;
 sigc::signal0<bool, accumulate_or> package_information_enabled;
-sigc::signal0<bool, accumulate_or> package_changelog_enabled;
 
 sigc::signal0<bool, accumulate_or> find_search_enabled;
 sigc::signal0<bool, accumulate_or> find_search_back_enabled;
@@ -163,21 +152,12 @@ sigc::signal0<bool, accumulate_or> find_broken_enabled;
 
 sigc::signal0<bool, accumulate_or> package_install;
 sigc::signal0<bool, accumulate_or> package_remove;
-sigc::signal0<bool, accumulate_or> package_purge;
 sigc::signal0<bool, accumulate_or> package_hold;
 sigc::signal0<bool, accumulate_or> package_keep;
 sigc::signal0<bool, accumulate_or> package_mark_auto;
 sigc::signal0<bool, accumulate_or> package_unmark_auto;
 sigc::signal0<bool, accumulate_or> package_forbid;
 sigc::signal0<bool, accumulate_or> package_information;
-sigc::signal0<bool, accumulate_or> package_changelog;
-
-sigc::signal0<bool, accumulate_or> resolver_toggle_rejected;
-sigc::signal0<bool, accumulate_or> resolver_toggle_rejected_enabled;
-sigc::signal0<bool, accumulate_or> resolver_toggle_approved;
-sigc::signal0<bool, accumulate_or> resolver_toggle_approved_enabled;
-sigc::signal0<bool, accumulate_or> resolver_view_target;
-sigc::signal0<bool, accumulate_or> resolver_view_target_enabled;
 
 sigc::signal0<bool, accumulate_or> find_search;
 sigc::signal0<bool, accumulate_or> find_search_back;
@@ -188,7 +168,7 @@ sigc::signal0<bool, accumulate_or> find_broken;
 
 const char *default_pkgstatusdisplay="%d";
 const char *default_pkgheaderdisplay="%N %n #%B %u %o";
-const char *default_grpstr="task,status,section(subdir,passthrough),section(topdir)";
+const char *default_grpstr="status,section(none)";
 
 void ui_start_download(bool hide_preview)
 {
@@ -375,115 +355,6 @@ static void do_connect_read_only_callbacks()
       (*apt_cache_file)->read_only_permission.connect(sigc::ptr_fun(&do_read_only_permission));
       (*apt_cache_file)->read_only_fail.connect(sigc::ptr_fun(&do_read_only_fail));
     }
-}
-
-// Runs a sub-aptitude with the same selections that the user
-// has currently made, but as root.
-//
-// Because tagfiles don't work on FIFOs, and su closes all open fds,
-// this is a lot hairier than it should be.
-//
-// This writes the current status to a file in a designated temporary
-// directory, then loads it in a su'd instance.  A FIFO is used to
-// make the reader block until the writer is done writing.  Not
-// foolproof but the user would have to go to a lot of pointless
-// trouble to screw it up.
-//
-// Note that the deletion of the temporary files is safe, since this
-// routine blocks until the sub-process exits.
-
-static void do_su_to_root(string args)
-{
-  if(getuid()==0)
-    {
-      show_message(_("You already are root!"));
-      return;
-    }
-
-  temp::dir  tempdir("aptitude");
-  temp::name statusname(tempdir, "pkgstates");
-  temp::name fifoname(tempdir, "control");
-
-  if(mkfifo(fifoname.get_name().c_str(), 0600) != 0)
-    {
-      _error->Errno("do_su_to_root",
-		    "Couldn't create temporary FIFO");
-      return;
-    }
-
-  int pid=fork();
-
-  if(pid==-1)
-    _error->Error("Unable to fork: %s", strerror(errno));
-  else if(pid==0) // I'm a child!
-    {
-      // Read one byte from the FIFO for synchronization
-      char tmp;
-      int fd = open(fifoname.get_name().c_str(), O_RDONLY);
-      read(fd, &tmp, 1); // Will block until the other process writes.
-      close(fd);
-
-      // It's ok to use argv0 to generate the command,
-      // since the user has to authenticate themselves as root (ie, if
-      // they're going to do something evil that way they'd have su'd
-      // directly)
-      //
-      // What happens if tmpdir has spaces in it?  Can I get more
-      // control over how the su-to-root function is called?
-      char cmdbuf[512];
-      snprintf(cmdbuf, 512, "%s -S %s %s",
-	       argv0, statusname.get_name().c_str(), args.c_str());
-      execl("/bin/su", "/bin/su", "-c", cmdbuf, NULL);
-    }
-  else
-    {
-      int status;
-      OpProgress foo; // Need a generic non-outputting progress bar
-
-      // Save the selection list.
-      (*apt_cache_file)->save_selection_list(foo, statusname.get_name().c_str());
-
-      // Shut curses down.
-      vscreen_suspend();
-
-      // Ok, wake the other process up.
-      char tmp=0;
-      int fd=open(fifoname.get_name().c_str(), O_WRONLY);
-      write(fd, &tmp, 1);
-      close(fd);
-
-      // Wait for a while so we don't accidentally daemonize ourselves.
-      while(waitpid(pid, &status, 0)!=pid)
-	;
-
-      if(!WIFEXITED(status) || WEXITSTATUS(status))
-	{
-	  _error->Error("%s",
-			_("Subprocess exited with an error -- did you type your password correctly?"));
-	  vscreen_resume();
-	  check_apt_errors();
-	  // We have to clear these out or the cache won't reload properly (?)
-
-	  vs_progress_ref p = gen_progress_bar();
-	  apt_reload_cache(p.unsafe_get_ref(), true, statusname.get_name().c_str());
-	  p->destroy();
-	}
-      else
-	{
-	  // Clear out our references to these objects so they get
-	  // removed.
-	  tempdir    = temp::dir();
-	  statusname = temp::name();
-	  fifoname   = temp::name();
-
-	  exit(0);
-	}
-    }
-}
-
-static bool su_to_root_enabled()
-{
-  return getuid()!=0;
 }
 
 static void update_menubar_autohide()
@@ -690,7 +561,8 @@ void do_new_package_view(OpProgress &progress)
       if(!grp)
 	// Eek!  The default grouping failed to parse.  Fall all the
 	// way back.
-	grp=new pkg_grouppolicy_task_factory(new pkg_grouppolicy_status_factory(new pkg_grouppolicy_section_factory(pkg_grouppolicy_section_factory::split_subdir,true,new pkg_grouppolicy_section_factory(pkg_grouppolicy_section_factory::split_topdir,false,new pkg_grouppolicy_end_factory()))));
+	// status,section(none,nopassthrough)
+	grp=new pkg_grouppolicy_status_factory(new pkg_grouppolicy_section_factory(pkg_grouppolicy_section_factory::split_none,false,new pkg_grouppolicy_end_factory()));
     }
 
   pkg_tree_ref tree=pkg_tree::create(grpstr.c_str(), grp);
@@ -713,29 +585,6 @@ static void do_new_package_view_with_new_bar()
   p->destroy();
 }
 
-static void do_new_recommendations_view()
-{
-  vs_progress_ref p = gen_progress_bar();
-
-  pkg_grouppolicy_factory *grp = new pkg_grouppolicy_end_factory();
-  std::string grpstr="section(subdir, passthrough)";
-
-  pkg_tree_ref tree=pkg_tree::create(grpstr.c_str(), grp,
-				     L"!~v!~i~RBrecommends:~i");
-
-  add_main_widget(make_default_view(tree,
-				    &tree->selected_signal,
-				    &tree->selected_desc_signal,
-				    true,
-				    true),
-		  _("Recommended Packages"),
-		  _("View packages that it is recommended that you install"),
-		  _("Recommendations"));
-
-  tree->build_tree(*p.unsafe_get_ref());
-  p->destroy();
-}
-
 static void do_new_flat_view_with_new_bar()
 {
   vs_progress_ref p = gen_progress_bar();
@@ -752,56 +601,6 @@ static void do_new_flat_view_with_new_bar()
 		  _("Packages"));
 
   tree->build_tree(*p.unsafe_get_ref());
-  p->destroy();
-}
-
-static void do_new_tag_view_with_new_bar()
-{
-  vs_progress_ref p = gen_progress_bar();
-
-  pkg_grouppolicy_factory *grp = NULL;
-  string grpstr = "tag";
-  grp = parse_grouppolicy(grpstr);
-
-  pkg_tree_ref tree = pkg_tree::create(grpstr.c_str(), grp);
-
-  add_main_widget(make_default_view(tree,
-				    &tree->selected_signal,
-				    &tree->selected_desc_signal),
-		  _("Packages"),
-		  _("View available packages and choose actions to perform"),
-		  _("Packages"));
-
-  tree->build_tree(*p.unsafe_get_ref());
-  p->destroy();
-}
-
-void do_new_hier_view(OpProgress &progress)
-{
-  pkg_grouppolicy_factory *grp=NULL;
-  std::string grpstr="";
-
-  grpstr="hier";
-  grp=parse_grouppolicy(grpstr);
-
-  pkg_tree_ref tree=pkg_tree::create(grpstr.c_str(), grp);
-  tree->set_limit(transcode("!~v"));
-  //tree->set_hierarchical(false);
-
-  add_main_widget(make_default_view(tree,
-				    &tree->selected_signal,
-				    &tree->selected_desc_signal),
-		  _("Packages"),
-		  _("View available packages and choose actions to perform"),
-		  _("Packages"));
-  tree->build_tree(progress);
-}
-
-// For signal connections.
-static void do_new_hier_view_with_new_bar()
-{
-  vs_progress_ref p=gen_progress_bar();
-  do_new_hier_view(*p.unsafe_get_ref());
   p->destroy();
 }
 
@@ -1187,65 +986,6 @@ static void do_show_preview()
     }
 }
 
-static void fixer_dialog_done()
-{
-  if(active_preview_tree.valid())
-    active_preview_tree->build_tree();
-  do_package_run_or_show_preview();
-}
-
-static void install_fixer_dialog()
-{
-  vs_widget_ref w=make_solution_dialog();
-  w->destroyed.connect(sigc::ptr_fun(fixer_dialog_done));
-  popup_widget(w, true);
-}
-
-// FIXME: blocks.
-static void auto_fix_broken()
-{
-  undo_group *undo=new apt_undo_group;
-
-  try
-    {
-      eassert(resman != NULL);
-      eassert(resman->resolver_exists());
-
-      aptitude_solution sol = resman->get_solution(resman->get_selected_solution(), 0);
-
-      (*apt_cache_file)->apply_solution(sol, undo);
-
-      vs_widget_ref d = vs_dialog_ok(fragf("%s%n%n%F",
-					   _("Some packages were broken and have been fixed:"),
-					   solution_fragment(sol)),
-				     NULL);
-
-      popup_widget(d, true);
-    }
-  catch(NoMoreSolutions)
-    {
-      show_message(_("No solution to these dependency problems exists!"),
-		   NULL,
-		   get_style("Error"));
-    }
-  catch(NoMoreTime)
-    {
-      show_message(fragf(_("Ran out of time while trying to resolve dependencies (press \"%s\" to try harder)"),
-			 global_bindings.readable_keyname("NextSolution").c_str()),
-		   NULL,
-		   get_style("Error"));
-    }
-
-  if(!undo->empty())
-    apt_undos->add_item(undo);
-  else
-    delete undo;
-
-  if(active_preview_tree.valid())
-    active_preview_tree->build_tree();
-}
-
-
 //  Huge FIXME: the preview interacts badly with the menu.  This can be solved
 // in a couple ways, including having the preview be a popup dialog -- the best
 // thing IMO, though, would be to somehow allow particular widgets to override
@@ -1261,14 +1001,6 @@ static void actually_do_package_run()
 	  // routine.
 	  if((*apt_cache_file)->BrokenCount()>0)
 	    {
-	      if(_config->FindB(PACKAGE "::Auto-Fix-Broken", true))
-		{
-		  auto_fix_broken();
-		  do_show_preview();
-		}
-	      else
-		install_fixer_dialog();
-
 	      return;
 	    }
 
@@ -1276,13 +1008,9 @@ static void actually_do_package_run()
 	    check_package_trust();
 	  else
 	    {
-	      popup_widget(vs_dialog_yesno(wrapbox(text_fragment(_("Installing/removing packages requires administrative privileges, which you currently do not have.  Would you like to change to the root account?"))),
-					   arg(sigc::bind(sigc::ptr_fun(&do_su_to_root),
-						      "-i")),
-					   transcode(_("Become root")),
-					   arg(sigc::ptr_fun(&check_package_trust)),
-					   transcode(_("Don't become root")),
-					   get_style("Error")));
+	      popup_widget(vs_dialog_ok(wrapbox(text_fragment(_("Installing/removing packages requires administrative privileges, which you currently do not have."))),
+					NULL,
+					get_style("Error")));
 	    }
 	}
       else
@@ -1360,17 +1088,7 @@ void do_package_run()
     {
       if(active_preview_tree.valid() && active_preview_tree->get_visible())
 	actually_do_package_run();
-      else if((*apt_cache_file)->BrokenCount()>0)
-	{
-	  if(aptcfg->FindB(PACKAGE "::Auto-Fix-Broken", true))
-	    {
-	      auto_fix_broken();
-	      do_package_run_or_show_preview();
-	    }
-	  else
-	    install_fixer_dialog();
-	}
-      else
+      else if((*apt_cache_file)->BrokenCount() == 0)
 	do_package_run_or_show_preview();
     }
 }
@@ -1405,13 +1123,9 @@ void do_update_lists()
 	really_do_update_lists();
       else
 	{
-	  popup_widget(vs_dialog_yesno(wrapbox(text_fragment(_("Updating the package lists requires administrative privileges, which you currently do not have.  Would you like to change to the root account?"))),
-				       arg(sigc::bind(sigc::ptr_fun(&do_su_to_root),
-						      "-u")),
-				       transcode(_("Become root")),
-				       arg(sigc::ptr_fun(&really_do_update_lists)),
-				       transcode(_("Don't become root")),
-				       get_style("Error")));
+	  popup_widget(vs_dialog_ok(wrapbox(text_fragment(_("Updating the package lists requires administrative privileges, which you currently do not have."))),
+				    NULL,
+				    get_style("Error")));
 	}
     }
   else
@@ -1567,320 +1281,6 @@ static void do_reload_cache()
 }
 #endif
 
-static void start_solution_calculation(bool blocking = true);
-
-class interactive_continuation : public resolver_manager::background_continuation
-{
-  /** The manager associated with this continuation; usually resman. */
-  resolver_manager *manager;
-
-  /** Indicate that a new solution is available by invoking the
-   *  selection_changed signal.
-   */
-  class success_event : public vscreen_event
-  {
-    resolver_manager *manager;
-  public:
-    success_event(resolver_manager *_manager)
-      :manager(_manager)
-    {
-    }
-
-    void dispatch()
-    {
-      manager->state_changed();
-    }
-  };
-
-  class no_more_solutions_event : public vscreen_event
-  {
-    resolver_manager *manager;
-  public:
-    no_more_solutions_event(resolver_manager *_manager)
-      :manager(_manager)
-    {
-    }
-
-    void dispatch()
-    {
-      resolver_manager::state st = manager->state_snapshot();
-
-      if(st.selected_solution == st.generated_solutions)
-	manager->select_previous_solution();
-      show_message(_("No more solutions."));
-
-      manager->state_changed();
-    }
-  };
-public:
-  interactive_continuation(resolver_manager *_manager)
-    :manager(_manager)
-  {
-  }
-
-  void success(const aptitude_solution &sol)
-  {
-    vscreen_post_event(new success_event(manager));
-  }
-
-  void no_more_solutions()
-  {
-    vscreen_post_event(new no_more_solutions_event(manager));
-  }
-
-  void no_more_time()
-  {
-    start_solution_calculation(false);
-  }
-
-  void interrupted()
-  {
-  }
-};
-
-// If the current solution pointer is past the end of the solution
-// list, queue up a calculation for it in the background thread.  If
-// "blocking" is true, then the calling thread will wait for the
-// background resolver thread to finish its calculation before
-// returning from this function.  IF THE CALLING THREAD IS THE
-// BACKGROUND THREAD THIS WILL DEADLOCK IF BLOCKING IS TRUE! (see above for such a case)
-static void start_solution_calculation(bool blocking)
-{
-  resolver_manager::state state = resman->state_snapshot();
-
-  if(state.resolver_exists &&
-     state.selected_solution == state.generated_solutions &&
-     !state.solutions_exhausted &&
-     !state.background_thread_active)
-    {
-      const int selected = state.selected_solution;
-      const int limit = aptcfg->FindI(PACKAGE "::ProblemResolver::StepLimit", 5000);
-      const int wait_steps = aptcfg->FindI(PACKAGE "::ProblemResolver::WaitSteps", 50);
-      interactive_continuation * const k = new interactive_continuation(resman);
-
-      if(blocking)
-	resman->get_solution_background_blocking(selected, limit, wait_steps, k);
-      else
-	resman->get_solution_background(selected, limit, k);
-    }
-}
-
-static void do_connect_resolver_callback()
-{
-  resman->state_changed.connect(sigc::bind(sigc::ptr_fun(&start_solution_calculation), true));
-  // We may have missed a signal before making the connection:
-  start_solution_calculation();
-  resman->state_changed.connect(sigc::ptr_fun(&vscreen_update));
-}
-
-static bool do_next_solution_enabled()
-{
-  if(resman == NULL)
-    return false;
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  return
-    state.selected_solution < state.generated_solutions &&
-    !(state.selected_solution + 1 == state.generated_solutions &&
-      state.solutions_exhausted);
-}
-
-void do_next_solution()
-{
-  if(!do_next_solution_enabled())
-    beep();
-  else
-    resman->select_next_solution();
-}
-
-static bool do_previous_solution_enabled()
-{
-  if(resman == NULL)
-    return false;
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  return state.selected_solution > 0;
-}
-
-void do_previous_solution()
-{
-  if(!do_previous_solution_enabled())
-    beep();
-  else
-    resman->select_previous_solution();
-}
-
-static bool do_first_solution_enabled()
-{
-  if(resman == NULL)
-    return false;
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  return state.resolver_exists && state.selected_solution > 0;
-}
-
-static void do_first_solution()
-{
-  if(!do_first_solution_enabled())
-    beep();
-  else
-    resman->select_solution(0);
-}
-
-static bool do_last_solution_enabled()
-{
-  if(resman == NULL)
-    return false;
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  return state.resolver_exists && state.selected_solution + 1 < state.generated_solutions;
-}
-
-static void do_last_solution()
-{
-  if(resman == NULL)
-    {
-      beep();
-      return;
-    }
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  if(!(state.resolver_exists && state.selected_solution + 1 < state.generated_solutions))
-    beep();
-  else
-    resman->select_solution(state.generated_solutions - 1);
-}
-
-static bool do_apply_solution_enabled_from_state(const resolver_manager::state &state)
-{
-  return
-    state.resolver_exists &&
-    state.selected_solution >= 0 &&
-    state.selected_solution < state.generated_solutions;
-}
-
-static bool do_apply_solution_enabled()
-{
-  if(resman == NULL)
-    return false;
-
-  resolver_manager::state state = resman->state_snapshot();
-  return do_apply_solution_enabled_from_state(state);
-}
-
-void do_apply_solution()
-{
-  if(!apt_cache_file)
-    return;
-
-  resolver_manager::state state = resman->state_snapshot();
-
-  if(!do_apply_solution_enabled_from_state(state))
-    {
-      beep();
-      return;
-    }
-  else
-    {
-      undo_group *undo=new apt_undo_group;
-      try
-	{
-	  (*apt_cache_file)->apply_solution(resman->get_solution(state.selected_solution, aptcfg->FindI(PACKAGE "::ProblemResolver::StepLimit", 5000)),
-					    undo);
-	}
-      catch(NoMoreSolutions)
-	{
-	  show_message(_("Unable to find a solution to apply."),
-		       NULL,
-		       get_style("Error"));
-	}
-      catch(NoMoreTime)
-	{
-	  show_message(_("Ran out of time while trying to find a solution."),
-		       NULL,
-		       get_style("Error"));
-	}
-
-      if(!undo->empty())
-	{
-	  apt_undos->add_item(undo);
-	  package_states_changed();
-	}
-      else
-	delete undo;
-    }
-}
-
-static void do_nullify_solver(vs_widget_ref *solver)
-{
-  *solver = NULL;
-}
-
-static bool do_examine_solution_enabled()
-{
-  return resman != NULL && resman->resolver_exists();
-}
-
-void do_examine_solution()
-{
-  if(!do_examine_solution_enabled())
-    {
-      beep();
-      return;
-    }
-
-  static vs_widget_ref solver;
-
-  if(solver.valid())
-    solver->show();
-  else
-    {
-      solver = make_solution_screen();
-      solver->destroyed.connect(sigc::bind(sigc::ptr_fun(&do_nullify_solver),
-					   &solver));
-
-      add_main_widget(solver, _("Resolve Dependencies"),
-		      _("Search for solutions to unsatisfied dependencies"),
-		      _("Resolve Dependencies"));
-    }
-}
-
-static void handle_dump_resolver_response(const wstring &s)
-{
-  if(resman != NULL && resman->resolver_exists())
-    {
-      ofstream out(transcode(s).c_str());
-
-      if(!out)
-	_error->Errno("dump_resolver", _("Unable to open %ls"), s.c_str());
-      else
-	{
-	  resman->dump(out);
-
-	  if(!out)
-	    _error->Errno("dump_resolver", _("Error while dumping resolver state"));
-	}
-    }
-}
-
-static void do_dump_resolver()
-{
-  static vs_editline::history_list history;
-
-  if(resman != NULL && resman->resolver_exists())
-    prompt_string(_("File to which the resolver state should be dumped:"),
-		  "",
-		  arg(sigc::ptr_fun(handle_dump_resolver_response)),
-		  NULL,
-		  NULL,
-		  &history);
-}
-
 // NOTE ON TRANSLATIONS!
 //
 //   Implicitly translating stuff in the widget set would be ugly.  Everything
@@ -1929,9 +1329,6 @@ vs_menu_info actions_menu[]={
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Play Minesweeper"), NULL,
 	       N_("Waste time trying to find mines"), sigc::ptr_fun(do_sweep)),
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Become root"), NULL,
-	       N_("Run 'su' to become root; this will restart the program, but your settings will be preserved"), sigc::bind(sigc::ptr_fun(do_su_to_root), ""), sigc::ptr_fun(su_to_root_enabled)),
-
 #ifdef WITH_RELOAD_CACHE
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Reload package cache"), NULL,
 	       N_("Reload the package cache"),
@@ -1964,10 +1361,6 @@ vs_menu_info package_menu[]={
 	       N_("Flag the currently selected package for removal"),
 	       sigc::hide_return(package_remove.make_slot()),
 	       package_menu_enabled.make_slot()),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Purge"), "Purge",
-	       N_("Flag the currently selected package and its configuration files for removal"),
-	       sigc::hide_return(package_purge.make_slot()),
-	       package_menu_enabled.make_slot()),
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Keep"), "Keep",
 	       N_("Cancel any action on the selected package"),
 	       sigc::hide_return(package_keep.make_slot()),
@@ -1993,56 +1386,6 @@ vs_menu_info package_menu[]={
 	       N_("Display more information about the selected package"),
 	       sigc::hide_return(package_information.make_slot()),
 	       package_information_enabled.make_slot()),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Changelog"), "Changelog",
-	       N_("Display the Debian changelog of the selected package"),
-	       sigc::hide_return(package_changelog.make_slot()),
-	       package_changelog_enabled.make_slot()),
-  VS_MENU_END
-};
-
-vs_menu_info resolver_menu[] = {
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Examine Solution"),
-	       "ExamineSolution", N_("Examine the currently selected solution to the dependency problems."),
-	       sigc::ptr_fun(do_examine_solution),
-	       sigc::ptr_fun(do_examine_solution_enabled)),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Apply ^Solution"),
-	       "ApplySolution", N_("Perform the actions contained in the currently selected solution."),
-	       sigc::ptr_fun(do_apply_solution),
-	       sigc::ptr_fun(do_apply_solution_enabled)),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Next Solution"),
-	       "NextSolution", N_("Select the next solution to the dependency problems."),
-	       sigc::ptr_fun(do_next_solution),
-	       sigc::ptr_fun(do_next_solution_enabled)),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Previous Solution"),
-	       "PrevSolution", N_("Select the previous solution to the dependency problems."),
-	       sigc::ptr_fun(do_previous_solution),
-	       sigc::ptr_fun(do_previous_solution_enabled)),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^First Solution"),
-	       "FirstSolution", N_("Select the first solution to the dependency problems."),
-	       sigc::ptr_fun(do_first_solution),
-	       sigc::ptr_fun(do_first_solution_enabled)),
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Last Solution"),
-	       "LastSolution", N_("Select the last solution to the dependency problems that has been generated so far."),
-	       sigc::ptr_fun(do_last_solution),
-	       sigc::ptr_fun(do_last_solution_enabled)),
-
-  VS_MENU_SEPARATOR,
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Toggle ^Rejected"),
-	       "SolutionActionReject", N_("Toggle whether the currently selected action is rejected."),
-	       sigc::hide_return(resolver_toggle_rejected.make_slot()),
-	       resolver_toggle_rejected_enabled.make_slot()),
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Toggle ^Approved"),
-	       "SolutionActionApprove", N_("Toggle whether the currently selected action is approved."),
-	       sigc::hide_return(resolver_toggle_approved.make_slot()),
-	       resolver_toggle_approved_enabled.make_slot()),
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^View Target"),
-	       "InfoScreen", N_("View the package which will be affected by the selected action"),
-	       sigc::hide_return(resolver_view_target.make_slot()),
-	       resolver_view_target_enabled.make_slot()),
-
   VS_MENU_END
 };
 
@@ -2121,25 +1464,10 @@ vs_menu_info views_menu_info[]={
 	       N_("Create a new default package view"),
 	       sigc::ptr_fun(do_new_package_view_with_new_bar)),
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Audit ^Recommendations"), NULL,
-	       N_("View packages which it is recommended that you install, but which are not currently installed."),
-	       sigc::ptr_fun(do_new_recommendations_view)),
-
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("New ^Flat Package List"), NULL,
 	       N_("View all the packages on the system in a single uncategorized list"),
 	       sigc::ptr_fun(do_new_flat_view_with_new_bar)),
 
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("New ^Debtags Browser"),
-	       NULL,
-	       N_("Browse packages using Debtags data"),
-	       sigc::ptr_fun(do_new_tag_view_with_new_bar)),
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("New Categorical ^Browser"),
-	       NULL,
-	       N_("Browse packages by category"),
-	       sigc::ptr_fun(do_new_hier_view_with_new_bar)),
-
-  VS_MENU_SEPARATOR,
   VS_MENU_END
 };
 
@@ -2278,12 +1606,6 @@ void ui_init()
 
   cache_closed.connect(sigc::ptr_fun(do_show_reload_message));
   cache_reloaded.connect(sigc::ptr_fun(do_hide_reload_message));
-  cache_reloaded.connect(sigc::ptr_fun(do_connect_resolver_callback));
-  if(apt_cache_file)
-    {
-      do_connect_resolver_callback();
-      start_solution_calculation();
-    }
   cache_reload_failed.connect(sigc::ptr_fun(do_hide_reload_message));
 
   cache_reloaded.connect(sigc::ptr_fun(do_connect_read_only_callbacks));
@@ -2293,7 +1615,6 @@ void ui_init()
   add_menu(actions_menu, _("Actions"), menu_description);
   add_menu(undo_menu, _("Undo"), menu_description);
   add_menu(package_menu, _("Package"), menu_description);
-  add_menu(resolver_menu, _("Resolver"), menu_description);
   add_menu(search_menu, _("Search"), menu_description);
   add_menu(options_menu, _("Options"), menu_description);
   views_menu=add_menu(views_menu_info, _("Views"), menu_description);
@@ -2329,27 +1650,6 @@ void ui_init()
   main_stacked->connect_key_post("Undo",
 				 &global_bindings,
 				 sigc::hide_return(undo_undo.make_slot()));
-  main_stacked->connect_key_post("NextSolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_next_solution));
-  main_stacked->connect_key_post("PrevSolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_previous_solution));
-  main_stacked->connect_key_post("FirstSolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_first_solution));
-  main_stacked->connect_key_post("LastSolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_last_solution));
-  main_stacked->connect_key_post("ApplySolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_apply_solution));
-  main_stacked->connect_key_post("ExamineSolution",
-				 &global_bindings,
-				 sigc::ptr_fun(do_examine_solution));
-  main_stacked->connect_key_post("DumpResolver",
-				 &global_bindings,
-				 sigc::ptr_fun(do_dump_resolver));
 
   main_table=vs_table::create();
   main_stacked->add_widget(main_table);
@@ -2382,11 +1682,6 @@ void ui_init()
 			      vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK);
   main_multiplex->show();
 
-  vs_widget_ref b=make_broken_indicator();
-  main_table->add_widget_opts(b, 2, 0, 1, 1,
-			      vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK,
-			      vs_table::ALIGN_CENTER);
-
   main_status_multiplex=vs_multiplex::create();
   main_status_multiplex->set_bg_style(get_style("Status"));
   main_table->add_widget_opts(main_status_multiplex, 3, 0, 1, 1,
@@ -2411,16 +1706,6 @@ void ui_init()
   // FIXME: put this in load_options() and kill all other references
   //       to setup_columns?
   pkg_item::pkg_columnizer::setup_columns();
-
-  // Make sure the broken indicator doesn't annoyingly pop up for a
-  // moment. (hack?)
-  //
-  // Note that it *should* be visible if we enter this code from the
-  // command-line (i.e., with the cache already loaded).  More hack?
-  if(resman != NULL && resman->resolver_exists())
-    b->show();
-  else
-    b->hide();
 
   maybe_show_old_tmpdir_message();
 }

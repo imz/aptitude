@@ -54,8 +54,6 @@ bool pkg_tree_node::dispatch_key(const key &k, vs_tree *owner)
     hold(grp);
   else if(bindings->key_matches(k, "Keep"))
     keep(grp);
-  else if(bindings->key_matches(k, "Purge"))
-    purge(grp);
   else if(bindings->key_matches(k, "Reinstall"))
     reinstall(grp);
   else if(bindings->key_matches(k, "SetAuto"))
@@ -112,11 +110,6 @@ bool pkg_tree_node::package_install()
 bool pkg_tree_node::package_remove()
 {
   return package_action(&pkg_tree_node::remove);
-}
-
-bool pkg_tree_node::package_purge()
-{
-  return package_action(&pkg_tree_node::purge);
 }
 
 bool pkg_tree_node::package_keep()

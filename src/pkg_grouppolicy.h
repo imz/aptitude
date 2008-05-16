@@ -216,49 +216,6 @@ public:
   {delete chain;}
 };
 
-class pkg_hier;
-
-// Groups by a 'hierarchy' as described in generic/README.hier
-class pkg_grouppolicy_hier_factory:public pkg_grouppolicy_factory
-{
-  // This is deleted with the factory iff del_hier==true.
-  pkg_hier *hier;
-
-  pkg_grouppolicy_factory *chain;
-
-  // If true, delete our hierarchy object when we are destroyed.
-  bool del_hier;
-public:
-  pkg_grouppolicy_hier_factory(pkg_hier *_hier,
-			       bool _del_hier,
-			       pkg_grouppolicy_factory *_chain)
-    :hier(_hier), chain(_chain), del_hier(_del_hier)
-  {
-  }
-
-  pkg_grouppolicy *instantiate(pkg_signal *sig,
-			       desc_signal *_desc_sig);
-
-  virtual ~pkg_grouppolicy_hier_factory();
-};
-
-// Groups packages by task; if they are not in any task, they may be
-// discarded (based on the value of "discard")
-class pkg_grouppolicy_task_factory:public pkg_grouppolicy_factory
-{
-  pkg_grouppolicy_factory *chain;
-public:
-  pkg_grouppolicy_task_factory(pkg_grouppolicy_factory *_chain)
-    :chain(_chain)
-  {
-  }
-
-  pkg_grouppolicy *instantiate(pkg_signal *sig,
-			       desc_signal *_desc_sig);
-
-  virtual ~pkg_grouppolicy_task_factory();
-};
-
 // Groups packages using the given list of matchers/tree names.  Match
 // results can be substituted into tree names using \N notation.
 class pkg_grouppolicy_matchers_factory:public pkg_grouppolicy_factory
@@ -291,41 +248,6 @@ public:
 			       desc_signal *_desc_sig);
 
   ~pkg_grouppolicy_matchers_factory();
-};
-
-/** Groups packages by their tags within a single facet. */
-class pkg_grouppolicy_tag_factory : public pkg_grouppolicy_factory
-{
-  pkg_grouppolicy_factory *chain;
-
-  std::string facet;
-public:
-  pkg_grouppolicy_tag_factory(const std::string &_facet,
-			      pkg_grouppolicy_factory *_chain)
-    :chain(_chain), facet(_facet)
-  {
-  }
-
-  pkg_grouppolicy *instantiate(pkg_signal *sig,
-			       desc_signal *desc_sig);
-
-  ~pkg_grouppolicy_tag_factory();
-};
-
-/** Groups packages by their facets and their tags. */
-class pkg_grouppolicy_facet_tag_factory : public pkg_grouppolicy_factory
-{
-  pkg_grouppolicy_factory *chain;
-public:
-  pkg_grouppolicy_facet_tag_factory(pkg_grouppolicy_factory *_chain)
-    :chain(_chain)
-  {
-  }
-
-  pkg_grouppolicy *instantiate(pkg_signal *sig,
-			       desc_signal *desc_sig);
-
-  ~pkg_grouppolicy_facet_tag_factory();
 };
 
 #endif

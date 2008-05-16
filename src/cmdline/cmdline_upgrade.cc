@@ -29,7 +29,7 @@ int cmdline_upgrade(int argc, char *argv[],
 		    bool always_prompt, bool queue_only,
 		    int verbose)
 {
-  pkgset to_install, to_hold, to_remove, to_purge;
+  pkgset to_install, to_hold, to_remove;
 
   _error->DumpErrors();
 
@@ -82,7 +82,7 @@ int cmdline_upgrade(int argc, char *argv[],
       return 0;
     }
   else if(simulate)
-    return cmdline_simulate(true, to_install, to_hold, to_remove, to_purge,
+    return cmdline_simulate(true, to_install, to_hold, to_remove,
 			    showvers, showdeps, showsize,
 			    always_prompt, verbose, assume_yes,
 			    false);
@@ -97,7 +97,7 @@ int cmdline_upgrade(int argc, char *argv[],
     {
 
       if(!cmdline_do_prompt(true, to_install, to_hold, to_remove,
-			    to_purge, showvers, showdeps, showsize,
+			    showvers, showdeps, showsize,
 			    always_prompt, verbose,
 			    assume_yes, false))
 	{

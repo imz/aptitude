@@ -3625,10 +3625,10 @@ msgstr "main"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available from security.debian.org."
+" Security updates for these packages are available."
 msgstr ""
 "Sicherheitsupgrades\n"
-" Sicherheitsupgrades für diese Paket sind auf security.debian.org abrufbar."
+" Sicherheitsupgrades für diese Paket sind abrufbar."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4759,10 +4759,10 @@ msgstr "Zeit verschwenden (Minensuchspiel)"
 #, fuzzy
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Zum Installieren/Entfernen von Paketen sind Administrationsrechte nötig,\n"
-"die Sie derzeit nicht haben.  Wollen Sie zum root-Account wechseln?\n"
+"die Sie derzeit nicht haben.\n"
 
 #: src/ui.cc:1282 src/ui.cc:1411
 msgid "Become root"
@@ -4815,10 +4815,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Zum Aktualisieren der Paketliste sind Administrationsrechte nötig,\n"
-"die Sie derzeit nicht haben.  Wollen Sie zum root-Account wechseln?\n"
+"die Sie derzeit nicht haben.\n"
 
 #: src/ui.cc:1423 src/ui.cc:1930
 msgid "Waste time trying to find mines"

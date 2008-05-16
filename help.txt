@@ -19,7 +19,6 @@ screens.  Other keys are available; consult the README for a list of these.
   "]":          Collapse a group of packages and all its subgroups.
 
   Enter:        View information about a package.
-  "C":          View a package's changelog.
   "+":          Install or upgrade a package, or remove its held state.
   "-":          Remove a package.
   "=":          Hold a package in its current version to prevent upgrades.

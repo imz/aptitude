@@ -24,9 +24,7 @@
 #include "pkg_item.h"
 #include "pkg_tree.h" // For pkg_tree::bindings(?!?!)
 #include "pkg_ver_item.h"
-#include "solution_item.h"
 #include "ui.h"
-#include "view_changelog.h"
 
 #include <generic/apt/apt.h>
 #include <generic/apt/apt_undo_group.h>
@@ -107,11 +105,6 @@ bool menu_tree::package_remove()
   return proxy_redirect(&menu_redirect::package_remove);
 }
 
-bool menu_tree::package_purge()
-{
-  return proxy_redirect(&menu_redirect::package_purge);
-}
-
 bool menu_tree::package_keep()
 {
   return proxy_redirect(&menu_redirect::package_keep);
@@ -142,16 +135,6 @@ bool menu_tree::package_forbid()
   return proxy_redirect(&menu_redirect::package_forbid);
 }
 
-bool menu_tree::package_changelog_enabled()
-{
-  return proxy_redirect(&menu_redirect::package_changelog_enabled);
-}
-
-bool menu_tree::package_changelog()
-{
-  return proxy_redirect(&menu_redirect::package_changelog);
-}
-
 bool menu_tree::package_information_enabled()
 {
   return proxy_redirect(&menu_redirect::package_information_enabled);
@@ -161,37 +144,6 @@ bool menu_tree::package_information()
 {
   return proxy_redirect(&menu_redirect::package_information);
 }
-
-bool menu_tree::resolver_toggle_rejected()
-{
-  return proxy_redirect(&menu_redirect::resolver_toggle_rejected);
-}
-
-bool menu_tree::resolver_toggle_rejected_enabled()
-{
-  return proxy_redirect(&menu_redirect::resolver_toggle_rejected_enabled);
-}
-
-bool menu_tree::resolver_toggle_approved()
-{
-  return proxy_redirect(&menu_redirect::resolver_toggle_approved);
-}
-
-bool menu_tree::resolver_toggle_approved_enabled()
-{
-  return proxy_redirect(&menu_redirect::resolver_toggle_approved_enabled);
-}
-
-bool menu_tree::resolver_view_target()
-{
-  return proxy_redirect(&menu_redirect::resolver_view_target);
-}
-
-bool menu_tree::resolver_view_target_enabled()
-{
-  return proxy_redirect(&menu_redirect::resolver_view_target_enabled);
-}
-
 
 
 bool menu_tree::find_search_enabled()

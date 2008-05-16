@@ -8,7 +8,6 @@ LDADD = @LIBINTL@
 EXTRA_DIST = README.hier
 
 noinst_LIBRARIES = libgeneric-apt.a
-noinst_PROGRAMS  = pkg_hier_dump
 
 libgeneric_apt_a_SOURCES = \
         acqprogress.cc      \
@@ -19,10 +18,6 @@ libgeneric_apt_a_SOURCES = \
         apt.h               \
         aptitudepolicy.cc   \
         aptitudepolicy.h    \
-        aptitude_resolver.cc \
-        aptitude_resolver.h \
-        aptitude_resolver_universe.cc \
-        aptitude_resolver_universe.h \
         apt_undo_group.cc   \
         apt_undo_group.h    \
         config_signal.cc    \
@@ -43,17 +38,4 @@ libgeneric_apt_a_SOURCES = \
         matchers.h          \
         pkg_acqfile.cc      \
         pkg_acqfile.h       \
-        pkg_changelog.cc    \
-        pkg_changelog.h     \
-        pkg_hier.cc         \
-        pkg_hier.h          \
-        resolver_manager.cc \
-        resolver_manager.h  \
-        rev_dep_iterator.h  \
-        tags.cc             \
-        tags.h              \
-        tasks.cc            \
-        tasks.h
-
-pkg_hier_dump_SOURCES = pkg_hier_dump.cc
-pkg_hier_dump_LDADD = $(top_builddir)/src/generic/util/libgeneric-util.a libgeneric-apt.a
+        rev_dep_iterator.h

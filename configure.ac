@@ -23,6 +23,15 @@ AC_CHECK_LIB(pthread, main,
 	HAVE_LIBPTHREAD=1
 	, [AC_MSG_ERROR([Can't find the POSIX thread libraries])])
 
+dnl popt checking
+AC_CHECK_LIB(popt, main,
+      HAVE_POPT=1,
+              AC_MSG_ERROR([Can't find the popt library -- please install popt-devel package]))
+dnl rpm checking
+AC_CHECK_LIB(rpm, main,
+      HAVE_RPM=1,
+              AC_MSG_ERROR([Can't find the rpm library -- please install librpm-devel package]))
+
 ALL_LINGUAS="ar bs ca cs da de el es eu fi fr gl it ja lt nb nl nn pl pt pt_BR ro ru sk sv tl tr vi zh_CN zh_TW"
 AM_GNU_GETTEXT([external])
 
@@ -153,6 +162,24 @@ then
 	[AC_MSG_ERROR([POSIX thread header not installed])])
 fi
 
+if test x$HAVE_RPM = x1
+then
+  AC_CHECK_HEADER(rpm/rpmio.h,
+              CXXFLAGS="$CXXFLAGS -I/usr/include/rpm"
+              LIBS="$LIBS -lrpm"
+              [AC_DEFINE(HAVE_RPM,  , [Define if rpm is available])],
+              [AC_MSG_ERROR([RPM headers not found. Please verify your build system.])])
+fi
+
+if test x$HAVE_POPT = x1
+then
+      AC_CHECK_HEADER(popt.h,
+              CXXFLAGS="$CXXFLAGS"
+              LIBS="$LIBS -lpopt"
+              [AC_DEFINE(HAVE_POPT,  , [Define if popt is available])],
+              [AC_MSG_ERROR([POPT headers not found. Please verify your build system.])])
+fi
+
 WERROR="-Werror"
 
 AC_ARG_ENABLE(dynamic-backtrace,
@@ -252,7 +279,6 @@ AC_CONFIG_FILES([
 	src/cmdline/Makefile
 	src/generic/Makefile
 	src/generic/apt/Makefile
-	src/generic/problemresolver/Makefile
 	src/generic/util/Makefile
 	src/mine/Makefile
 	src/vscreen/Makefile

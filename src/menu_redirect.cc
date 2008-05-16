@@ -31,7 +31,6 @@ bool menu_redirect::undo_undo() { return false; }
 bool menu_redirect::package_enabled() { return false; }
 bool menu_redirect::package_install() { return false; }
 bool menu_redirect::package_remove() { return false; }
-bool menu_redirect::package_purge() { return false; }
 bool menu_redirect::package_hold() { return false; }
 bool menu_redirect::package_keep() { return false; }
 bool menu_redirect::package_mark_auto() { return false; }
@@ -40,14 +39,6 @@ bool menu_redirect::package_forbid_enabled() { return false; }
 bool menu_redirect::package_forbid() { return false; }
 bool menu_redirect::package_information_enabled() { return false; }
 bool menu_redirect::package_information() { return false; }
-bool menu_redirect::package_changelog_enabled() { return false; }
-bool menu_redirect::package_changelog() { return false; }
-bool menu_redirect::resolver_toggle_approved() { return false;}
-bool menu_redirect::resolver_toggle_approved_enabled() { return false; }
-bool menu_redirect::resolver_toggle_rejected() { return false;}
-bool menu_redirect::resolver_toggle_rejected_enabled() { return false; }
-bool menu_redirect::resolver_view_target() { return false; }
-bool menu_redirect::resolver_view_target_enabled() { return false; }
 bool menu_redirect::find_search_enabled() { return false; }
 bool menu_redirect::find_search() { return false; }
 bool menu_redirect::find_search_back_enabled() { return false; }
@@ -108,11 +99,6 @@ void create_menu_bindings(menu_redirect *menu_handler,
 				    menu_handler,
 				    &menu_redirect::package_remove));
 
-  package_purge.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-				   valve.weak_ref(),
-				   menu_handler,
-				   &menu_redirect::package_purge));
-
   package_hold.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
 				  valve.weak_ref(),
 				  menu_handler,
@@ -152,47 +138,6 @@ void create_menu_bindings(menu_redirect *menu_handler,
 					 valve.weak_ref(),
 					 menu_handler,
 					 &menu_redirect::package_information));
-
-  package_changelog_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-					       valve.weak_ref(),
-					       menu_handler,
-					       &menu_redirect::package_changelog_enabled));
-
-  package_changelog.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-				       valve.weak_ref(),
-				       menu_handler,
-				       &menu_redirect::package_changelog));
-
-
-  resolver_toggle_rejected_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-						      valve.weak_ref(),
-						      menu_handler,
-						      &menu_redirect::resolver_toggle_rejected_enabled));
-
-  resolver_toggle_rejected.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-					      valve.weak_ref(),
-					      menu_handler,
-					      &menu_redirect::resolver_toggle_rejected));
-
-  resolver_toggle_approved_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-						      valve.weak_ref(),
-						      menu_handler,
-						      &menu_redirect::resolver_toggle_approved_enabled));
-
-  resolver_toggle_approved.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-					      valve.weak_ref(),
-					      menu_handler,
-					      &menu_redirect::resolver_toggle_approved));
-
-  resolver_view_target_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-						  valve.weak_ref(),
-						  menu_handler,
-						  &menu_redirect::resolver_view_target_enabled));
-
-  resolver_view_target.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
-					  valve.weak_ref(),
-					  menu_handler,
-					  &menu_redirect::resolver_view_target));
 
 
   find_search_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),

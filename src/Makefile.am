@@ -25,10 +25,6 @@ aptitude_SOURCES= 	\
 	apt_options.h	\
 	apt_undo_tree.cc \
 	apt_undo_tree.h \
-	broken_indicator.cc\
-	broken_indicator.h\
-	changelog_parse.cc \
-	changelog_parse.h  \
 	defaults.cc	\
 	defaults.h	\
 	dep_item.cc	\
@@ -43,8 +39,6 @@ aptitude_SOURCES= 	\
 	download_screen.cc\
 	download_thread.h\
 	download_thread.cc\
-	edit_pkg_hier.h	\
-	edit_pkg_hier.cc\
 	load_config.cc	\
 	load_config.h	\
 	load_grouppolicy.cc\
@@ -82,21 +76,11 @@ aptitude_SOURCES= 	\
 	pkg_view.h	\
 	reason_fragment.cc\
 	reason_fragment.h\
-	solution_dialog.cc\
-	solution_dialog.h\
-	solution_fragment.cc\
-	solution_fragment.h\
-	solution_item.cc\
-	solution_item.h\
-	solution_screen.cc\
-	solution_screen.h\
 	trust.h		\
 	trust.cc	\
 	ui.cc		\
 	ui.h		\
 	ui_download_manager.cc \
 	ui_download_manager.h  \
-	view_changelog.cc \
-	view_changelog.h \
 	vs_progress.cc  \
 	vs_progress.h

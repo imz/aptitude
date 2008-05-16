@@ -35,19 +35,15 @@
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
 
-#include <generic/problemresolver/exceptions.h>
-
 #include <vscreen/config/keybindings.h>
 #include <vscreen/transcode.h>
 #include <vscreen/vscreen.h>
 #include <vscreen/vs_util.h>
 
-#include <cmdline/cmdline_changelog.h>
 #include <cmdline/cmdline_clean.h>
 #include <cmdline/cmdline_common.h>
 #include <cmdline/cmdline_do_action.h>
 #include <cmdline/cmdline_download.h>
-#include <cmdline/cmdline_dump_resolver.h>
 #include <cmdline/cmdline_forget_new.h>
 #include <cmdline/cmdline_moo.h>
 #include <cmdline/cmdline_prompt.h>
@@ -119,7 +115,6 @@ static void usage()
   printf(_("  Actions (if none is specified, aptitude will enter interactive mode):\n\n"));
   printf(_(" install      - Install/upgrade packages\n"));
   printf(_(" remove       - Remove packages\n"));
-  printf(_(" purge        - Remove packages and their configuration files\n"));
   printf(_(" hold         - Place packages on hold\n"));
   printf(_(" unhold       - Cancel a hold command for a package\n"));
   printf(_(" markauto     - Mark packages as having been automatically installed\n"));
@@ -137,7 +132,6 @@ static void usage()
   printf(_(" show         - Display detailed information about a package\n"));
   printf(_(" clean        - Erase downloaded package files\n"));
   printf(_(" autoclean    - Erase old downloaded package files\n"));
-  printf(_(" changelog    - View a package's changelog\n"));
   printf(_(" download     - Download the .deb file for a package\n"));
   printf(_(" reinstall    - Download and (possibly) reinstall a currently installed package\n"));
   printf("\n");
@@ -171,7 +165,6 @@ enum {
   OPTION_VERSION = 1,
   OPTION_VISUAL_PREVIEW,
   OPTION_QUEUE_ONLY,
-  OPTION_PURGE_UNUSED,
 };
 int getopt_result;
 
@@ -194,7 +187,6 @@ option opts[]={
   {"target-release", 1, NULL, 't'},
   {"visual-preview", 0, &getopt_result, OPTION_VISUAL_PREVIEW},
   {"schedule-only", 0, &getopt_result, OPTION_QUEUE_ONLY},
-  {"purge-unused", 0, &getopt_result, OPTION_PURGE_UNUSED},
   {0,0,0,0}
 };
 
@@ -374,9 +366,6 @@ int main(int argc, char *argv[])
 	    case OPTION_QUEUE_ONLY:
 	      queue_only=true;
 	      break;
-	    case OPTION_PURGE_UNUSED:
-	      aptcfg->Set(PACKAGE "::Purge-Unused", "true");
-	      break;
 	    default:
 	      fprintf(stderr, "%s",
 		      _("WEIRDNESS: unknown option code received\n"));
@@ -457,7 +446,6 @@ int main(int argc, char *argv[])
 		   (!strcasecmp(argv[optind], "reinstall")) ||
 		   (!strcasecmp(argv[optind], "dist-upgrade")) ||
 		   (!strcasecmp(argv[optind], "remove")) ||
-		   (!strcasecmp(argv[optind], "purge")) ||
 		   (!strcasecmp(argv[optind], "hold")) ||
 		   (!strcasecmp(argv[optind], "unhold")) ||
 		   (!strcasecmp(argv[optind], "markauto")) ||
@@ -480,14 +468,10 @@ int main(int argc, char *argv[])
 				   queue_only, verbose);
 	  else if(!strcasecmp(argv[optind], "download"))
 	    return cmdline_download(argc-optind, argv+optind);
-	  else if(!strcasecmp(argv[optind], "changelog"))
-	    return cmdline_changelog(argc-optind, argv+optind);
 	  else if(!strcasecmp(argv[optind], "moo"))
 	    return cmdline_moo(argc-optind, argv+optind, verbose);
 	  else if(!strcasecmp(argv[optind], "show"))
 	    return cmdline_show(argc-optind, argv+optind, verbose);
-	  else if(!strcasecmp(argv[optind], "dump-resolver"))
-	    return cmdline_dump_resolver(argc-optind, argv+optind, status_fname);
 	  else if(!strcasecmp(argv[optind], "help"))
 	    {
 	      usage();

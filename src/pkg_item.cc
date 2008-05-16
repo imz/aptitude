@@ -27,11 +27,9 @@
 #include <vscreen/transcode.h>
 #include <vscreen/vs_util.h>
 
-#include "edit_pkg_hier.h"
 #include "pkg_columnizer.h"
 #include "pkg_item.h"
 #include "ui.h"
-#include "view_changelog.h"
 #include "vs_progress.h"
 
 #include <generic/apt/apt.h>
@@ -181,16 +179,6 @@ void pkg_item::remove(undo_group *undo)
     }
 }
 
-// No "do_purge" because purge was always idempotent.
-void pkg_item::purge(undo_group *undo)
-{
-  if((package->Flags&pkgCache::Flag::Essential)==pkgCache::Flag::Essential ||
-     (package->Flags&pkgCache::Flag::Important)==pkgCache::Flag::Important)
-    confirm_delete_essential(package, false);
-  else
-    (*apt_cache_file)->mark_delete(package, true, false, undo);
-}
-
 void pkg_item::reinstall(undo_group *undo)
 {
   if(!package.CurrentVer().end())
@@ -225,11 +213,6 @@ void pkg_item::show_information()
   vs_widget_ref w=make_info_screen(package, visible_version());
   // what to use as the menu description?
   insert_main_widget(w, menulabel, "", tablabel);
-}
-
-void pkg_item::show_changelog()
-{
-   view_changelog(visible_version());
 }
 
 style pkg_item::get_highlight_style()
@@ -351,9 +334,6 @@ bool pkg_item::dispatch_key(const key &k, vs_tree *owner)
     }
   else if(bindings->key_matches(k, "InfoScreen"))
     show_information();
-  else if(bindings->key_matches(k, "Changelog") &&
-	  !visible_version().end())
-    show_changelog();
   else if(bindings->key_matches(k, "InstallSingle"))
     {
       if((*apt_cache_file)[package].CandidateVerIter(*apt_cache_file).end())
@@ -398,60 +378,6 @@ bool pkg_item::dispatch_key(const key &k, vs_tree *owner)
       system(cmd.c_str());
 
       vscreen_resume();
-    }
-  else if(bindings->key_matches(k, "DpkgReconfigure"))
-    // Don't bother with my internal su-to-root stuff here, since I don't
-    // need to touch the package lists in the subprocess.
-    {
-      // Try to do *something*.
-      char *sucmd=NULL;
-
-      if(getuid()==0)
-	sucmd="dpkg-reconfigure '%s'";
-      else if(access("/usr/sbin/su-to-root", X_OK)==0)
-	sucmd="/usr/sbin/su-to-root -c \"/usr/sbin/dpkg-reconfigure '%s'\"";
-      else if(access("/bin/su", X_OK)==0)
-	sucmd="/bin/su -c \"/usr/sbin/dpkg-reconfigure '%s'\"";
-      else
-	popup_widget(vs_dialog_ok(text_fragment(_("You are not root and I cannot find any way to become root.  To reconfigure this package, install the menu package, the login package, or run aptitude as root."))));
-
-      if(sucmd)
-	{
-	  vscreen_suspend();
-
-	  apt_cache_file->ReleaseLock();
-
-	  printf(_("Reconfiguring %s\n"), package.Name());
-
-	  char buf[512];
-	  if(sucmd)
-	    {
-	      snprintf(buf, 512, sucmd,
-		       package.Name());
-
-	      system(buf);
-
-	      cerr<<_("Press return to continue.\n");
-	      getchar();
-
-	      vscreen_resume();
-	    }
-
-	  vs_progress_ref p = gen_progress_bar();
-	  apt_reload_cache(p.unsafe_get_ref(), true);
-	  p->destroy();
-	}
-    }
-  else if(bindings->key_matches(k, "EditHier"))
-    {
-      vs_hier_editor_ref e=vs_hier_editor::create();
-      e->set_package(package, visible_version());
-
-      // FIXME: better title
-      add_main_widget(e, _("Hierarchy editor"), "", _("Hierarchy Editor"));
-
-      e->connect_key("Quit", &global_bindings,
-		     sigc::mem_fun(*e.unsafe_get_ref(), &vscreen_widget::destroy));
     }
   else
     return pkg_tree_node::dispatch_key(k, owner);
@@ -538,17 +464,6 @@ bool pkg_item::package_forbid()
 
   package_states_changed();
 
-  return true;
-}
-
-bool pkg_item::package_changelog_enabled()
-{
-  return true;
-}
-
-bool pkg_item::package_changelog()
-{
-  show_changelog();
   return true;
 }
 

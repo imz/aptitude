@@ -29,19 +29,6 @@ void ui_preview()
   exit(0);
 }
 
-void ui_solution_screen()
-{
-  ui_init();
-  file_quit.connect(sigc::ptr_fun(vscreen_exitmain));
-
-  vs_progress_ref p = gen_progress_bar();
-  do_new_package_view(*p.unsafe_get_ref());
-
-  do_examine_solution();
-  ui_main();
-  exit(0);
-}
-
 void cmdline_show_stringlist(strvector &items)
 {
   int loc=2;

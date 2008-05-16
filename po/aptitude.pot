@@ -3203,7 +3203,7 @@ msgstr ""
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available from security.debian.org."
+" Security updates for these packages are available."
 msgstr ""
 
 #: src/pkg_grouppolicy.cc:330
@@ -4176,7 +4176,7 @@ msgstr ""
 #: src/ui.cc:1279
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 
 #: src/ui.cc:1282 src/ui.cc:1411
@@ -4221,7 +4221,7 @@ msgstr ""
 #: src/ui.cc:1408
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 
 #: src/ui.cc:1423 src/ui.cc:1930

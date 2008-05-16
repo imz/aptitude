@@ -22,7 +22,6 @@ anleitung" im Aptitude-Hilfemenü.)
    ]            Eine Gruppe von Paketen und alle Untergruppen einklappen.
 
    Enter        Informationen über ein Paket anzeigen.
-   C            Das Änderungsprotokoll (Changelog) eines Pakets anzeigen.
    +            Ein Paket installieren oder aktualisieren bzw. nicht mehr
                 zurückhalten.
    -            Ein Paket entfernen.

@@ -29,7 +29,6 @@
 #include "pkg_ver_item.h"
 #include "pkg_sortpolicy.h"
 #include "ui.h"
-#include "view_changelog.h"
 #include "vs_progress.h"
 
 #include <generic/apt/apt.h>
@@ -49,6 +48,8 @@
 #include <signal.h>
 
 using namespace std;
+
+#define pkgCheckDep _system->checkDep
 
 class pkg_ver_columnizer:public pkg_item::pkg_columnizer
 {
@@ -254,7 +255,7 @@ column_disposition pkg_ver_columnizer::setup_column(int type)
 	else if(ver.VerStr() == estate.forbidver)
 	  return column_disposition("F", 0);
 	else if(state.Delete())
-	  return column_disposition((state.iFlags&pkgDepCache::Purge)?"p":"d", 0);
+	  return column_disposition("d", 0);
 	else if(state.InstBroken() && state.InstVerIter(*apt_cache_file)==ver)
 	  return column_disposition("B", 0);
 	else if(state.NewInstall())
@@ -297,7 +298,7 @@ column_disposition pkg_ver_columnizer::setup_column(int type)
 	else if(ver.VerStr() == estate.forbidver)
 	  return column_disposition("forbidden version", 0);
 	else if(state.Delete())
-	  return column_disposition((state.iFlags&pkgDepCache::Purge)?"p":"d", 0);
+	  return column_disposition("d", 0);
 	else if(state.InstBroken() && state.InstVerIter(*apt_cache_file)==ver)
 	  return column_disposition(_("broken"), 0);
 	else if(state.NewInstall())
@@ -621,12 +622,6 @@ void pkg_ver_item::keep(undo_group *undo)
   // Do nothing for now.
 }
 
-void pkg_ver_item::purge(undo_group *undo)
-{
-  if(version==version.ParentPkg().CurrentVer())
-    (*apt_cache_file)->mark_delete(version.ParentPkg(), true, false, undo);
-}
-
 void pkg_ver_item::reinstall(undo_group *undo)
 {
   if(version.ParentPkg().CurrentVer()==version)
@@ -708,11 +703,6 @@ bool pkg_ver_item::dispatch_key(const key &k, vs_tree *owner)
       show_information();
       return true;
     }
-  else if(bindings->key_matches(k, "Changelog"))
-    {
-      view_changelog(version);
-      return true;
-    }
   else if(bindings->key_matches(k, "ForbidUpgrade"))
     {
       undo_group *grp=new apt_undo_group;
@@ -787,17 +777,6 @@ bool pkg_ver_item::package_forbid()
     delete grp;
 
   package_states_changed();
-  return true;
-}
-
-bool pkg_ver_item::package_changelog_enabled()
-{
-  return true;
-}
-
-bool pkg_ver_item::package_changelog()
-{
-  view_changelog(get_version());
   return true;
 }
 

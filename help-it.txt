@@ -20,7 +20,6 @@ README.
   "]":          Comprime un gruppo di pacchetti e tutti i suoi sottogruppi.
 
   Invio:        Mostra le informazioni sul pacchetto selezionato.
-  "C":          Visualizza il changelog di un pacchetto.
   "+":          Installa o aggiorna un pacchetto; sblocca il pacchetto se
                 era bloccato.
   "-":          Rimuove un pacchetto.

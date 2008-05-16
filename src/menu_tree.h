@@ -30,7 +30,6 @@
 
 class pkg_matcher;
 class pkg_tree_node;
-class solution_item;
 class undo_group;
 
 /** A vs_tree that can be generically used as a menu redirector.  All
@@ -53,11 +52,6 @@ class menu_tree:public vs_tree, public menu_redirect
 
   /** Return the selected node, if any, or \b NULL if no node is selected. */
   pkg_tree_node *pkg_node_selection();
-
-  /** Return the selected solution item, if any, or \b NULL if no
-   *  solution is selected.
-   */
-  solution_item *solution_selection();
 
   /** A precompiled matcher representing the last search that was performed. */
   pkg_matcher *last_search_matcher;
@@ -113,9 +107,6 @@ public:
   /** If a pkg_node is currently selected, execute its "remove" operation. */
   bool package_remove();
 
-  /** If a pkg_node is currently selected, execute its "purge" operation. */
-  bool package_purge();
-
   /** If a pkg_node is currently selected, execute its "keep" operation. */
   bool package_keep();
 
@@ -137,35 +128,10 @@ public:
   bool package_forbid();
 
   /** \return \b true if a package or a package version is selected. */
-  bool package_changelog_enabled();
-
-  /** If a package or version is selected, show its changelog. */
-  bool package_changelog();
-
-  /** \return \b true if a package or a package version is selected. */
   bool package_information_enabled();
 
   /** If a package or version is selected, show its information. */
   bool package_information();
-
-
-  /** If a solution item is selected, toggle whether it is rejected. */
-  bool resolver_toggle_rejected();
-
-  /** \return \b true if a solution item is selected. */
-  bool resolver_toggle_rejected_enabled();
-
-  /** If a solution item is selected, toggle whether it is approved. */
-  bool resolver_toggle_approved();
-
-  /** \return \b true if a solution item is selected. */
-  bool resolver_toggle_approved_enabled();
-
-  /** If a solution item is selected, view its target. */
-  bool resolver_view_target();
-
-  /** \return \b true if a solution item is selected. */
-  bool resolver_view_target_enabled();
 
 
   /** \return \b true; all package trees know how to search. */

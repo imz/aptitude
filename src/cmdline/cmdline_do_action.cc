@@ -7,7 +7,6 @@
 #include "cmdline_action.h"
 #include "cmdline_common.h"
 #include "cmdline_prompt.h"
-#include "cmdline_resolver.h"
 #include "cmdline_show_broken.h"
 #include "cmdline_simulate.h"
 #include "cmdline_util.h"
@@ -53,8 +52,6 @@ int cmdline_do_action(int argc, char *argv[],
     }
   else if(!strcasecmp(argv[0], "remove"))
     default_action=cmdline_remove;
-  else if(!strcasecmp(argv[0], "purge"))
-    default_action=cmdline_purge;
   else if(!strcasecmp(argv[0], "hold"))
     default_action=cmdline_hold;
   else if(!strcasecmp(argv[0], "keep") || !strcasecmp(argv[0], "keep-all"))
@@ -105,7 +102,7 @@ int cmdline_do_action(int argc, char *argv[],
       return -1;
     }
 
-  pkgset to_upgrade, to_install, to_hold, to_remove, to_purge;
+  pkgset to_upgrade, to_install, to_hold, to_remove;
 
   if(dist_upgrade)
     {
@@ -173,11 +170,6 @@ int cmdline_do_action(int argc, char *argv[],
 	      action=cmdline_install;
 	      argv[i][tmp]=0;
 	      break;
-	    case '_':
-	      action=cmdline_purge;
-	      argv[i][tmp]=0;
-
-	      break;
 	    case ':':
 	      action=cmdline_keep;
 	      argv[i][tmp]=0;
@@ -200,7 +192,7 @@ int cmdline_do_action(int argc, char *argv[],
 	    }
 
 	cmdline_applyaction(argv[i], action,
-			    to_install, to_hold, to_remove, to_purge,
+			    to_install, to_hold, to_remove,
 			    verbose);
       }
   (*apt_cache_file)->end_action_group(NULL);
@@ -211,7 +203,7 @@ int cmdline_do_action(int argc, char *argv[],
       return 0;
     }
   else if(simulate)
-    return cmdline_simulate(dist_upgrade, to_install, to_hold, to_remove, to_purge,
+    return cmdline_simulate(dist_upgrade, to_install, to_hold, to_remove,
 			    showvers, showdeps, showsize,
 			    always_prompt, verbose, assume_yes,
 			    !fix_broken);
@@ -228,7 +220,7 @@ int cmdline_do_action(int argc, char *argv[],
   else
     {
       if(!cmdline_do_prompt(dist_upgrade,
-			    to_install, to_hold, to_remove, to_purge,
+			    to_install, to_hold, to_remove,
 			    showvers, showdeps, showsize,
 			    always_prompt, verbose, assume_yes,
 			    !fix_broken))

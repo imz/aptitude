@@ -61,8 +61,8 @@ doc-html-stamp: $(XMLSOURCES) $(srcdir)/../aptitude-html.xsl $(IMAGES)
 
 	mkdir output-html/images/
 	ln -f $(srcdir)/images/*.png output-html/images/
-	for x in caution important note tip warning; do ln -s /usr/share/xml/docbook/stylesheet/nwalsh/images/$$x.png output-html/images/; done
-	for x in home next prev up; do ln -s /usr/share/xml/docbook/stylesheet/nwalsh/images/$$x.gif output-html/images/; done
+	for x in caution important note tip warning; do cp -p /usr/share/xml/docbook/xsl-stylesheets/images/$$x.png output-html/images/; done
+	for x in home next prev up; do cp -p /usr/share/xml/docbook/xsl-stylesheets/images/$$x.gif output-html/images/; done
 
 	touch doc-html-stamp
 

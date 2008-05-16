@@ -32,9 +32,13 @@
 #include "pkg_grouppolicy.h"
 #include "pkg_item_with_subtree.h"
 
-#include <apt-pkg/version.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/pkgsystem.h>
+#include <apt-pkg/version.h>
+
+#ifndef HAVE_LIBAPT_PKG3
+#define pkgVersionCompare _system->versionCompare
+#endif
 
 class pkg_ver_item:public pkg_tree_node
 {
@@ -66,7 +70,6 @@ public:
   virtual void hold(undo_group *undo);
   virtual void keep(undo_group *undo);
   virtual void remove(undo_group *undo);
-  virtual void purge(undo_group *undo);
   virtual void reinstall(undo_group *undo);
   virtual void set_auto(bool isauto, undo_group *undo);
 
@@ -88,8 +91,6 @@ public:
   // Menu redirections:
   bool package_forbid_enabled();
   bool package_forbid();
-  bool package_changelog_enabled();
-  bool package_changelog();
   bool package_information_enabled();
   bool package_information();
 };

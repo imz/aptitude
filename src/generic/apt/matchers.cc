@@ -33,8 +33,6 @@
 #include "matchers.h"
 
 #include "apt.h"
-#include "tags.h"
-#include "tasks.h"
 
 #include <aptitude.h>
 
@@ -49,7 +47,7 @@
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/pkgsystem.h>
-#include <apt-pkg/version.h>
+#define pkgCheckDep _system->checkDep
 
 #include <generic/util/eassert.h>
 #include <ctype.h>
@@ -479,95 +477,6 @@ public:
   }
 };
 
-class pkg_task_matcher : public pkg_string_matcher
-{
-public:
-  pkg_task_matcher(const string &s) : pkg_string_matcher(s)
-  {
-  }
-
-  bool matches(const pkgCache::PkgIterator &pkg,
-	       const pkgCache::VerIterator &v)
-  {
-    list<string> *l=get_tasks(pkg);
-
-    if(!l)
-      return false;
-
-    for(list<string>::iterator i=l->begin();
-	i!=l->end();
-	++i)
-      if(string_matches(i->c_str()))
-	return true;
-
-    return false;
-  }
-
-  // Uses the fact that the result returns NULL <=> nothing matched
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
-  {
-    list<string> *l=get_tasks(pkg);
-
-    if(!l)
-      return NULL;
-
-    for(list<string>::iterator i=l->begin();
-	i!=l->end();
-	++i)
-      {
-	pkg_match_result *r=get_string_match(i->c_str());
-
-	if(r != NULL)
-	  return r;
-      }
-
-    return NULL;
-  }
-};
-
-class pkg_tag_matcher : public pkg_string_matcher
-{
-public:
-  pkg_tag_matcher(const string &s)
-    : pkg_string_matcher(s)
-  {
-  }
-
-  bool matches(const pkgCache::PkgIterator &pkg,
-	       const pkgCache::VerIterator &ver)
-  {
-    const std::set<tag> *tags = get_tags(pkg);
-
-    if(tags == NULL)
-      return false;
-
-    for(std::set<tag>::const_iterator i=tags->begin(); i!=tags->end(); ++i)
-      if(string_matches(i->str().c_str()))
-	return true;
-
-    return false;
-  }
-
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
-  {
-    const set<tag> *tags = get_tags(pkg);
-
-    if(tags == NULL)
-      return NULL;
-
-    for(set<tag>::const_iterator i=tags->begin(); i!=tags->end(); ++i)
-      {
-	pkg_match_result *res = get_string_match(i->str().c_str());
-	if(res != NULL)
-	  return res;
-      }
-
-    return NULL;
-  }
-};
-
 //  Package-file info matchers.  Match a package if any of its
 // available files (for all versions) match the given criteria.
 //
@@ -839,44 +748,37 @@ public:
 class pkg_action_matcher:public pkg_matcher
 {
   pkg_action_state type;
-  bool require_purge;
 public:
-  pkg_action_matcher(pkg_action_state _type, bool _require_purge)
-    :type(_type), require_purge(_require_purge)
+  pkg_action_matcher(pkg_action_state _type)
+    :type(_type)
   {
   }
 
   bool matches(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
   {
-    if(require_purge &&
-       ((*apt_cache_file)[pkg].iFlags & pkgDepCache::Purge) == 0)
-      return false;
-    else
+    switch(type)
       {
-	switch(type)
-	  {
-	  case pkg_install:
-	    {
-	      pkg_action_state thetype=find_pkg_state(pkg);
-	      return thetype==pkg_install || thetype==pkg_auto_install;
-	    }
-	  case pkg_hold:
-	    return !pkg.CurrentVer().end() && (*apt_cache_file)->get_ext_state(pkg).selection_state==pkgCache::State::Hold;
-	  case pkg_remove:
-	    {
-	      pkg_action_state thetype=find_pkg_state(pkg);
+      case pkg_install:
+        {
+          pkg_action_state thetype=find_pkg_state(pkg);
+          return thetype==pkg_install || thetype==pkg_auto_install;
+        }
+      case pkg_hold:
+        return !pkg.CurrentVer().end() && (*apt_cache_file)->get_ext_state(pkg).selection_state==pkgCache::State::Hold;
+      case pkg_remove:
+        {
+          pkg_action_state thetype=find_pkg_state(pkg);
 
-	      return thetype==pkg_remove || thetype==pkg_auto_remove ||
-		thetype==pkg_unused_remove;
-	    }
-	  default:
-	    {
-	      pkg_action_state thetype=find_pkg_state(pkg);
+	  return thetype==pkg_remove || thetype==pkg_auto_remove ||
+	      thetype==pkg_unused_remove;
+        }
+      default:
+        {
+          pkg_action_state thetype=find_pkg_state(pkg);
 
-	      return thetype==type;
-	    }
-	  }
+          return thetype==type;
+        }
       }
   }
 
@@ -2144,30 +2046,26 @@ pkg_matcher *parse_atom(string::const_iterator &start,
 		      {
 			// Match packages to be installed
 			if(!strcasecmp(substr.c_str(), "install"))
-			  return new pkg_action_matcher(pkg_install, false);
+			  return new pkg_action_matcher(pkg_install);
 
 			// Match packages to be upgraded
 			else if(!strcasecmp(substr.c_str(), "upgrade"))
-			  return new pkg_action_matcher(pkg_upgrade, false);
+			  return new pkg_action_matcher(pkg_upgrade);
 
 			else if(!strcasecmp(substr.c_str(), "downgrade"))
-			  return new pkg_action_matcher(pkg_downgrade, false);
+			  return new pkg_action_matcher(pkg_downgrade);
 
 			// Match packages to be removed OR purged
 			else if(!strcasecmp(substr.c_str(), "remove"))
-			  return new pkg_action_matcher(pkg_remove, false);
-
-			// Match packages to be purged
-			else if(!strcasecmp(substr.c_str(), "purge"))
-			  return new pkg_action_matcher(pkg_remove, true);
+			  return new pkg_action_matcher(pkg_remove);
 
 			// Match packages to be reinstalled
 			else if(!strcasecmp(substr.c_str(), "reinstall"))
-			  return new pkg_action_matcher(pkg_reinstall, false);
+			  return new pkg_action_matcher(pkg_reinstall);
 
 			// Match held packages
 			else if(!strcasecmp(substr.c_str(), "hold"))
-			  return new pkg_action_matcher(pkg_hold, false);
+			  return new pkg_action_matcher(pkg_hold);
 			else if(!strcasecmp(substr.c_str(), "keep"))
 			  return new pkg_keep_matcher;
 
@@ -2189,8 +2087,6 @@ pkg_matcher *parse_atom(string::const_iterator &start,
 		      }
 		    case 'd':
 		      return new pkg_description_matcher(substr);
-		    case 'G':
-		      return new pkg_tag_matcher(substr);
 		    case 'F':
 		      return new pkg_false_matcher;
 		    case 'm':
@@ -2233,8 +2129,6 @@ pkg_matcher *parse_atom(string::const_iterator &start,
 		      }
 		    case 's':
 		      return new pkg_section_matcher(substr);
-		    case 't':
-		      return new pkg_task_matcher(substr);
 		    case 'T':
 		      return new pkg_true_matcher;
 		    case 'V':

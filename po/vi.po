@@ -3547,11 +3547,10 @@ msgstr "chính"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available from security.debian.org."
+" Security updates for these packages are available."
 msgstr ""
 "Trình cập nhật bảo mật\n"
-"Trình cập nhật bảo mậtho những gói này công bố tại nơi Mạng «s<curity.debian."
-"org».>"
+"Trình cập nhật bảo mậtho những gói này công bố tại nơi"
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4639,10 +4638,10 @@ msgstr ""
 #: src/ui.cc:1279
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Việc ci đặt / lgỡỏ gói cần thiết quyền truy cập quản trị mà bạn hiện thời "
-"không có. Bạn có muốn chuyển đổi sang tài khoản ngươi chủ (root) phải không?"
+"không có."
 
 #: src/ui.cc:1282 src/ui.cc:1411
 msgid "Become root"
@@ -4689,10 +4688,10 @@ msgstr "Cập nhật danh sách"
 #: src/ui.cc:1408
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Việc cập nhậtnh sách gói thn thiết quyền truy cập quản trị, mà bạn hiện thời "
-"không có. Bạn có muốn chuyển đổi sang tài khoản người chủ phải không?"
+"không có."
 
 #: src/ui.cc:1423 src/ui.cc:1930
 msgid "Waste time trying to find mines"

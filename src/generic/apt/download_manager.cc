@@ -36,5 +36,5 @@ pkgAcquire::RunResult download_manager::do_download()
 
 pkgAcquire::RunResult download_manager::do_download(int PulseInterval)
 {
-  return fetcher->Run(PulseInterval);
+  return fetcher->Run();
 }

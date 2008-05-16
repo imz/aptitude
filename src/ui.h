@@ -25,7 +25,6 @@ class OpProgress;
 
 class download_signal_log;
 class fragment;
-class pkg_hier;
 class vs_progress;
 class vscreen_widget;
 template<class T> class ref_ptr;
@@ -68,9 +67,6 @@ extern sigc::signal0<bool, accumulate_or> package_install;
 /** Emitted for Package -> Remove. */
 extern sigc::signal0<bool, accumulate_or> package_remove;
 
-/** Emitted for Package -> Purge. */
-extern sigc::signal0<bool, accumulate_or> package_purge;
-
 /** Emitted for Package -> Hold. */
 extern sigc::signal0<bool, accumulate_or> package_hold;
 
@@ -94,30 +90,6 @@ extern sigc::signal0<bool, accumulate_or> package_information_enabled;
 
 /** Emitted for Package -> Package Information. */
 extern sigc::signal0<bool, accumulate_or> package_information;
-
-/** Tests whether Package -> Changelog is enabled. */
-extern sigc::signal0<bool, accumulate_or> package_changelog_enabled;
-
-/** Emitted for Package -> Changelog. */
-extern sigc::signal0<bool, accumulate_or> package_changelog;
-
-
-/** Emitted for Resolver -> Toggle Rejected. */
-extern sigc::signal0<bool, accumulate_or> resolver_toggle_rejected;
-
-/** Tests whether Resolver -> Reject/Unreject Action is enabled. */
-extern sigc::signal0<bool, accumulate_or> resolver_toggle_rejected_enabled;
-
-/** Emitted for Resolver -> Toggle Approved. */
-extern sigc::signal0<bool, accumulate_or> resolver_toggle_approved;
-
-/** Tests whether Resolver -> Toggle Approved is enabled. */
-extern sigc::signal0<bool, accumulate_or> resolver_toggle_approved_enabled;
-/** Emitted for Resolver -> View Target */
-extern sigc::signal0<bool, accumulate_or> resolver_view_target;
-
-/** Tests whether Resolver -> View Target is enabled. */
-extern sigc::signal0<bool, accumulate_or> resolver_view_target_enabled;
 
 
 /** Tests whether Search -> Find is enabled. */

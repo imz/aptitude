@@ -5,8 +5,6 @@
 #include "cmdline_prompt.h"
 
 #include "cmdline_action.h"
-#include "cmdline_changelog.h"
-#include "cmdline_resolver.h"
 #include "cmdline_show.h"
 #include "cmdline_util.h"
 
@@ -21,10 +19,10 @@
 #include <vscreen/vscreen.h>
 
 #include <apt-pkg/algorithms.h>
-#include <apt-pkg/dpkgpm.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/pkgsystem.h>
 
 using namespace std;
 
@@ -51,7 +49,7 @@ static bool get_fetchinfo(fetchinfo &f)
   if(!l.ReadMainList())
     return _error->Error(_("Couldn't read list of sources"));
 
-  pkgDPkgPM pm(*apt_cache_file);
+  pkgPackageManager &pm = *_system->CreatePM(*apt_cache_file);
   pm.GetArchives(&fetcher, &l, apt_package_records);
 
   f.FetchBytes=fetcher.FetchNeeded();
@@ -106,8 +104,7 @@ static string reason_string_list(set<reason> &reasons)
 static void cmdline_show_instinfo(pkgvector &items,
 				  bool showvers,
 				  bool showdeps,
-				  bool showsize,
-				  bool showpurge)
+				  bool showsize)
 {
   sort(items.begin(), items.end(), pkg_byname_compare);
   strvector output;
@@ -119,12 +116,6 @@ static void cmdline_show_instinfo(pkgvector &items,
       pkgDepCache::StateCache &state=(*apt_cache_file)[*i];
       //aptitudeDepCache::aptitude_state &extstate=(*apt_cache_file)->get_ext_state(*i);
       pkgCache::VerIterator instver=state.InstVerIter(*apt_cache_file);
-
-      if(showpurge)
-	{
-	  if(state.Delete() && state.iFlags&pkgDepCache::Purge)
-	    s += "{p}";
-	}
 
       // Display version numbers.
       if(showvers)
@@ -519,26 +510,23 @@ static bool cmdline_show_preview(bool as_upgrade, pkgset &to_install,
 	  if(i==pkg_auto_install || i==pkg_auto_remove || i==pkg_unused_remove ||
 	     i==pkg_auto_hold || i==pkg_broken)
 	    cmdline_show_instinfo(lists[i],
-				  showvers, showdeps, showsize,
-				  (i == pkg_auto_remove ||
-				   i == pkg_unused_remove));
+				  showvers, showdeps, showsize);
 	  else
 	    cmdline_show_instinfo(lists[i],
-				  showvers, false, showsize,
-				  i == pkg_remove);
+				  showvers, false, showsize);
 	}
     }
 
   if(!recommended.empty())
     {
       printf(_("The following packages are RECOMMENDED but will NOT be installed:\n"));
-      cmdline_show_instinfo(recommended, showvers, showdeps, showsize, false);
+      cmdline_show_instinfo(recommended, showvers, showdeps, showsize);
     }
 
   if(verbose>0 && !suggested.empty())
     {
       printf(_("The following packages are SUGGESTED but will NOT be installed:\n"));
-      cmdline_show_instinfo(suggested, showvers, showdeps, showsize, false);
+      cmdline_show_instinfo(suggested, showvers, showdeps, showsize);
     }
 
   if(all_empty)
@@ -615,36 +603,6 @@ static void cmdline_parse_show(string response,
   prompt_string(_("Press Return to continue."));
 }
 
-// Erm.  Merge w/ above?
-static void cmdline_parse_changelog(string response)
-{
-  // assume response[0]=='i'
-  string::size_type i=1;
-
-  vector<string> packages;
-
-  while(i<response.size())
-    {
-      while(i<response.size() && isspace(response[i]))
-	++i;
-
-      string pkgname;
-      // Could support quoting, etc?
-      while(i<response.size() && !isspace(response[i]))
-	pkgname+=response[i++];
-
-      if(!pkgname.empty())
-	packages.push_back(pkgname);
-    }
-
-  if(packages.empty())
-    printf(_("No packages found -- enter the package names on the line after 'c'.\n"));
-  else
-    do_cmdline_changelog(packages);
-
-  prompt_string(_("Press Return to continue"));
-}
-
 static inline fragment *flowindentbox(int i1, int irest, fragment *f)
 {
   return indentbox(i1, irest, flowbox(f));
@@ -656,7 +614,6 @@ static void prompt_help(ostream &out)
 			fragf(_("y: %F"
 				"n: %F"
 				"i: %F"
-				"c: %F"
 				"d: %F"
 				"s: %F"
 				"v: %F"
@@ -670,7 +627,6 @@ static void prompt_help(ostream &out)
 				"%F"
 				"%F"
 				"%F"
-				"%F"
 				"%F"),
 			      flowindentbox(0, 3,
 					    fragf(_("continue with the installation"))),
@@ -678,8 +634,6 @@ static void prompt_help(ostream &out)
 					    fragf(_("abort and quit"))),
 			      flowindentbox(0, 3,
 					    fragf(_("show information about one or more packages; the package names should follow the 'i'"))),
-			      flowindentbox(0, 3,
-					    fragf(_("show the Debian changelogs of one or more packages; the package names should follow the 'c'"))),
 			      flowindentbox(0, 3,
 					    fragf(_("toggle the display of dependency information"))),
 			      flowindentbox(0, 3,
@@ -699,8 +653,6 @@ static void prompt_help(ostream &out)
 			      flowindentbox(0, 4,
 					    fragf(_("'-' to remove packages"))),
 			      flowindentbox(0, 4,
-					    fragf(_("'_' to purge packages"))),
-			      flowindentbox(0, 4,
 					    fragf(_("'=' to place packages on hold"))),
 			      flowindentbox(0, 4,
 					    fragf(_("':' to keep packages in their current state without placing them on hold"))),
@@ -718,7 +670,6 @@ bool cmdline_do_prompt(bool as_upgrade,
 		       pkgset &to_install,
 		       pkgset &to_hold,
 		       pkgset &to_remove,
-		       pkgset &to_purge,
 		       bool showvers,
 		       bool showdeps,
 		       bool showsize,
@@ -741,17 +692,8 @@ bool cmdline_do_prompt(bool as_upgrade,
 	cont=true;
       else if((*apt_cache_file)->BrokenCount() > 0)
 	{
-	  if(!cmdline_resolve_deps(to_install,
-				   to_hold,
-				   to_remove,
-				   to_purge,
-				   assume_yes,
-				   force_no_change,
-				   verbose))
-	    {
-	      cont=true;
-	      rval=false;
-	    }
+	  cont=true;
+	  rval=false;
 	}
       else if(assume_yes)
 	cont=true;
@@ -811,16 +753,12 @@ bool cmdline_do_prompt(bool as_upgrade,
 		case 'I':
 		  cmdline_parse_show(response, verbose);
 		  break;
-		case 'C':
-		  cmdline_parse_changelog(response);
-		  break;
 		case '+':
 		case '-':
 		case '=':
-		case '_':
 		case ':':
 		  cmdline_parse_action(response, to_install, to_hold,
-				       to_remove, to_purge, verbose);
+				       to_remove, verbose);
 		  break;
 		case 'E':
 		  ui_preview();

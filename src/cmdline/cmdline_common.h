@@ -23,7 +23,7 @@ typedef std::vector<string> strvector;
 
 enum cmdline_pkgaction_type
   {cmdline_install, cmdline_installauto, cmdline_remove,
-   cmdline_purge, cmdline_hold, cmdline_unhold, cmdline_markauto,
+   cmdline_hold, cmdline_unhold, cmdline_markauto,
    cmdline_unmarkauto, cmdline_forbid_version, cmdline_reinstall,
    cmdline_keep};
 

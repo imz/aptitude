@@ -24,8 +24,6 @@
 #include "aptitude.h"
 #include "ui.h"
 
-#include <generic/apt/tags.h>
-
 #include <vscreen/fragment.h>
 #include <vscreen/transcode.h>
 #include <vscreen/config/colors.h>
@@ -83,7 +81,7 @@ static fragment *make_level_fragment(const wstring &desc,
 	{
 	  nspaces=0;
 
-	  while(loc<desc.size() && desc[loc]==L' ' && nspaces<indent)
+	  while(loc<desc.size() && (desc[loc]==L' ' || desc[loc]==L'\t') && nspaces<indent)
 	    {
 	      ++loc;
 	      ++nspaces;
@@ -101,6 +99,8 @@ static fragment *make_level_fragment(const wstring &desc,
       switch(desc[loc])
 	{
 	case L' ':
+	case L'\t':
+	  // preformatted:
 	  {
 	    // Stores the number of spaces up to a bullet, if any.
 	    unsigned int nspaces2=nspaces+1;
@@ -130,7 +130,7 @@ static fragment *make_level_fragment(const wstring &desc,
 		start = loc2+1;
 		int indent_beyond_bullet = 0;
 
-		while(start < desc.size() && desc[start] == L' ')
+		while(start < desc.size() && (desc[start] == L' ' || desc[start] == L'\t'))
 		  {
 		    ++start;
 		    ++indent_beyond_bullet;
@@ -167,6 +167,7 @@ static fragment *make_level_fragment(const wstring &desc,
 
 	  break;
 	case L'.':
+	case L'\n':
 	  // Add a blank line (ignore the rest of the line)
 	  {
 	    fragments.push_back(newline_fragment());
@@ -198,7 +199,7 @@ static fragment *make_level_fragment(const wstring &desc,
 
 	      // If we hit a newline and didn't just output a whitespace
 	      // character, insert one.
-	      if(loc<desc.size() && par.size()>0 && par[par.size()-1]!=' ')
+	      if(loc<desc.size() && par.size()>0 && par[par.size()-1]!=L' ')
 		par+=L" ";
 
 	      // Skip the newline
@@ -210,7 +211,7 @@ static fragment *make_level_fragment(const wstring &desc,
 
 	      // Find how much indentation this line has.
 	      nspaces=0;
-	      while(loc<desc.size() && desc[loc]==L' ')
+	      while(loc<desc.size() && (desc[loc]==L' ' || desc[loc]==L'\t'))
 		{
 		  ++loc;
 		  ++nspaces;
@@ -242,42 +243,6 @@ fragment *make_desc_fragment(const wstring &desc)
   wstring::size_type loc=0;
   vector<fragment*> fragments;
 
-  // Skip the short description
-  while(loc<desc.size() && desc[loc]!=L'\n')
-    ++loc;
-
-  if(loc<desc.size()) // Skip the '\n'
-    ++loc;
-
-  // Skip leading whitespace on the first line if there is any.
-  if(loc<desc.size() && desc[loc] == L' ')
-    ++loc;
-
-  // Note that the starting amount of indentation is 1...
   return make_level_fragment(desc, 0, 1, loc);
 }
 
-
-fragment *make_tags_fragment(const pkgCache::PkgIterator &pkg)
-{
-  if(pkg.end())
-    return NULL;
-
-  const set<tag> *s = get_tags(pkg);
-  if(!s->empty())
-    {
-      vector<fragment *> tags;
-
-      for(set<tag>::const_iterator i = s->begin(); i != s->end(); ++i)
-	tags.push_back(text_fragment(i->str(), style_attrs_on(A_BOLD)));
-
-      wstring tagstitle = transcode(_("Tags"));
-
-      return fragf("%ls: %F",
-		   tagstitle.c_str(),
-		   indentbox(0, wcswidth(tagstitle.c_str(), tagstitle.size())+2,
-			     wrapbox(join_fragments(tags, L", "))));
-    }
-  else
-    return NULL;
-}

@@ -31,7 +31,8 @@
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
 
-#include <apt-pkg/version.h>
+#include <apt-pkg/pkgsystem.h>
+#include <apt-pkg/configuration.h>
 
 using namespace std;
 using namespace __gnu_cxx;

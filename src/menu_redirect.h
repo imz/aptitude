@@ -46,9 +46,6 @@ public:
   /** Remove the selected package (if any). */
   virtual bool package_remove();
 
-  /** Purge the selected package (if any). */
-  virtual bool package_purge();
-
   /** Hold the selected package (if any). */
   virtual bool package_hold();
 
@@ -76,31 +73,6 @@ public:
    *  package version.
    */
   virtual bool package_information();
-
-  /** \return \b true if the selected item has a changelog. */
-  virtual bool package_changelog_enabled();
-
-  /** View the changelog of the selected package. */
-  virtual bool package_changelog();
-
-
-  /** Toggle whether a solution action item is approved. */
-  virtual bool resolver_toggle_approved();
-
-  /** \return \b true if the selected item can be approved. */
-  virtual bool resolver_toggle_approved_enabled();
-
-  /** Toggle whether a solution action item is rejected. */
-  virtual bool resolver_toggle_rejected();
-
-  /** \return \b true if the selected item can be approved. */
-  virtual bool resolver_toggle_rejected_enabled();
-
-  /** View information about a solution action item. */
-  virtual bool resolver_view_target();
-
-  /** \return \b true if the selected item can be approved. */
-  virtual bool resolver_view_target_enabled();
 
 
   /** \return \b true if this view knows how to search. */

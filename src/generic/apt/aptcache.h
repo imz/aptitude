@@ -42,9 +42,6 @@
 
 class undoable;
 class undo_group;
-class pkgProblemResolver;
-class aptitude_universe;
-template<typename PackageUniverse> class generic_solution;
 
 class aptitudeDepCache:public pkgDepCache, public sigc::trackable
 {
@@ -209,17 +206,6 @@ private:
   apt_state_snapshot backup_state;
   // Stores what the cache was like just before an action was performed
 
-  /** Call whenever the cache state is modified; discards the
-   *  state of the active resolver.
-   *
-   *  \param undo the undo group with which this discarding should be
-   *  associated.
-   */
-  void discard_resolver(undo_group *undo);
-
-  /** Call whenever a new resolver should be instantiated. */
-  void create_resolver();
-
   undoable *state_restorer(PkgIterator pkg, StateCache &state, aptitude_state &ext_state);
   // Returns an 'undoable' object which will restore the given package to the
   // given state via {Mark,Set}* routines
@@ -360,13 +346,6 @@ public:
    */
   void set_read_only(bool new_read_only);
 
-  /** Apply the given solution as a resolver result; any actions
-   *  that it requests will be marked as having been performed to
-   *  fulfill dependencies.
-   */
-  void apply_solution(const generic_solution<aptitude_universe> &solution,
-		      undo_group *undo);
-
   /** \return \b true if automatic aptitude upgrades should ignore this
    *  package.
    */
@@ -374,14 +353,6 @@ public:
 
   bool all_upgrade(bool with_autoinst, undo_group *undo);
   // Wrapper for pkgAllUpgrade (the engine of "apt-get upgrade")
-
-  bool try_fix_broken(undo_group *undo);
-  // Attempts to fix any broken packages, dumping the changes the problem
-  // fixer creates into the given undo group.
-
-  bool try_fix_broken(pkgProblemResolver &fixer, undo_group *undo);
-  // Just runs the resolver given and catches automatic changes.
-  // (this lets callers customize the information given to the resolver)
 
   const apt_state_snapshot *snapshot_apt_state();
   // Returns the current state of the *APT* cache (no information about

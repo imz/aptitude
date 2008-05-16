@@ -25,11 +25,7 @@
 
 
 #include "config_signal.h"
-#include "pkg_hier.h"
-#include "resolver_manager.h"
 #include "rev_dep_iterator.h"
-#include "tags.h"
-#include "tasks.h"
 
 #include <generic/util/undo.h>
 #include <generic/util/util.h>
@@ -65,8 +61,6 @@ signalling_config *aptcfg=NULL;
 pkgRecords *apt_package_records=NULL;
 pkgSourceList *apt_source_list=NULL;
 undo_list *apt_undos=NULL;
-pkg_hier *user_pkg_hier=NULL;
-resolver_manager *resman = NULL;
 
 string *pendingerr=NULL;
 bool erroriswarning=false;
@@ -75,7 +69,6 @@ static Configuration *theme_config;
 static Configuration *user_config;
 
 sigc::signal0<void> cache_closed, cache_reloaded, cache_reload_failed;
-sigc::signal0<void> hier_reloaded;
 sigc::signal0<void> consume_errors;
 
 static void reset_interesting_dep_memoization()
@@ -88,24 +81,6 @@ static void reset_surrounding_or_memoization()
 {
   delete cached_surrounding_or;
   cached_surrounding_or = NULL;
-}
-
-static void reload_user_pkg_hier()
-{
-  delete user_pkg_hier;
-  user_pkg_hier=new pkg_hier;
-
-  user_pkg_hier->input_file(PKGDATADIR "/function_groups");
-
-  string cfgloc(get_homedir());
-  if(!cfgloc.empty())
-    {
-      string user_hier=cfgloc+string("/.aptitude/function_pkgs");
-      if(access(user_hier.c_str(), R_OK)==0)
-	user_pkg_hier->input_file(user_hier);
-      else
-	user_pkg_hier->input_file(PKGDATADIR "/function_pkgs");
-    }
 }
 
 void apt_preinit()
@@ -243,8 +218,6 @@ void apt_close_cache()
 {
   cache_closed();
 
-  reset_tasks();
-
   if(apt_package_records)
     {
       delete apt_package_records;
@@ -261,12 +234,6 @@ void apt_close_cache()
     {
       delete apt_source_list;
       apt_source_list=NULL;
-    }
-
-  if(resman)
-    {
-      delete resman;
-      resman = NULL;
     }
 }
 
@@ -321,17 +288,6 @@ void apt_load_cache(OpProgress *progress_bar, bool do_initselections,
   // Um, good time to clear our undo info.
   apt_undos->clear_items();
 
-  load_tasks(*progress_bar);
-  load_tags(*progress_bar);
-
-  if(user_pkg_hier)
-    {
-      reload_user_pkg_hier();
-      hier_reloaded();
-    }
-
-  resman = new resolver_manager(*new_file);
-
   cache_reloaded();
 }
 
@@ -340,14 +296,6 @@ void apt_reload_cache(OpProgress *progress_bar, bool do_initselections,
 {
   apt_close_cache();
   apt_load_cache(progress_bar, do_initselections, status_fname);
-}
-
-pkg_hier *get_user_pkg_hier()
-{
-  if(!user_pkg_hier)
-    reload_user_pkg_hier();
-
-  return user_pkg_hier;
 }
 
 pkg_action_state find_pkg_state(pkgCache::PkgIterator pkg)
@@ -598,6 +546,8 @@ bool package_recommended(const pkgCache::PkgIterator &pkg)
 
 bool package_trusted(const pkgCache::VerIterator &ver)
 {
+// Not yet implemented in apt 0.5
+#if 0
   for(pkgCache::VerFileIterator i = ver.FileList(); !i.end(); ++i)
     {
       pkgIndexFile *index;
@@ -609,8 +559,8 @@ bool package_trusted(const pkgCache::VerIterator &ver)
       else if(index->IsTrusted())
 	return true;
     }
-
-  return false;
+#endif
+  return true;
 }
 
 /** \return \b true if d1 subsumes d2; that is, if one of the

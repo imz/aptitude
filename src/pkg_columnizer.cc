@@ -25,7 +25,6 @@
 
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
-#include <generic/apt/tasks.h>
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/pkgrecords.h>
@@ -33,6 +32,10 @@
 #include <apt-pkg/policy.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/version.h>
+
+#ifndef HAVE_LIBAPT_PKG3
+#define pkgCheckDep _system->checkDep
+#endif
 
 #include <vscreen/transcode.h>
 
@@ -261,7 +264,7 @@ column_disposition pkg_item::pkg_columnizer::setup_column(int type)
 		!candver.end() && candver.VerStr() == estate.forbidver)
 	  return column_disposition("F", 0);
 	else if(state.Delete())
-	  return column_disposition((state.iFlags&pkgDepCache::Purge)?"p":"d", 0);
+	  return column_disposition("d", 0);
 	else if(state.InstBroken())
 	  return column_disposition("B", 0);
 	else if(state.NewInstall())
@@ -292,7 +295,7 @@ column_disposition pkg_item::pkg_columnizer::setup_column(int type)
 		!candver.end() && candver.VerStr() == estate.forbidver)
 	  return column_disposition(_("forbidden upgrade"), 0);
 	else if(state.Delete())
-	  return column_disposition((state.iFlags&pkgDepCache::Purge)?_("purge"):_("delete"), 0);
+	  return column_disposition(_("delete"), 0);
 	else if(state.InstBroken())
 	  return column_disposition(_("broken"), 0);
 	else if(state.NewInstall())

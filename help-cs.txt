@@ -19,7 +19,6 @@ všech kláves naleznete v souboru README.
   "]":          Sbalí skupinu balíků a všechny její podskupiny.
 
   Enter:        Zobrazí informace o balíku.
-  "C":          Zobrazí seznam změn balíku (changelog).
   "+":          Instaluje nebo aktualizuje balík, také zruší podržení.
   "-":          Odstraní balík.
   "=":          Podrží balík v aktuální verzi (zabrání aktualizaci).

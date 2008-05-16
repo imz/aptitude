@@ -3459,10 +3459,10 @@ msgstr "主要"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available from security.debian.org."
+" Security updates for these packages are available."
 msgstr ""
 "資安更新\n"
-" 資安更新代表 security.debian.org 所提供的更新套件。"
+" 資安更新代表所提供的更新套件。"
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4534,10 +4534,10 @@ msgstr "玩玩踩地雷來消磨時間"
 #, fuzzy
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "安裝/刪除套件需要管理員權限，而您現在\n"
-"沒有這種權限。您想要進入 root 帳號嗎？\n"
+"沒有這種權限。\n"
 
 #: src/ui.cc:1282 src/ui.cc:1411
 msgid "Become root"
@@ -4587,10 +4587,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "更新套件列表需要管理員權限，而您現在\n"
-"沒有這種權限。您想要進入 root 帳號嗎？\n"
+"沒有這種權限。\n"
 
 #: src/ui.cc:1423 src/ui.cc:1930
 msgid "Waste time trying to find mines"

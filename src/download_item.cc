@@ -42,8 +42,11 @@ style download_item::get_normal_style()
 	return vs_treeitem::get_normal_style()+get_style("DownloadHit");
     case pkgAcquire::Item::StatError:
       return vs_treeitem::get_normal_style()+get_style("Error");
+// Not yet implemented in apt 0.5
+#if 0
     case pkgAcquire::Item::StatAuthError:
       return vs_treeitem::get_normal_style()+get_style("Error");
+#endif
     default:
       eassert(0);
     }
@@ -104,9 +107,12 @@ void download_item::paint(vs_tree *win, int y, bool hierarchical,
     case pkgAcquire::Item::StatError:
       output+=item.Owner->ErrorText;
       break;
+// Not yet implemented in apt 0.5
+#if 0
     case pkgAcquire::Item::StatAuthError:
       output+=item.Owner->ErrorText;
       break;
+#endif
     }
 
   win->show_string_as_progbar(0, y, transcode(output),

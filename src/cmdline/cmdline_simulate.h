@@ -16,7 +16,6 @@
  *  \param to_install a set of packages to install.
  *  \param to_hold a set of packages to hold.
  *  \param to_remove a set of packages to remove.
- *  \param to_purge a set of packages to purge.
  *  \param showvers \b true to show version information in the preview.
  *  \param showdeps \b true to show dependency information in the preview.
  *  \param showsize \b true to show size information in the preview.
@@ -30,7 +29,6 @@
 
 int cmdline_simulate(bool as_upgrade,
 		     pkgset &to_install, pkgset &to_hold, pkgset &to_remove,
-		     pkgset &to_purge,
 		     bool showvers, bool showdeps, bool showsize,
 		     bool always_prompt, int verbose,
 		     bool assume_yes, bool force_no_change);

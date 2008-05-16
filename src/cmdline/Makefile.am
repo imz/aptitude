@@ -5,8 +5,6 @@ noinst_LIBRARIES=libcmdline.a
 libcmdline_a_SOURCES=\
 	cmdline_action.cc \
 	cmdline_action.h \
-	cmdline_changelog.cc \
-	cmdline_changelog.h \
 	cmdline_clean.cc \
 	cmdline_clean.h \
 	cmdline_common.h \
@@ -14,8 +12,6 @@ libcmdline_a_SOURCES=\
 	cmdline_do_action.h \
 	cmdline_download.cc \
 	cmdline_download.h \
-	cmdline_dump_resolver.cc \
-	cmdline_dump_resolver.h \
 	cmdline_forget_new.cc \
 	cmdline_forget_new.h \
 	cmdline_moo.cc \
@@ -24,8 +20,6 @@ libcmdline_a_SOURCES=\
 	cmdline_progress.h \
 	cmdline_prompt.cc \
 	cmdline_prompt.h \
-	cmdline_resolver.cc \
-	cmdline_resolver.h \
 	cmdline_search.cc \
 	cmdline_search.h \
 	cmdline_show.cc \

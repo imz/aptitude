@@ -61,7 +61,6 @@ public:
   virtual void hold(undo_group *undo);
   virtual void keep(undo_group *undo);
   virtual void remove(undo_group *undo);
-  virtual void purge(undo_group *undo);
   virtual void reinstall(undo_group *undo);
   virtual void set_auto(bool isauto, undo_group *undo);
   virtual void forbid_upgrade(undo_group *undo);
@@ -72,7 +71,6 @@ public:
   virtual style get_highlight_style();
   virtual style get_normal_style();
 
-  void show_changelog();
   void show_information();
 
   const pkgCache::PkgIterator &get_package() const;
@@ -92,8 +90,6 @@ public:
   // Menu redirections:
   bool package_forbid_enabled();
   bool package_forbid();
-  bool package_changelog_enabled();
-  bool package_changelog();
   bool package_information_enabled();
   bool package_information();
 };

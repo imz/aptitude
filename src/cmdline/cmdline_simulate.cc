@@ -18,13 +18,12 @@
 
 int cmdline_simulate(bool as_upgrade,
 		     pkgset &to_install, pkgset &to_hold, pkgset &to_remove,
-		     pkgset &to_purge,
 		     bool showvers, bool showdeps, bool showsize,
 		     bool always_prompt, int verbose,
 		     bool assume_yes, bool force_no_change)
 {
   if(!cmdline_do_prompt(as_upgrade,
-			to_install, to_hold, to_remove, to_purge,
+			to_install, to_hold, to_remove,
 			showvers, showdeps, showsize, always_prompt, verbose,
 			assume_yes, force_no_change))
     {

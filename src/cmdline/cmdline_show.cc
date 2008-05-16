@@ -187,9 +187,6 @@ static fragment *state_fragment(pkgCache::PkgIterator pkg)
 			 statestr,
 			 instver.VerStr());
 	}
-      else if(state.Delete() && (state.iFlags&pkgDepCache::Purge) &&
-	      pkg->CurrentState!=pkgCache::State::NotInstalled)
-	return fragf(_("%s; will be purged"), statestr);
       else
 	return fragf("%s", statestr);
     }
@@ -199,13 +196,6 @@ static fragment *state_fragment(pkgCache::PkgIterator pkg)
 
       if(!state.Delete())
 	return fragf("Internal error: no InstVer for a non-deleted package");
-      else if(state.iFlags&pkgDepCache::Purge)
-	{
-	  if(unused_delete)
-	    return fragf(_("%s; will be purged because nothing depends on it"), statestr);
-	  else
-	    return fragf(_("%s; will be purged"));
-	}
       else
 	{
 	  if(unused_delete)
@@ -331,10 +321,6 @@ static fragment *version_file_fragment(pkgCache::VerIterator ver,
 			    _("Description: "),
 			    get_short_description(ver).c_str()));
   fragments.push_back(indentbox(1, 1, make_desc_fragment(get_long_description(ver))));
-
-  fragment *tags = make_tags_fragment(pkg);
-  if(tags)
-    fragments.push_back(fragf("%n%F", tags));
 
   return sequence_fragment(fragments);
 }

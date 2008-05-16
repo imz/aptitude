@@ -141,8 +141,8 @@ public:
    */
   int height_request(int w);
 
-  bool vs_tree::get_cursorvisible();
-  point vs_tree::get_cursorloc();
+  bool get_cursorvisible();
+  point get_cursorloc();
   virtual bool focus_me() {return true;}
   virtual void paint(const style &st);
   virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);

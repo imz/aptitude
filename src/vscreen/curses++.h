@@ -23,7 +23,7 @@
 #define CURSES_PLUSPLUS_H
 
 #include <string>
-#include <ncursesw/curses.h>
+#include <ncurses/curses.h>
 
 #include <generic/util/eassert.h>
 

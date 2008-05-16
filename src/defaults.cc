@@ -31,7 +31,6 @@ static void init_keybindings()
   global_bindings.set("Install", key(L'+', false));
   global_bindings.set("Remove", key(L'-', false));
   global_bindings.set("Hold", key(L'=', false));
-  global_bindings.set("Purge", key(L'_', false));
   global_bindings.set("Keep", key(L':', false));
   global_bindings.set("SetAuto", key(L'M', false));
   global_bindings.set("ClearAuto", key(L'm', false));
@@ -42,7 +41,6 @@ static void init_keybindings()
   global_bindings.set("ReverseDependencies", key(L'r', false));
   global_bindings.set("InfoScreen", key(KEY_ENTER, true));
   global_bindings.set("Versions", key(L'v', false));
-  global_bindings.set("Changelog", key(L'C', false));
 
   global_bindings.set("DoInstallRun", key(L'g', false));
   global_bindings.set("InstallSingle", key(L'I', false));
@@ -59,11 +57,6 @@ static void init_keybindings()
 
   global_bindings.set("DpkgReconfigure", key(L'R', false));
   global_bindings.set("BugReport", key(L'B', false));
-
-  // Hierarchy editor
-  global_bindings.set("Commit", key(L'N', false));
-  global_bindings.set("SaveHier", key(L'S', false));
-  global_bindings.set("EditHier", key(L'E', false));
 
   global_bindings.set("SearchBroken", key(L'b', false));
 
@@ -119,7 +112,6 @@ static void init_styles()
   set_style("DownloadProgress", style_fg(COLOR_BLUE)+style_bg(COLOR_YELLOW));
   set_style("DownloadHit", style_fg(COLOR_BLACK)+style_bg(COLOR_GREEN));
 
-  set_style("ChangelogNewerVersion", style_attrs_on(A_BOLD));
   set_style("Bullet", style_fg(COLOR_YELLOW)+style_attrs_on(A_BOLD));
   set_style("TrustWarning", style_fg(COLOR_RED)+style_bg(COLOR_BLACK)+style_attrs_on(A_BOLD));
 

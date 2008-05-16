@@ -3629,11 +3629,10 @@ msgstr "κύριο"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available from security.debian.org."
+" Security updates for these packages are available."
 msgstr ""
 "Αναβαθμίσεις Ασφαλείας\n"
-" Υπάρχουν διαθέσιμες αναβαθμίσεις ασφαλείας για αυτά τα πακέτα από το "
-"security.debian.org."
+" Υπάρχουν διαθέσιμες αναβαθμίσεις ασφαλείας για αυτά τα πακέτα από."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4758,10 +4757,10 @@ msgstr "Σκοτώστε την ώρα σας βρίσκοντας νάρκες"
 #, fuzzy
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Η εγκατάσταση/αφαίρεση πακέτων απαιτεί προνόμια διαχειριστή, που δεν\n"
-"έχετε αυτή τη στιγμή.  Θα θέλατε να συνδεθείτε ως χρήστης root;\n"
+"έχετε αυτή τη στιγμή.\n"
 
 #: src/ui.cc:1282 src/ui.cc:1411
 msgid "Become root"
@@ -4812,10 +4811,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have.  Would you like to change to the root account?"
+"currently do not have."
 msgstr ""
 "Η ενημέρωση των λιστών πακέτων απαιτεί προνόμια διαχειριστή, που δεν\n"
-"έχετε αυτή τη στιγμή.  Θα θέλατε να συνδεθείτε ως χρήστης root;\n"
+"έχετε αυτή τη στιγμή.\n"
 
 #: src/ui.cc:1423 src/ui.cc:1930
 msgid "Waste time trying to find mines"

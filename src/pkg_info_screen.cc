@@ -79,7 +79,7 @@ void pkg_grouppolicy_info::setup_package_info(const pkgCache::PkgIterator &pkg,
       pkgRecords::Parser &rec=apt_package_records->Lookup(ver.FileList());
 
       std::wstring desc(get_long_description(ver));
-      std::wstring shortdesc(desc, 0, desc.find(L'\n'));
+      std::wstring shortdesc(get_short_description(ver));
 
       vector<fragment*> frags;
 
@@ -94,10 +94,6 @@ void pkg_grouppolicy_info::setup_package_info(const pkgCache::PkgIterator &pkg,
       frags.push_back(clipbox(fragf("%B%s%b%ls%n",
 				    _("Description: "), shortdesc.c_str())));
       frags.push_back(indentbox(2, 2, make_desc_fragment(desc)));
-
-      fragment *tags = make_tags_fragment(pkg);
-      if(tags != NULL)
-	frags.push_back(fragf("%n%F", tags));
 
       // Can I use something other than a clipbox below?
 

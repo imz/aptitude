@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <apt-pkg/pkgcache.h>
+#include <apt-pkg/version.h>
 
 /* For the cases where you want to investigate just what you matched a
  * bit more thoroughly.

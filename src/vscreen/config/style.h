@@ -20,7 +20,7 @@
 #ifndef STYLE_H
 #define STYLE_H
 
-#include <ncursesw/curses.h>
+#include <ncurses/curses.h>
 
 #include <vscreen/curses++.h>
 

@@ -10,7 +10,6 @@
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
 #include <generic/apt/matchers.h>
-#include <generic/apt/tasks.h>
 
 #include <apt-pkg/algorithms.h>
 #include <apt-pkg/error.h>
@@ -19,7 +18,7 @@
 bool cmdline_applyaction(cmdline_pkgaction_type action,
 			 pkgCache::PkgIterator pkg,
 			 pkgset &to_install, pkgset &to_hold,
-			 pkgset &to_remove, pkgset &to_purge,
+			 pkgset &to_remove,
 			 int verbose,
 			 cmdline_version_source source,
 			 const string &sourcestr)
@@ -106,19 +105,12 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
       else if((*apt_cache_file)[pkg].Keep() && verbose>0)
 	printf(_("Package %s is not installed, so it will not be removed\n"), pkg.Name());
       break;
-    case cmdline_purge:
-      if(!pkg.CurrentVer().end() || pkg->CurrentState!=pkgCache::State::ConfigFiles)
-	to_purge.insert(pkg);
-      else if((*apt_cache_file)[pkg].Keep() && verbose>0)
-	printf(_("Package %s is not installed, so it will not be removed\n"), pkg.Name());
-      break;
     case cmdline_hold:
       to_hold.insert(pkg);
       break;
     case cmdline_keep:
       to_install.erase(pkg);
       to_remove.erase(pkg);
-      to_purge.erase(pkg);
       to_hold.erase(pkg);
       break;
     case cmdline_unhold:
@@ -152,9 +144,6 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
       break;
     case cmdline_remove:
       (*apt_cache_file)->mark_delete(pkg, false, false, NULL);
-      break;
-    case cmdline_purge:
-      (*apt_cache_file)->mark_delete(pkg, true, false, NULL);
       break;
     case cmdline_hold:
       (*apt_cache_file)->mark_keep(pkg, false, true, NULL);
@@ -197,7 +186,7 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
 bool cmdline_applyaction(string s,
 			 cmdline_pkgaction_type action,
 			 pkgset &to_install, pkgset &to_hold,
-			 pkgset &to_remove, pkgset &to_purge,
+			 pkgset &to_remove,
 			 int verbose)
 {
   bool rval=true;
@@ -205,32 +194,6 @@ bool cmdline_applyaction(string s,
   cmdline_version_source source=cmdline_version_cand;
 
   string sourcestr, package;
-
-  // Handle task installation.  Won't work if tasksel isn't installed.
-  if(task_list->find(s)!=task_list->end())
-    {
-      task t=(*task_list)[s];
-
-      printf(_("Note: selecting the task \"%s: %s\" for installation\n"),
-	     s.c_str(), t.shortdesc.c_str());
-
-      for(pkgCache::PkgIterator pkg=(*apt_cache_file)->PkgBegin();
-	  !pkg.end(); ++pkg)
-	{
-	  std::list<std::string> *tasks=get_tasks(pkg);
-
-	  for(std::list<std::string>::iterator i=tasks->begin();
-	      i!=tasks->end(); ++i)
-	    if(*i==s)
-	      rval=cmdline_applyaction(action, pkg,
-				       to_install, to_hold, to_remove, to_purge,
-				       verbose, source,
-				       sourcestr) && rval;
-	}
-
-      // break out.
-      return rval;
-    }
 
   if(!cmdline_parse_source(s, source, package, sourcestr))
     return false;
@@ -324,7 +287,7 @@ bool cmdline_applyaction(string s,
 	}
 
       rval=cmdline_applyaction(action, pkg,
-			       to_install, to_hold, to_remove, to_purge,
+			       to_install, to_hold, to_remove,
 			       verbose, source,
 			       sourcestr);
     }
@@ -344,7 +307,7 @@ bool cmdline_applyaction(string s,
 
 	  if(m->matches(pkg))
 	    rval=cmdline_applyaction(action, pkg,
-				     to_install, to_hold, to_remove, to_purge,
+				     to_install, to_hold, to_remove,
 				     verbose, source,
 				     sourcestr) && rval;
 	}
@@ -366,10 +329,6 @@ static bool parse_action_str(const string &s,
     {
       switch(s[loc])
 	{
-	case '_':
-	  action=cmdline_purge;
-	  ++loc;
-	  break;
 	case '-':
 	  action=cmdline_remove;
 	  ++loc;
@@ -419,7 +378,7 @@ static bool parse_action_str(const string &s,
 
 void cmdline_parse_action(string s,
 			  pkgset &to_install, pkgset &to_hold,
-			  pkgset &to_remove, pkgset &to_purge,
+			  pkgset &to_remove,
 			  int verbose)
 {
   string::size_type loc=0;
@@ -453,7 +412,7 @@ void cmdline_parse_action(string s,
 
 	      if(!cmdline_applyaction(pkgname, action,
 				      to_install, to_hold,
-				      to_remove, to_purge,
+				      to_remove,
 				      verbose))
 		return;
 	    }

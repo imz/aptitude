@@ -235,11 +235,7 @@ void resize()
       struct winsize w;
       if(ioctl(fd, TIOCGWINSZ, &w)!=-1)
 	{
-	  resize_term(w.ws_row,w.ws_col);
-	  rootwin=newwin(w.ws_row, w.ws_col, 0, 0);
-	  eassert(rootwin);
-	  //eassert(rootwin.getmaxy()==w.ws_row);
-	  //eassert(rootwin.getmaxx()==w.ws_col);
+	  resizeterm(w.ws_row,w.ws_col);
 	  return;
 	}
       else

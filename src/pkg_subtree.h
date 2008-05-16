@@ -58,7 +58,6 @@ public:
   virtual void hold(undo_group *undo);
   virtual void keep(undo_group *undo);
   virtual void remove(undo_group *undo);
-  virtual void purge(undo_group *undo);
   virtual void reinstall(undo_group *undo);
   virtual void set_auto(bool isauto, undo_group *undo);
 

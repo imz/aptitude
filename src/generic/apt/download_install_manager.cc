@@ -26,14 +26,14 @@
 #include <aptitude.h>
 
 #include <apt-pkg/acquire-item.h>
-#include <apt-pkg/dpkgpm.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
+#include <apt-pkg/pkgsystem.h>
 
 using namespace std;
 
 download_install_manager::download_install_manager(bool _download_only)
-  : log(NULL), download_only(_download_only), pm(new pkgDPkgPM(*apt_cache_file))
+  : log(NULL), download_only(_download_only), pm(_system->CreatePM(*apt_cache_file))
 {
 }
 
@@ -126,20 +126,19 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
 
   pre_install_hook();
 
-  // Note that someone could grab the lock before dpkg takes it;
+  // Note that someone could grab the lock before rpm takes it;
   // without a more complicated synchronization protocol (and I don't
-  // control the code at dpkg's end), them's the breaks.
+  // control the code at rpm's end), them's the breaks.
   apt_cache_file->ReleaseLock();
 
   result rval = success;
 
-  pkgPackageManager::OrderResult pmres = pm->DoInstall(aptcfg->FindI("APT::Status-Fd", -1));
+  pkgPackageManager::OrderResult pmres = pm->DoInstall();
   switch(pmres)
     {
     case pkgPackageManager::Failed:
       _error->DumpErrors();
-      cerr << _("A package failed to install.  Trying to recover:") << endl;
-      system("dpkg --configure -a");
+      cerr << _("A package failed to install.") << endl;
       _error->Discard();
       
       rval = failure;
@@ -162,7 +161,7 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
   if(!apt_cache_file->GainLock())
     // This really shouldn't happen.
     {
-      _error->Error(_("Could not regain the system lock!  (Perhaps another apt or dpkg is running?)"));
+      _error->Error(_("Could not regain the system lock!  (Perhaps another apt or rpm is running?)"));
       return failure;
     }
 
