@@ -3549,10 +3549,11 @@ msgstr "pagrindiniai"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Saugumo pataisos\n"
-" Šiuose paketuose rasta saugumo spragų, juos galima atnaujinti."
+" Šiuose paketuose rasta saugumo spragų, juos galima atnaujinti iš security."
+"debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4637,10 +4638,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Norėdami įdiegti/pašalinti paketus turite turėti administratoriaus (root) "
-"privilegijas, kurių jūs neturite."
+"privilegijas, kurių jūs neturite.  Ar norite pereiti į „root“ paskyrą?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4687,10 +4688,10 @@ msgstr "Atnaujinimų sąrašas"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Norint atnaujinti paketų sąrašą reikalingos administratoriaus privilegijos, "
-"kurių jūs šiuo metu neturite."
+"kurių jūs šiuo metu neturite. Ar norite pereiti į root paskyrą?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

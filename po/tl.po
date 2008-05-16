@@ -3631,10 +3631,11 @@ msgstr "main"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Update sa seguridad\n"
-" Update sa seguridad para sa paketeng ito ay available."
+" Update sa seguridad para sa paketeng ito ay available mula sa security."
+"debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4761,11 +4762,11 @@ msgstr "Magsayang ng oras sa pag-hahanap ng mga mina"
 #, fuzzy
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Installing/removing ng mga pakete ay kailangan ng administrative na "
 "pribilhiyo, na\n"
-"sa iyo kasalukuyan ay wala.\n"
+"sa iyo kasalukuyan ay wala.  Gusto mo bang magbago sa root account?\n"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4816,11 +4817,11 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Updating ng mga pakete list ay kailangan ng administrative na pribilhiyo, "
 "na\n"
-"sa iyo kasalukuyan ay wala.\n"
+"sa iyo kasalukuyan ay wala.  Gusto mo bang magbago sa root account?\n"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

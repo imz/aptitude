@@ -3470,10 +3470,10 @@ msgstr "رئيسي"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "ترقيات الأمن\n"
-" تتوفر ترقيات أمنية لهذه الحزم."
+" تتوفر ترقيات أمنية لهذه الحزم من security.debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4519,9 +4519,10 @@ msgstr "نفذ الوقت أثناء محاولة حل المعتمدات (اض�
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
-"تثبيت/إزالة الحزم بتطلب صلاحيات إداريّة، والتي لا تملكها حاليّاً."
+"تثبيت/إزالة الحزم بتطلب صلاحيات إداريّة، والتي لا تملكها حاليّاً.  هل تود "
+"التغيّر إلى حساب root؟"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4567,9 +4568,10 @@ msgstr "تحديث القائمة"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
-"تحديث لوائح الحزم يتطلب صلاحيات إداريّة، والتي لا تملكها حاليّاً."
+"تحديث لوائح الحزم يتطلب صلاحيات إداريّة، والتي لا تملكها حاليّاً.  هل تود "
+"التغيّر إلى حساب المستخدم root؟"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

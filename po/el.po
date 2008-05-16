@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: aptitude_po_el\n"
 "Report-Msgid-Bugs-To: aptitude@packages.debian.org\n"
 "POT-Creation-Date: 2006-09-03 09:36-0700\n"
-"PO-Revision-Date: 2008-05-16 19:39+0400\n"
+"PO-Revision-Date: 2006-09-03 09:46-0700\n"
 "Last-Translator: Konstantinos Margaritis <markos@debian.org>\n"
 "Language-Team: Greek <debian-l10n-greek@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -3640,10 +3640,11 @@ msgstr "κύριο"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Αναβαθμίσεις Ασφαλείας\n"
-" Υπάρχουν διαθέσιμες αναβαθμίσεις ασφαλείας για αυτά τα πακέτα από."
+" Υπάρχουν διαθέσιμες αναβαθμίσεις ασφαλείας για αυτά τα πακέτα από το "
+"security.debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4751,10 +4752,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Η εγκατάσταση/αφαίρεση πακέτων απαιτεί προνόμια διαχειριστή, που δεν έχετε "
-"αυτή τη στιγμή."
+"αυτή τη στιγμή. Θα θέλατε να περάσετε στο λογαριασμό χρήστη root;"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4801,10 +4802,10 @@ msgstr "Αναβάθμιση λίστας"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Η ενημέρωση των καταλόγων των πακέτων απαιτεί προνόμια διαχειριστή, που δεν "
-"έχετε αυτή τη στιγμή."
+"έχετε αυτή τη στιγμή. Θα θέλατε να αλλάξετε στον λογαριασμό του χρήστη root;"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

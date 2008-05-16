@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: aptitude\n"
 "Report-Msgid-Bugs-To: aptitude@packages.debian.org\n"
 "POT-Creation-Date: 2006-09-03 09:36-0700\n"
-"PO-Revision-Date: 2008-05-16 20:19+0400\n"
+"PO-Revision-Date: 2006-09-07 16:00-0300\n"
 "Last-Translator: André Luís Lopes <andrelop@debian.org>\n"
 "Language-Team: l10n portuguese <debian-l10n-portuguese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -3600,10 +3600,11 @@ msgstr "principal"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Atualizações de Segurança\n"
-" Atualizações de segurança para estes pacotes estão disponíveis."
+" Atualizações de segurança para estes pacotes estão disponíveis em security."
+"debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4703,10 +4704,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Instalar/remover pacotes requer privilégios administrativos, os quais você "
-"atualmente não possui."
+"atualmente não possui. Você gostaria de mudar para a conta de root?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4754,10 +4755,10 @@ msgstr "Atualização da Lista"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Atualizar a lista de pacotes requer privilégios administrativos, os quais "
-"você atualmente não possui."
+"você atualmente não possui. Você gostaria de mudar para a conta de root ?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

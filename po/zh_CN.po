@@ -3421,10 +3421,10 @@ msgstr "主要"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "安全更新\n"
-" 这些软件包的安全更新可在得到。"
+" 这些软件包的安全更新可在 security.debian.org 得到。"
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4469,9 +4469,9 @@ msgstr "试图搜寻解决方案时用时已尽 (按“%s”加把劲儿再试�
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
-"安装/删除软件包需要管理员权限，而您现在没有这种权限。"
+"安装/删除软件包需要管理员权限，而您现在没有这种权限。您想要进入 root 帐号吗？"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4517,9 +4517,9 @@ msgstr "列表更新"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
-"更新软件包列表需要管理员权限，而您现在没有这种权限。"
+"更新软件包列表需要管理员权限，而您现在没有这种权限。您想要进入 root 帐号吗？"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

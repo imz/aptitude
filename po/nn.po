@@ -3572,10 +3572,11 @@ msgstr "hovud"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Tryggingsoppdateringer\n"
-"Tryggingsoppdateringer for desse pakkane er tilgjengeleg."
+"Tryggingsoppdateringer for desse pakkane er tilgjengeleg frå security.debian."
+"org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4666,10 +4667,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Å installera/fjerna pakkar krev at du har administrative rettar, noko du "
-"ikkje har no."
+"ikkje har no. Vil du byte til root-kontoen?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4716,9 +4717,10 @@ msgstr "Listeoppdatering"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
-"Oppdatering av pakkelister krev administrative rettar, noko du ikkje har no."
+"Oppdatering av pakkelister krev administrative rettar, noko du ikkje har no. "
+"Vil du byte til root-kontoen?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

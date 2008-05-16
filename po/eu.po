@@ -3535,10 +3535,10 @@ msgstr "nagusia"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Segurtasun Eguneratzeak\n"
-" Pakete hauen segurtasun-eguneratzeak aurkituko "
+" Pakete hauen segurtasun-eguneratzeak security.debian.org gunean aurkituko "
 "dituzu."
 
 #: src/pkg_grouppolicy.cc:330
@@ -4628,10 +4628,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Paketeak instalatu/kendu ahal izateko, administratzaile-pribilegioak behar "
-"dira, eta zuk ez daukazu horrelakorik."
+"dira, eta zuk ez daukazu horrelakorik. Root kontura aldatu nahi duzu?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4678,10 +4678,10 @@ msgstr "Zerrendaren eguneraketa"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Pakete-zerrendak eguneratzeko, administratzaile-pribilegioak behar dira, eta "
-"zuk ez daukazu horrelakorik."
+"zuk ez daukazu horrelakorik. Root kontura aldatu nahi duzu?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

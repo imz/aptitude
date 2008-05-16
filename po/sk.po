@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: aptitude\n"
 "Report-Msgid-Bugs-To: aptitude@packages.debian.org\n"
 "POT-Creation-Date: 2006-09-03 09:36-0700\n"
-"PO-Revision-Date: 2008-05-16 20:19+0400\n"
+"PO-Revision-Date: 2006-10-22 18:32+0200\n"
 "Last-Translator: Peter Mann <Peter.Mann@tuke.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -3525,8 +3525,9 @@ msgstr "hlavný"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
+"Bezpečnostné aktualizácie\n"
 " Bezpečnostné aktualizácie týchto balíkov sú k dispozícií na security.debian.org."
 
 #: src/pkg_grouppolicy.cc:330
@@ -4608,10 +4609,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Inštalácia/odobranie balíkov vyžaduje administrátorské práva, ktoré "
-"momentálne nemáte."
+"momentálne nemáte. Chcete sa prepnúť na účet root?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4659,10 +4660,10 @@ msgstr "Aktualizovať Zoznam"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Aktualizácia zoznamu balíkov vyžaduje administrátorské práva, ktoré "
-"momentálne nemáte."
+"momentálne nemáte. Chcete sa prepnúť na účet root?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"

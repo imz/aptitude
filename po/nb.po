@@ -3495,10 +3495,11 @@ msgstr "hoved"
 #: src/pkg_grouppolicy.cc:329
 msgid ""
 "Security Updates\n"
-" Security updates for these packages are available."
+" Security updates for these packages are available from security.debian.org."
 msgstr ""
 "Sikkerhetsoppdateringer\n"
-"Sikkerhetsoppdateringer for disse pakkene er tilgjengelige."
+"Sikkerhetsoppdateringer for disse pakkene er tilgjengelige fra security."
+"debian.org."
 
 #: src/pkg_grouppolicy.cc:330
 msgid ""
@@ -4588,10 +4589,10 @@ msgstr ""
 #: src/ui.cc:1302
 msgid ""
 "Installing/removing packages requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Å installere eller fjerne pakker krever at du er logget inn som root, noe du "
-"ikke er."
+"ikke er. Vil du logge deg inn som root nå?"
 
 #: src/ui.cc:1305 src/ui.cc:1434
 msgid "Become root"
@@ -4638,10 +4639,10 @@ msgstr "Listeoppdatering"
 #: src/ui.cc:1431
 msgid ""
 "Updating the package lists requires administrative privileges, which you "
-"currently do not have."
+"currently do not have.  Would you like to change to the root account?"
 msgstr ""
 "Å oppdatere pakkelistene krever at du er logget inn som root, noe du ikke "
-"er."
+"er. Vil du logge deg inn som root nå?"
 
 #: src/ui.cc:1446 src/ui.cc:1967
 msgid "Waste time trying to find mines"
