@@ -1,0 +1,4 @@
+spec: aptitude.spec
+tar: @version@:.
+diff: @version@:. .
+
