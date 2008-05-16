@@ -1,4 +1,21 @@
 // vs_util.cc
+//
+//   Copyright (C) 2000-2007 Daniel Burrows
+//
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of the GNU General Public License as
+//   published by the Free Software Foundation; either version 2 of
+//   the License, or (at your option) any later version.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//   General Public License for more details.
+//
+//   You should have received a copy of the GNU General Public License
+//   along with this program; see the file COPYING.  If not, write to
+//   the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+//   Boston, MA 02111-1307, USA.
 
 #include "transcode.h"
 #include "vs_button.h"
@@ -254,6 +271,7 @@ vs_widget_ref vs_dialog_fileview(const string &fn,
 				 slot0arg okslot,
 				 slotarg<sigc::slot1<void, vs_pager &> > search_slot,
 				 slotarg<sigc::slot1<void, vs_pager &> > repeat_search_slot,
+				 slotarg<sigc::slot1<void, vs_pager &> > repeat_search_back_slot,
 				 const style &st,
 				 const char *encoding)
 {
@@ -280,6 +298,9 @@ vs_widget_ref vs_dialog_fileview(const string &fn,
   if(repeat_search_slot)
     p->connect_key("ReSearch", &global_bindings, sigc::bind(*repeat_search_slot, p.weak_ref()));
 
+  if(repeat_search_back_slot)
+    p->connect_key("RepeatSearchBack", &global_bindings, sigc::bind(*repeat_search_back_slot, p.weak_ref()));
+
   return vs_dialog_ok(t, okslot, transcode(_("Ok")), st);
 }
 
@@ -287,9 +308,11 @@ vs_widget_ref vs_dialog_fileview(const string &fn,
 				 slot0arg okslot,
 				 slotarg<sigc::slot1<void, vs_pager &> > search_slot,
 				 slotarg<sigc::slot1<void, vs_pager &> > repeat_search_slot,
+				 slotarg<sigc::slot1<void, vs_pager &> > repeat_search_back_slot,
 				 const char *encoding)
 {
-  return vs_dialog_fileview(fn, okslot, search_slot, repeat_search_slot,
+  return vs_dialog_fileview(fn, okslot, search_slot,
+			    repeat_search_slot, repeat_search_back_slot,
 			    style_attrs_flip(A_REVERSE),
 			    encoding);
 }
@@ -322,6 +345,8 @@ vs_widget_ref vs_dialog_string(const vs_widget_ref &msg,
   vs_button_ref bcancel = vs_button::create(_("Cancel"));
   vs_frame_ref f = vs_frame::create(t);
   vs_center_ref c = vs_center::create(f);
+
+  e->set_clear_on_first_edit(true);
 
   f->set_bg_style(st);
 

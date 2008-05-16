@@ -31,7 +31,16 @@ int cmdline_upgrade(int argc, char *argv[],
 {
   pkgset to_install, to_hold, to_remove;
 
+  if(!strcasecmp(argv[0], "upgrade"))
+    _error->Warning("The \"upgrade\" command is deprecated; use \"safe-upgrade\" instead.");
+
   _error->DumpErrors();
+
+  if(argc != 1)
+    {
+      fprintf(stderr, _("E: The %s command takes no arguments\n"), argv[0]);
+      return -1;
+    }
 
   OpTextProgress progress(aptcfg->FindI("Quiet", 0));
   apt_init(&progress, false, status_fname);

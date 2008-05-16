@@ -1,6 +1,6 @@
 // download_install_manager.cc
 //
-//   Copyright (C) 2005-2006 Daniel Burrows
+//   Copyright (C) 2005-2007 Daniel Burrows
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -61,6 +61,10 @@ bool download_install_manager::prepare(OpProgress &progress,
     return false;
 
   progress.Done();
+
+  // Abort here so we don't spew random messages below.
+  if(_error->PendingError())
+    return false;
 
   // Lock the archive directory..
   FileFd lock;
@@ -143,7 +147,6 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
 
   pthread_sigmask(SIG_UNBLOCK, &allsignals, &oldsignals);
   pkgPackageManager::OrderResult pmres = pm->DoInstall();
-  pthread_sigmask(SIG_SETMASK, &oldsignals, NULL);
 
   switch(pmres)
     {
@@ -162,6 +165,7 @@ download_manager::result download_install_manager::execute_install_run(pkgAcquir
       break;
     }
 
+  pthread_sigmask(SIG_SETMASK, &oldsignals, NULL);
   post_install_hook(pmres);
 
   fetcher->Shutdown();

@@ -1,6 +1,6 @@
 // menu_text_layout.cc
 //
-//   Copyright (C) 2005 Daniel Burrows
+//   Copyright (C) 2005, 2007 Daniel Burrows
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -25,6 +25,7 @@
 #include <generic/util/slotarg.h>
 
 #include <vscreen/config/keybindings.h>
+#include <vscreen/transcode.h>
 
 bool menu_text_layout::find_search_enabled()
 {
@@ -33,8 +34,8 @@ bool menu_text_layout::find_search_enabled()
 
 bool menu_text_layout::find_search()
 {
-  prompt_string(_("Search for: "),
-		"",
+  prompt_string(transcode(_("Search for: ")),
+		last_search,
 		arg(sigc::mem_fun(this, &menu_text_layout::do_find_search)),
 		NULL,
 		NULL,
@@ -66,7 +67,7 @@ bool menu_text_layout::find_search_back_enabled()
 bool menu_text_layout::find_search_back()
 {
   prompt_string(_("Search backwards for: "),
-		"",
+		transcode(last_search),
 		arg(sigc::mem_fun(this, &menu_text_layout::do_find_search_back)),
 		NULL,
 		NULL,
@@ -105,6 +106,23 @@ bool menu_text_layout::find_research()
   return true;
 }
 
+
+bool menu_text_layout::find_repeat_search_back_enabled()
+{
+  return !last_search.empty();
+}
+
+bool menu_text_layout::find_repeat_search_back()
+{
+  if(last_search.empty())
+    beep();
+  else
+    search_for(last_search, !last_search_forward);
+
+  return true;
+}
+
+
 bool menu_text_layout::handle_key(const key &k)
 {
   if(global_bindings.key_matches(k, "Search"))
@@ -113,6 +131,8 @@ bool menu_text_layout::handle_key(const key &k)
     find_search_back();
   else if(global_bindings.key_matches(k, "ReSearch"))
     find_research();
+  else if(global_bindings.key_matches(k, "RepeatSearchBack"))
+    find_repeat_search_back();
   else
     return vs_text_layout::handle_key(k);
 

@@ -1,6 +1,6 @@
 // main.cc  (neé testscr.cc)
 //
-//  Copyright 1999-2006 Daniel Burrows
+//  Copyright 1999-2007 Daniel Burrows
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -125,8 +125,8 @@ static void usage()
   // problem.
   printf(_(" forbid-version - Forbid aptitude from upgrading to a specific package version.\n"));
   printf(_(" update       - Download lists of new/upgradable packages\n"));
-  printf(_(" upgrade      - Perform a safe upgrade\n"));
-  printf(_(" dist-upgrade - Perform an upgrade, possibly installing and removing packages\n"));
+  printf(_(" safe-upgrade - Perform a safe upgrade\n"));
+  printf(_(" full-upgrade - Perform an upgrade, possibly installing and removing packages\n"));
   printf(_(" forget-new   - Forget what packages are \"new\"\n"));
   printf(_(" search       - Search for a package by name and/or expression\n"));
   printf(_(" show         - Display detailed information about a package\n"));
@@ -147,15 +147,15 @@ static void usage()
   printf(_(" -f             Aggressively try to fix broken packages.\n"));
   printf(_(" -V             Show which versions of packages are to be installed.\n"));
   printf(_(" -D             Show the dependencies of automatically changed packages.\n"));
-  printf(_(" -Z		    Show the change in installed size of each package.\n"));
+  printf(_(" -Z             Show the change in installed size of each package.\n"));
   printf(_(" -v             Display extra information. (may be supplied multiple times)\n"));
   printf(_(" -t [release]   Set the release from which packages should be installed\n"));
   printf(_(" -q             In command-line mode, suppress the incremental progress indicators.\n"));
   printf(_(" -o key=val     Directly set the configuration option named 'key'\n"));
   printf(_(" --with(out)-recommends	Specify whether or not to treat recommends as\n                strong dependencies\n"));
-  printf(_(" -S fname: Read the aptitude extended status info from fname.\n"));
-  printf(_(" -u      : Download new package lists on startup.\n"));
-  printf(_(" -i      : Perform an install run on startup.\n"));
+  printf(_(" -S fname       Read the aptitude extended status info from fname.\n"));
+  printf(_(" -u             Download new package lists on startup.\n"));
+  printf(_(" -i             Perform an install run on startup.\n"));
   printf("\n");
   printf(_("                  This aptitude does not have Super Cow Powers.\n"));
 }
@@ -315,6 +315,7 @@ int main(int argc, char *argv[])
 	  break;
 	case 'R':
 	  aptcfg->SetNoUser(PACKAGE "::Recommends-Important", "false");
+	  aptcfg->SetNoUser(PACKAGE "::Keep-Recommends", "true");
 	  break;
 	case 't':
 	  aptcfg->SetNoUser("APT::Default-Release", optarg);
@@ -445,6 +446,7 @@ int main(int argc, char *argv[])
 	  else if( (!strcasecmp(argv[optind], "install")) ||
 		   (!strcasecmp(argv[optind], "reinstall")) ||
 		   (!strcasecmp(argv[optind], "dist-upgrade")) ||
+		   (!strcasecmp(argv[optind], "full-upgrade")) ||
 		   (!strcasecmp(argv[optind], "remove")) ||
 		   (!strcasecmp(argv[optind], "hold")) ||
 		   (!strcasecmp(argv[optind], "unhold")) ||
@@ -459,7 +461,8 @@ int main(int argc, char *argv[])
 				     fix_broken, showvers, showdeps, showsize,
 				     visual_preview, always_prompt,
 				     queue_only, verbose);
-	  else if(!strcasecmp(argv[optind], "upgrade"))
+	  else if(!strcasecmp(argv[optind], "safe-upgrade") ||
+		  !strcasecmp(argv[optind], "upgrade"))
 	    return cmdline_upgrade(argc-optind, argv+optind,
 				   status_fname,
 				   simulate, assume_yes, download_only,

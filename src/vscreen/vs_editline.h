@@ -1,7 +1,22 @@
 // vs_editline.h             -*-c++-*-
 //
-//  Copyright 2000 Daniel Burrows
+//   Copyright (C) 2000, 2007 Daniel Burrows
 //
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of the GNU General Public License as
+//   published by the Free Software Foundation; either version 2 of
+//   the License, or (at your option) any later version.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//   General Public License for more details.
+//
+//   You should have received a copy of the GNU General Public License
+//   along with this program; see the file COPYING.  If not, write to
+//   the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+//   Boston, MA 02111-1307, USA.
+
 //  A simple line-editor widget.
 
 #ifndef VS_EDITLINE_H
@@ -36,6 +51,15 @@ private:
   // True if we're flipping through the history.  (to avoid signedness
   // problems)
   bool using_history;
+
+  /** \brief If \b true and the first user input is a character
+   *  insertion, the edit buffer will be cleared.
+   *
+   *  This is initially \b false.  It may be set to \b true by
+   *  set_clear_on_first_edit, and is set back to \b false after the
+   *  first keypress or mouse click.
+   */
+  bool clear_on_first_edit;
 
   void normalize_cursor();
 
@@ -97,6 +121,21 @@ public:
     ref_ptr<vs_editline> rval(new vs_editline(maxlength, prompt, text, history));
     rval->decref();
     return rval;
+  }
+
+  /** \return \b true if the contents of this edit-line will be erased
+   *  if the first character pressed is an edit (i.e., not an arrow
+   *  key).
+   */
+  bool get_clear_on_first_edit() const { return clear_on_first_edit; }
+  /** Change whether the contents of this edit-line widget will be
+   *  erased if the first character pressed is an edit.
+   *
+   *  This is initially \b false.
+   */
+  void set_clear_on_first_edit(bool value)
+  {
+    clear_on_first_edit = value;
   }
 
   bool focus_me();

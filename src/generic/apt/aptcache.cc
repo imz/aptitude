@@ -1,6 +1,6 @@
 // aptcache.cc
 //
-//  Copyright 1999-2006 Daniel Burrows
+//  Copyright 1999-2007 Daniel Burrows
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/stat.h>
+
 #include <generic/util/eassert.h>
 
 #include <sigc++/adaptors/bind.h>
@@ -224,6 +226,7 @@ bool aptitudeDepCache::build_selection_list(OpProgress &Prog, bool WithLock,
       package_states[i].reinstall=false;
       package_states[i].install_reason=manual;
       package_states[i].remove_reason=manual;
+      package_states[i].selection_state = pkgCache::State::Unknown;
     }
 
   if(WithLock && lock==-1)
@@ -311,11 +314,30 @@ bool aptitudeDepCache::build_selection_list(OpProgress &Prog, bool WithLock,
 	      pkg_state.candver=candver;
 	      pkg_state.forbidver=section.FindS("ForbidVer");
 
-	      if(do_dselect && pkg->SelectedState != last_dselect_state &&
-		 do_initselections)
+	      if(do_dselect && pkg->SelectedState != last_dselect_state)
 		{
 		  MarkFromDselect(pkg);
+		  // dirty should be set to "true" so that we update
+		  // the on-disk dselect state ASAP, even if no
+		  // package states change as a result.
 		  dirty=true;
+
+		  // We need to update the package state from the
+		  // dselect state regardless of whether we're doing
+		  // initselections.  This is so that, e.g., if the
+		  // user installed a package outside aptitude (so the
+		  // dselect state says to install it), our internal
+		  // state isn't left at "remove".  But if we aren't
+		  // supposed to set up stored installs/removals, we
+		  // should cancel this at the apt-get level (so the
+		  // package doesn't get changed if dselect said to
+		  // install it, but this isn't stored in our database
+		  // for future runs).
+		  //
+		  // In the past, we skipped doing MarkFromDselect in
+		  // this case.  BAD.
+		  if(!do_initselections)
+		    MarkKeep(pkg, false);
 		}
 	    }
 	  amt+=section.size();
@@ -520,9 +542,13 @@ bool aptitudeDepCache::save_selection_list(OpProgress &prog,
   FileFd newstate;
 
   if(!status_fname)
-    newstate.Open(statefile+".new", FileFd::WriteEmpty);
+    newstate.Open(statefile+".new", FileFd::WriteEmpty, 0644);
   else
-    newstate.Open(status_fname, FileFd::WriteEmpty);
+    newstate.Open(status_fname, FileFd::WriteEmpty, 0644);
+
+  // The user might have a restrictive umask -- make sure we get a
+  // mode 644 file.
+  fchmod(newstate.Fd(), 0644);
 
   if(!newstate.IsOpen())
     _error->Error(_("Cannot open Aptitude state file"));

@@ -402,6 +402,14 @@ static bool prompt_trust()
 	  return true;
 	}
 
+      if(aptcfg->FindB("Apt::Get::AllowUnauthenticated", false))
+	{
+	  printf("%s",
+		 _("*** WARNING ***   Ignoring these trust violations because\n"
+		   "                  Apt::Get::AllowUnauthenticated is 'true'!\n"));
+	  return true;
+	}
+
 
       const string okstr=_("Yes"), abortstr=_("No");
 
@@ -759,6 +767,7 @@ bool cmdline_do_prompt(bool as_upgrade,
 		case '-':
 		case '=':
 		case ':':
+		case '&':
 		  cmdline_parse_action(response, to_install, to_hold,
 				       to_remove, verbose, true);
 		  break;

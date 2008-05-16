@@ -1,6 +1,6 @@
 // util.cc
 //
-//   Copyright (C) 2005 Daniel Burrows
+//   Copyright (C) 2005, 2007 Daniel Burrows
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -63,18 +63,23 @@ const int initbufsize=512;
 
 string vssprintf(const char *format, va_list ap)
 {
+  // We need to do this because you can't necessarily re-use a
+  // va_list after stepping down it.
+  va_list ap2;
+  va_copy(ap2, ap);
   char buf[initbufsize];
-  int amt = vsnprintf(buf, initbufsize, format, ap);
+  const int amt = vsnprintf(buf, initbufsize, format, ap);
 
   if(amt < initbufsize)
     return buf;
   else
     {
-      char *buf2 = new char[amt+1];
+      const int buf2size = amt + 1;
+      char *buf2 = new char[buf2size];
 
-      int amt2 = vsnprintf(buf2, initbufsize, format, ap);
+      const int amt2 = vsnprintf(buf2, buf2size, format, ap2);
 
-      eassert(amt2 < amt+1);
+      eassert(amt2 < buf2size);
 
       string rval(buf2, amt2);
 

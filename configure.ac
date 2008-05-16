@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(aptitude, 0.4.4)
+AC_INIT(aptitude, 0.4.5)
 AC_CONFIG_SRCDIR([src/main.cc])
 AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
@@ -39,7 +39,7 @@ AC_CHECK_LIB(rpm, main,
       HAVE_RPM=1,
               AC_MSG_ERROR([Can't find the rpm library -- please install librpm-devel package]))
 
-ALL_LINGUAS="ar bs ca cs da de el es eu fi fr gl hu it ja km ku lt nb nl nn pl pt pt_BR ro ru sk sv tl tr vi zh_CN zh_TW"
+ALL_LINGUAS="ar bs ca cs da de el es eu fi fr gl hu it ja km ku lt mr nb nl nn pl pt pt_BR ro ru sk sv tl tr vi zh_CN zh_TW"
 AM_GNU_GETTEXT([external])
 
 dnl Old sigc:

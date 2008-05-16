@@ -7,7 +7,7 @@
   <!ENTITY dselect '<command>dselect</command>'>
   <!ENTITY apt-get '<command>apt-get</command>'>
   <!ENTITY root '<systemitem class="username">root</systemitem>'>
-  <!ENTITY VERSION '0.4.3'>
+  <!ENTITY VERSION '0.4.5'>
 
   <!-- Shortcuts for menu commands: -->
 
@@ -48,6 +48,7 @@
   <!ENTITY search-find "<menuchoice><shortcut><keycap>/</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find</guimenuitem></menuchoice>">
   <!ENTITY search-find-back "<menuchoice><shortcut><keycap>\</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Backwards</guimenuitem></menuchoice>">
   <!ENTITY search-refind "<menuchoice><shortcut><keycap>n</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Again</guimenuitem></menuchoice>">
+  <!ENTITY search-repeat-find-back "<menuchoice><shortcut><keycap>N</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Again Backwards</guimenuitem></menuchoice>">
   <!ENTITY search-limit "<menuchoice><shortcut><keycap>l</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Limit Display</guimenuitem></menuchoice>">
   <!ENTITY search-unlimit "<menuchoice><guimenu>Search</guimenu><guimenuitem>Un-Limit Display</guimenuitem></menuchoice>">
   <!ENTITY search-find-broken "<menuchoice><shortcut><keycap>b</keycap></shortcut><guimenu>Search</guimenu><guimenuitem>Find Broken</guimenuitem></menuchoice>">
@@ -1076,7 +1077,7 @@ including kdesdk, qt3-designer, and all core KDE -dev packages.
 	  <para>
 	    At any time, you can use &undo-undo; to
 	    <quote>undo</quote> any change to one or more packages.
-	    This is very useful if an action has unforseen
+	    This is very useful if an action has unforeseen
 	    consequences and you want to <quote>take it back</quote>.
 	  </para>
 	</tip>
@@ -1260,7 +1261,7 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	    we were trying to perform!  By pressing <keycap>r</keycap>
 	    on the item corresponding to this action, we can tell
 	    &aptitude; that it should not cancel the removal of
-	    sound-juicer in this way.
+	    <systemitem>sound-juicer</systemitem> in this way.
 	  </para>
 
 	  <screenshot>
@@ -1314,20 +1315,20 @@ e: Examine  !: Apply  .: Next  ,: Previous</screen>
 	      In the above screen image, a description of
 	      <systemitem>sound-juicer</systemitem> is displayed in
 	      the middle of the screen; below it, you can see the
-	      dependency that caused sound-juicer to be kept at its
-	      current version, along with all the ways to resolve this
-	      dependency that &aptitude; knows about.
+	      dependency that caused <systemitem>sound-juicer</systemitem> to
+	      be kept at its current version, along with all the ways to
+	      resolve this dependency that &aptitude; knows about.
 	    </para>
 	  </note>
 
 	  <para>
 	    For instance, if this rejection is imposed immediately
-	    after removing <systemitem>sound-juicer</systemitem>,
+	    after attempting to remove <systemitem>sound-juicer</systemitem>,
 	    pressing <keycap>.</keycap> retrieves the following
 	    solution, skipping the <link
 	    linkend='solutionScreenSnapshot2'>solution</link> that
-	    cancels the installation of sound-juicer and downgrades
-	    gstreamer0.8-cdparanoia.
+	    cancels the installation of <systemitem>sound-juicer</systemitem>
+	    and downgrades <systemitem>gstreamer0.8-cdparanoia</systemitem>.
 	  </para>
 
 	  <screenshot>
@@ -1575,16 +1576,23 @@ space.
 	  <term>
 	    <cmdsynopsis>
 	      <command>aptitude</command>
-	      <arg choice='plain'>upgrade</arg>
+	      <arg choice='plain'>safe-upgrade</arg>
 	    </cmdsynopsis>
 	  </term>
 
 	  <listitem>
 	    <para>
-	      This command will upgrade as many packages as possible.
-	      If there are dependency problems, it will avoid
-	      upgrading packages (rather than, for instance, removing
-	      them).
+	      This command will upgrade as many packages as it can
+	      upgrade without removing existing packages or installing
+	      new ones.
+	    </para>
+
+	    <para>
+	      It is sometimes necessary to remove or install one
+	      package in order to upgrade another; this command is not
+	      able to upgrade packages in such situations.  Use the
+	      <literal>full-upgrade</literal> to upgrade those
+	      packages as well.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -1593,19 +1601,28 @@ space.
 	  <term>
 	    <cmdsynopsis>
 	      <command>aptitude</command>
-	      <arg choice='plain'>dist-upgrade</arg>
+	      <arg choice='plain'>full-upgrade</arg>
 	    </cmdsynopsis>
 	  </term>
 
 	  <listitem>
 	    <para>
-	      This command will also attempt to upgrade packages, but
-	      it is more aggressive about solving dependency problems:
-	      it will install and remove packages until all
-	      dependencies are satisfied.  Because of the nature of
-	      this command, it is possible that it will do undesirable
-	      things, and so you should be careful when using it.
+	      Like <literal>safe-upgrade</literal>, this command will
+	      attempt to upgrade packages, but it is more aggressive
+	      about solving dependency problems: it will install and
+	      remove packages until all dependencies are satisfied.
+	      Because of the nature of this command, it is possible
+	      that it will do undesirable things, and so you should be
+	      careful when using it.
 	    </para>
+
+	    <note>
+	      <para>
+		For historical reasons, this command was originally
+		named <literal>dist-upgrade</literal>, and that name
+		is still recognized by &aptitude;.
+	      </para>
+	    </note>
 	  </listitem>
 	</varlistentry>
 
@@ -1662,7 +1679,11 @@ space.
 		  <literal>install</literal> or
 		  <literal>show</literal>.
 		</para>
-	      </footnote>
+	      </footnote> For instance, <quote><literal>aptitude
+	      search gnome kde</literal></quote> will list all
+	      packages whose name contains either
+	      <quote><literal>gnome</literal></quote> or
+	      <quote><literal>kde</literal></quote>.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -1688,8 +1709,8 @@ space.
 
       <para>
 	The commands that install, upgrade, and remove packages all
-	accept the parameter <quote>-s</quote>, which stands for <quote>simulate</quote>.  When
-	<quote>-s</quote> is passed on the command line, the program performs all
+	accept the parameter <literal>-s</literal>, which stands for <quote>simulate</quote>.  When
+	<literal>-s</literal> is passed on the command line, the program performs all
 	the actions it would normally perform, but does not actually
 	download or install/remove any files.
       </para>
@@ -1704,14 +1725,13 @@ The following NEW packages will be installed:
   space-orbit space-orbit-common 
 0 packages upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
 Need to get 3200kB of archives. After unpacking 8413kB will be used.
-
 <prompt>Do you want to continue? [Y/n/?]</prompt></screen>
 
       <para>
 	In addition to the obvious options of <quote>Yes</quote> and <quote>No</quote>, a number
 	of commands are available which can be used to change the
 	information displayed at the prompt, or to specify further
-	actions.  For instance, typing <quote>s</quote> will display or hide
+	actions.  For instance, typing <userinput>s</userinput> will display or hide
 	information about how much space each package will use:
       </para>
 
@@ -1728,7 +1748,7 @@ Need to get 3200kB of archives. After unpacking 8413kB will be used.
 <prompt>Do you want to continue? [Y/n/?]</prompt></screen>
 
       <para>
-	Similarly, typing <quote>d</quote> will display information about
+	Similarly, typing <userinput>d</userinput> will display information about
 	automatically installed or removed packages:
       </para>
 
@@ -1743,7 +1763,7 @@ Need to get 3200kB of archives. After unpacking 8413kB will be used.</screen>
 	This shows that <systemitem>space-orbit-common</systemitem> is
 	being installed because <systemitem>space-orbit</systemitem>
 	depends on it.  You can see the entire list of possible
-	entries by entering <quote>?</quote> at the prompt.
+	entries by entering <userinput>?</userinput> at the prompt.
       </para>
 
       <para>
@@ -1765,7 +1785,7 @@ libsdl1.2debian-oss [1.2.7+1.2.8cvs20041007-4.1 (unstable)]
 
 Score is 19
 
-Accept this solution? [Y/n/q/?]</screen>
+<prompt>Accept this solution? [Y/n/q/?]</prompt></screen>
 
       <para>
 	Typing <userinput>y</userinput> (or simply pressing
@@ -1774,7 +1794,7 @@ Accept this solution? [Y/n/q/?]</screen>
 	best</quote> solution:
       </para>
 
-      <screen>Accept this solution? [Y/n/q/?] <userinput>n</userinput>
+      <screen><prompt>Accept this solution? [Y/n/q/?]</prompt> <userinput>n</userinput>
 The following actions will resolve these dependencies:
 
 Install the following packages:
@@ -1782,14 +1802,14 @@ libsdl1.2debian-alsa [1.2.7+1.2.8cvs20041007-4.1 (unstable,now)]
 
 Score is 19
 
-Accept this solution? [Y/n/q/?]</screen>
+<prompt>Accept this solution? [Y/n/q/?]</prompt></screen>
 
       <para>
 	Typing <userinput>q</userinput> will <quote>give up</quote>
 	and quit the program immediately:
       </para>
 
-      <screen>Accept this solution? [Y/n/q/?] q
+      <screen><prompt>Accept this solution? [Y/n/q/?]</prompt> <userinput>q</userinput>
 Abandoning all efforts to resolve these dependencies.
 Abort.</screen>
 
@@ -1838,7 +1858,7 @@ Abort.</screen>
       are already present but are difficult to find.<footnote><para>I
       am pleased to say that the number of requests of this sort fell
       off precipitously following the initial publication of this
-      Guide.  It would be a happy occurance if there was a connection
+      Guide.  It would be a happy occurrence if there was a connection
       between the two events.</para></footnote>
     </para>
 
@@ -2333,6 +2353,17 @@ Abort.</screen>
 
 		   <entry>
 		     Repeat the last Find command.
+		   </entry>
+		  </row>
+
+		  <row>
+		   <entry>&search-repeat-find-back;</entry>
+
+		   <entry>
+		     Repeat the last Find command, but in the opposite
+		     direction.  If the last Find command was Find
+		     Backwards, this will perform a forwards search,
+		     and vice versa.
 		   </entry>
 		  </row>
 
@@ -3280,8 +3311,8 @@ i A 0.5.25
 		      <para>
 			That is, it will be unaffected by
 			&actions-upgrade; or the
-			<command>dist-upgrade</command> or
-			<command>upgrade</command> command-line
+			<command>full-upgrade</command> or
+			<command>safe-upgrade</command> command-line
 			actions.
 		      </para>
 		    </footnote>
@@ -4211,20 +4242,21 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <quote><literal>provides</literal></quote> or one of the
 	      dependency types given in <link
 	      linkend='searchBrokenType'>the documentation of
-	      ~B</link>.  If <replaceable>type</replaceable> is not
-	      present, it defaults to <literal>depends</literal>.  If
+	      <literal>~B</literal></link>.  If
+	      <replaceable>type</replaceable> is not present, it
+	      defaults to <literal>depends</literal>.  If
 	      <literal>B</literal> is present, only broken
 	      dependencies will be considered.
 	    </para>
 
 	    <para>
-	      If <literal>type</literal> is
+	      If <replaceable>type</replaceable> is
 	      <quote><literal>provides</literal></quote>, matches
 	      packages that provide a package matching
 	      <replaceable>term</replaceable> (the equivalent of
 	      <literal>~P</literal>).  Otherwise, matches packages
 	      which declare a dependency of type
-	      <literal>type</literal> upon a package version which
+	      <replaceable>type</replaceable> upon a package version which
 	      matches <replaceable>term</replaceable>.
 	    </para>
 	  </listitem>
@@ -4383,7 +4415,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	  <listitem>
 	    <para>
 	      Matches package versions which provide a package that
-	      matches the <replaceable>name</replaceable>.  For
+	      matches the <replaceable>term</replaceable>.  For
 	      instance,
 	      <quote><literal>~Pmail-transport-agent</literal></quote>
 	      will match all the packages that provide
@@ -4420,8 +4452,9 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <quote><literal>provides</literal></quote> or one of the
 	      dependency types given in <link
 	      linkend='searchBrokenType'>the documentation of
-	      ~B</link>.  If <replaceable>type</replaceable> is not
-	      present, it defaults to <literal>depends</literal>.  If
+	      <literal>~B</literal></link>.  If
+	      <replaceable>type</replaceable> is not present, it
+	      defaults to <literal>depends</literal>.  If
 	      <literal>B</literal> is present, only broken
 	      dependencies will be considered.
 	    </para>
@@ -5200,7 +5233,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		</para>
 
 		<para>
-		  See the section <xref linkend='secSearchPatterns'/>
+		  See <xref linkend='secSearchPatterns'/>
 		  for more information on the format of
 		  <replaceable>pattern</replaceable>.
 		</para>
@@ -6099,6 +6132,15 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		<entry>
 		  Flags the currently selected package to be
 		  <link linkend='pkgCmdReinstall'>reinstalled</link>.
+		</entry>
+	      </row>
+
+	      <row>
+		<entry><literal>RepeatSearchBack</literal></entry>
+		<entry><literal>N</literal></entry>
+		<entry>
+		  Repeats the last search, but searches in the
+		  opposite direction.
 		</entry>
 	      </row>
 
@@ -8075,8 +8117,9 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <seg><literal>false</literal></seg>
 	      <seg>
 		In command-line mode, causes the program to ignore the
-		installation of <link
-		linkend='secTrust'>untrusted packages</link>.
+		installation of <link linkend='secTrust'>untrusted
+		packages</link>.  This is a synonym for
+		<literal>Apt::Get::AllowUnauthenticated</literal>.
 	      </seg>
 	    </seglistitem>
 
@@ -8101,6 +8144,22 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		broken dependencies and this option is set to the name
 		of a writable file, the resolver state will be dumped
 		to this file before any calculations are undertaken.
+	      </seg>
+	    </seglistitem>
+
+	    <seglistitem id='configCmdLine-Resolver-Show-Steps'>
+	      <seg><literal>Aptitude::CmdLine::Resolver-Show-Steps</literal></seg>
+
+	      <seg><literal>false</literal></seg>
+	      <seg>
+		If this option is <literal>true</literal>, then a
+		dependency solution will be displayed as a sequence of
+		resolutions of individual dependencies; for instance,
+		<quote><literal>wesnoth depends upon wesnoth-data (=
+		1.2.4-1) -> installing wesnoth-data 1.2.4-1
+		(unstable)</literal></quote>.  To toggle between the
+		two display modes, press <keycap>o</keycap> at the
+		prompt <quote><literal>Accept this solution?</literal></quote>.
 	      </seg>
 	    </seglistitem>
 
@@ -8239,7 +8298,7 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <seg><literal>0</literal></seg>
 	      <seg>
 		This controls how verbose the command-line mode
-		of &aptitude; is.  Every occurance of the
+		of &aptitude; is.  Every occurrence of the
 		<literal>-v</literal> command-line option adds 1
 		to this value.
 	      </seg>
@@ -8336,11 +8395,13 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	      <seg>
 		If this option is <literal>true</literal>, then
-		packages will be kept on the system as long as any
-		installed package recommends them, even if
+		&aptitude; will not consider packages to be unused
+		(and thus will not automatically remove them) as long
+		as any installed package recommends them, even if
 		<literal><link
 		linkend='configRecommends-Important'>Aptitude::Recommends-Important</link></literal>
-		is <literal>false</literal>.
+		is <literal>false</literal>.  For more information,
+		see <xref linkend='secAutoInstall'/>.
 	      </seg>
 	    </seglistitem>
 
@@ -8350,11 +8411,11 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <seg><literal>false</literal></seg>
 
 	      <seg>
-		If this option is <literal>true</literal>, &aptitude;
-		will keep automatically installed packages on the
-		system as long as any installed package suggests them.
-		For more information, see <xref
-		linkend='secAutoInstall'/>.
+		If this option is <literal>true</literal>, then
+		&aptitude; will not consider packages to be unused
+		(and thus will not automatically remove them) as long
+		as any installed package suggests them.  For more
+		information, see <xref linkend='secAutoInstall'/>.
 	      </seg>
 	    </seglistitem>
 
@@ -8450,11 +8511,15 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 	      <seg>
 		If this option is <literal>true</literal> and
 		<literal>Aptitude::Auto-Install</literal> is
-		<literal>true</literal>, installing a new package will
-		also install any packages that it recommends.
+		<literal>true</literal>, then whenever you mark a
+		package for installation, &aptitude; will also mark
+		the packages it recommends for installation.
 		Furthermore, if this option is
-		<literal>true</literal>, then packages will be kept on
-		the system if an installed package recommends them.
+		<literal>true</literal>, &aptitude; will not consider
+		packages to be unused (and thus will not automatically
+		remove them) as long as any installed package
+		reommends them.  For more information, see <xref
+		linkend='secAutoInstall'/>.
 	      </seg>
 	    </seglistitem>
 
@@ -8676,13 +8741,17 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 
 	    <seglistitem id='configProblemResolver-StepScore'>
 	      <seg><literal>Aptitude::ProblemResolver::StepScore</literal></seg>
-	      <seg><literal>10</literal></seg>
+	      <seg><literal>70</literal></seg>
 
 	      <seg>
 		How much to reward or penalize prospective solutions
 		based on their length.  For each action performed by a
 		solution, this many points are added to its score.
-		Typically this should be a negative value.
+		The larger this value is, the more the resolver tends
+		to stick with its first choice rather than considering
+		alternatives; this will cause it to produce a solution
+		more quickly, but the solution might be of slightly
+		lower quality than it would otherwise be.
 	      </seg>
 	    </seglistitem>
 
@@ -8945,6 +9014,34 @@ iuAU wesnoth-data                                  +930kB  0.8.7-1    0.8.8-1.0w
 		If this option is <literal>true</literal>,
 		&aptitude; will format descriptions so that each
 		line is exactly the width of the screen.
+	      </seg>
+	    </seglistitem>
+
+	    <seglistitem id='configGet-Root-Command'>
+	      <seg><literal>Aptitude::Get-Root-Command</literal></seg>
+
+	      <seg><literal>su:/usr/bin/su</literal></seg>
+
+	      <seg>
+		This option sets the external command that &aptitude;
+		will use to switch to the &root; user (see <xref
+		linkend='secBecomingRoot'/>).  It has the form
+		<literal><replaceable>protocol</replaceable>:<replaceable>command</replaceable></literal>.
+		<replaceable>protocol</replaceable> must be either
+		<literal>su</literal> or <literal>sudo</literal>; it
+		determines how aptitude invokes the program when it
+		wants to gain root privileges.  If
+		<replaceable>protocol</replaceable> is
+		<literal>su</literal>, then
+		<literal><replaceable>command</replaceable> -c
+		<replaceable>arguments</replaceable></literal> is used
+		to become root; otherwise, aptitude uses
+		<literal><replaceable>command</replaceable>
+		<replaceable>arguments</replaceable></literal>.  The
+		first word in <replaceable>command</replaceable> is
+		the name of the program that should be invoked;
+		remaining words are treated as arguments to that
+		program.
 	      </seg>
 	    </seglistitem>
 
@@ -9682,8 +9779,8 @@ Minesweeper                                   Minesweeper    Lost in 2388 second
 	  <para>
 	    When a program running in an xterm is using the mouse, the
 	    xterm disables text selection.  However, you can override
-	    this behavior and perform a selection by holding the Shift
-	    key down.
+	    this behavior and perform a selection by holding the
+	    <keycap>Shift</keycap> key down.
 	  </para>
 	</answer>
       </qandaentry>
@@ -9829,7 +9926,7 @@ Minesweeper                                   Minesweeper    Lost in 2388 second
 
 	<listitem>
 	  <para>
-	    YasuoEto, 
+	    Yasuo Eto, Noritada Kobayashi
 	  </para>
 	</listitem>
       </varlistentry>

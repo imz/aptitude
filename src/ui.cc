@@ -1,6 +1,6 @@
 // ui.cc
 //
-//   Copyright 2000-2006 Daniel Burrows <dburrows@debian.org>
+//   Copyright 2000-2007 Daniel Burrows <dburrows@debian.org>
 //
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License as
@@ -40,6 +40,7 @@
 #include <sys/types.h>
 
 #include <fstream>
+#include <sstream>
 #include <utility>
 
 #ifdef HAVE_CONFIG_H
@@ -146,6 +147,7 @@ sigc::signal0<bool, accumulate_or> package_information_enabled;
 sigc::signal0<bool, accumulate_or> find_search_enabled;
 sigc::signal0<bool, accumulate_or> find_search_back_enabled;
 sigc::signal0<bool, accumulate_or> find_research_enabled;
+sigc::signal0<bool, accumulate_or> find_repeat_search_back_enabled;
 sigc::signal0<bool, accumulate_or> find_limit_enabled;
 sigc::signal0<bool, accumulate_or> find_cancel_limit_enabled;
 sigc::signal0<bool, accumulate_or> find_broken_enabled;
@@ -162,6 +164,7 @@ sigc::signal0<bool, accumulate_or> package_information;
 sigc::signal0<bool, accumulate_or> find_search;
 sigc::signal0<bool, accumulate_or> find_search_back;
 sigc::signal0<bool, accumulate_or> find_research;
+sigc::signal0<bool, accumulate_or> find_repeat_search_back;
 sigc::signal0<bool, accumulate_or> find_limit;
 sigc::signal0<bool, accumulate_or> find_cancel_limit;
 sigc::signal0<bool, accumulate_or> find_broken;
@@ -228,6 +231,11 @@ static void pager_search(vs_pager &p)
 static void pager_repeat_search(vs_pager &p)
 {
   p.search_for(L"");
+}
+
+static void pager_repeat_search_back(vs_pager &p)
+{
+  p.search_back_for(L"");
 }
 
 static vs_widget_ref make_error_dialog(const vs_text_layout_ref &layout)
@@ -388,10 +396,34 @@ static void do_hide_reload_message()
     }
 }
 
+/** \brief If this is \b true, there's a "really quit aptitude?"
+ *  prompt displayed.
+ *
+ *  The sole purpose of this variable is to prevent the dialog
+ *  box that asks about quitting from showing up multiple times.
+ */
+static bool really_quit_active = false;
+
+static void do_really_quit_answer(bool should_i_quit)
+{
+  really_quit_active = false;
+
+  if(should_i_quit)
+    file_quit();
+}
+
 static void do_quit()
 {
   if(aptcfg->FindB(PACKAGE "::UI::Prompt-On-Exit", true))
-    prompt_yesno(_("Really quit Aptitude?"), false, arg(file_quit.make_slot()), NULL);
+    {
+      if(!really_quit_active)
+	{
+	  really_quit_active = true;
+	  prompt_yesno(_("Really quit Aptitude?"), false,
+		       arg(sigc::bind(ptr_fun(do_really_quit_answer), true)),
+		       arg(sigc::bind(ptr_fun(do_really_quit_answer), false)));
+	}
+    }
   else
     file_quit();
 }
@@ -646,7 +678,8 @@ static void do_help_license()
   vs_widget_ref w=vs_dialog_fileview(HELPDIR "/COPYING",
 				     NULL,
 				     arg(sigc::ptr_fun(pager_search)),
-				     arg(sigc::ptr_fun(pager_repeat_search)));
+				     arg(sigc::ptr_fun(pager_repeat_search)),
+				     arg(sigc::ptr_fun(pager_repeat_search_back)));
   w->show_all();
 
   popup_widget(w);
@@ -670,6 +703,7 @@ static void do_help_help()
   vs_widget_ref w=vs_dialog_fileview(buf, NULL,
 				     arg(sigc::ptr_fun(pager_search)),
 				     arg(sigc::ptr_fun(pager_repeat_search)),
+				     arg(sigc::ptr_fun(pager_repeat_search_back)),
 				     encoding);
   w->show_all();
 
@@ -703,6 +737,8 @@ static void do_help_readme()
 		 sigc::bind(sigc::ptr_fun(&pager_search), p.weak_ref()));
   p->connect_key("ReSearch", &global_bindings,
 		 sigc::bind(sigc::ptr_fun(&pager_repeat_search), p.weak_ref()));
+  p->connect_key("RepeatSearchBack", &global_bindings,
+		 sigc::bind(sigc::ptr_fun(&pager_repeat_search_back), p.weak_ref()));
 
   t->add_widget_opts(p, 0, 0, 1, 1,
 		     vs_table::EXPAND | vs_table::FILL | vs_table::SHRINK,
@@ -1431,6 +1467,10 @@ vs_menu_info search_menu[]={
 	       N_("Repeat the last search"),
 	       sigc::hide_return(find_research.make_slot()),
 	       find_research_enabled.make_slot()),
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("Find Again ^Backwards"), "RepeatSearchBack",
+	       N_("Repeat the last search in the opposite direction"),
+	       sigc::hide_return(find_repeat_search_back.make_slot()),
+	       find_repeat_search_back_enabled.make_slot()),
   VS_MENU_SEPARATOR,
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Limit Display"),
 	       "ChangePkgTreeLimit", N_("Apply a filter to the package list"),
@@ -1960,6 +2000,7 @@ void prompt_string(const std::wstring &prompt,
   if(aptcfg->FindB(PACKAGE "::UI::Minibuf-Prompts"))
     {
       vs_editline_ref e=vs_editline::create(prompt, text, history);
+      e->set_clear_on_first_edit(true);
       if(slot)
 	e->entered.connect(*slot);
 
