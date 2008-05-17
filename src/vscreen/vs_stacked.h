@@ -24,8 +24,8 @@ class vs_stacked:public vs_passthrough
     sigc::connection shown_conn, hidden_conn;
 
     child_info(const vs_widget_ref &_w,
-	       SigC::Connection &_shown_conn,
-	       SigC::Connection &_hidden_conn)
+	       sigc::connection &_shown_conn,
+	       sigc::connection &_hidden_conn)
       :w(_w), shown_conn(_shown_conn),
        hidden_conn(_hidden_conn)
     {
