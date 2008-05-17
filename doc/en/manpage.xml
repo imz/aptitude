@@ -105,8 +105,7 @@
     <cmdsynopsis>
       <command>aptitude</command>
       <arg choice='opt'>-S <replaceable>fname</replaceable></arg>
-      <group choice='opt'><arg choice='plain'>-u</arg> <arg
-      choice='plain'>-i</arg></group>
+      <arg choice='opt'>-i</arg>
     </cmdsynopsis>
 
     <cmdsynopsis>
@@ -1039,25 +1038,13 @@ ihA raptor-utils                    - Raptor RDF Parser utilities</screen>
       </varlistentry>
 
       <varlistentry>
-	<term><literal>-u</literal></term>
-
-	<listitem>
-	  <para>
-	    Begins updating the package lists as soon as the
-	    program starts.  You cannot use this option and <literal>-i</literal> at the same time.
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
 	<term><literal>-i</literal></term>
 
 	<listitem>
 	  <para>
 	    Displays a download preview when the program starts
 	    (equivalent to starting the program and immediately
-	    pressing <quote><keycap>g</keycap></quote>).  You
-	    cannot use this option and <quote><literal>-u</literal></quote> at the same time.
+	    pressing <quote><keycap>g</keycap></quote>).
 	  </para>
 	</listitem>
       </varlistentry>

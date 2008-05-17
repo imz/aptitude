@@ -84,7 +84,6 @@
 #include <generic/apt/apt_undo_group.h>
 #include <generic/apt/config_signal.h>
 #include <generic/apt/download_install_manager.h>
-#include <generic/apt/download_update_manager.h>
 #include <generic/apt/download_signal_log.h>
 #include <generic/apt/matchers.h>
 
@@ -1150,45 +1149,6 @@ void do_package_run()
     }
 }
 
-static void lists_autoclean_msg(download_update_manager *m)
-{
-  vs_widget_ref msg = vs_center::create(vs_frame::create(vs_label::create(_("Deleting obsolete downloaded files"))));
-  m->post_autoclean_hook.connect(sigc::mem_fun(msg.unsafe_get_ref(),
-					       &vscreen_widget::destroy));
-
-  popup_widget(msg);
-  vscreen_tryupdate();
-}
-
-void really_do_update_lists()
-{
-  download_update_manager *m = new download_update_manager;
-  m->pre_autoclean_hook.connect(sigc::bind(sigc::ptr_fun(lists_autoclean_msg),
-					   m));
-  m->post_forget_new_hook.connect(package_states_changed.make_slot());
-  (new ui_download_manager(m, false, true, false,
-			   _("Updating package lists"),
-			   _("View the progress of the package list update"),
-			   _("List Update")))->start();
-}
-
-void do_update_lists()
-{
-  if(!active_download)
-    {
-      if(getuid()==0 || !aptcfg->FindB(PACKAGE "::Warn-Not-Root", true))
-	really_do_update_lists();
-      else
-	{
-	  popup_widget(vs_dialog_ok(wrapbox(text_fragment(_("Updating the package lists requires administrative privileges, which you currently do not have."))),
-				    NULL,
-				    get_style("Error")));
-	}
-    }
-  else
-    show_message(_("A package-list update or install run is already taking place."), NULL, get_style("Error"));
-}
-
 static void do_sweep()
 {
   add_main_widget(cmine::create(), _("Minesweeper"), _("Waste time trying to find mines"), _("Minesweeper"));
@@ -1362,9 +1322,6 @@ vs_menu_info actions_menu[]={
 
   vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Install/remove packages"), "DoInstallRun",
 	       N_("Perform all pending installs and removals"), sigc::ptr_fun(do_package_run), sigc::ptr_fun(can_start_download_and_install)),
-
-  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Update package list"), "UpdatePackageList",
-	       N_("Check for new versions of packages"), sigc::ptr_fun(do_update_lists), sigc::ptr_fun(can_start_download)),
 
   VS_MENU_SEPARATOR,
 
@@ -1718,9 +1675,6 @@ void ui_init()
   main_stacked->connect_key_post("DoInstallRun",
 				 &global_bindings,
 				 sigc::ptr_fun(do_package_run));
-  main_stacked->connect_key_post("UpdatePackageList",
-				 &global_bindings,
-				 sigc::ptr_fun(do_update_lists));
   main_stacked->connect_key_post("MarkUpgradable",
 				 &global_bindings,
 				 sigc::ptr_fun(do_mark_upgradable));
@@ -1742,14 +1696,12 @@ void ui_init()
   wstring menu_key=global_bindings.readable_keyname("ToggleMenuActive"),
     help_key=global_bindings.readable_keyname("Help"),
     quit_key=global_bindings.readable_keyname("Quit"),
-    update_key=global_bindings.readable_keyname("UpdatePackageList"),
     install_key=global_bindings.readable_keyname("DoInstallRun");
 
-  wstring helptext = swsprintf(transcode(_("%ls: Menu  %ls: Help  %ls: Quit  %ls: Update  %ls: Download/Install/Remove Pkgs")).c_str(),
+  wstring helptext = swsprintf(transcode(_("%ls: Menu  %ls: Help  %ls: Quit  %ls: Download/Install/Remove Pkgs")).c_str(),
 			menu_key.c_str(),
 			help_key.c_str(),
 			quit_key.c_str(),
-			update_key.c_str(),
 			install_key.c_str());
 
   help_bar_ref help_label(help_bar::create(helptext, get_style("Header")));

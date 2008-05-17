@@ -104,8 +104,7 @@
     <cmdsynopsis>
       <command>aptitude</command>
       <arg choice='opt'>-S <replaceable>Dateiname</replaceable></arg>
-      <group choice='opt'><arg choice='plain'>-u</arg> <arg
-      choice='plain'>-i</arg></group>
+      <arg choice='opt'>-i</arg>
     </cmdsynopsis>
 
     <cmdsynopsis>
@@ -829,28 +828,13 @@
       </varlistentry>
 
       <varlistentry>
-        <term><literal>-u</literal></term>
-
-        <listitem>
-          <para>
-          
-            Die Paketlisten aktualisieren, wenn das Programm startet.  Sie
-            können diese Option und <literal>-i</literal> nicht kombinieren.
-
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
         <term><literal>-i</literal></term>
 
         <listitem>
           <para>
           
             Den Vorschaubildschirm anzeigen, wenn das Programm startet
-            (äquivalent zur Taste <quote><keycap>g</keycap></quote>).  Sie
-            können diese Option nicht mit <quote><literal>-u</literal></quote>
-            kombinieren.
+            (äquivalent zur Taste <quote><keycap>g</keycap></quote>).
 
           </para>
         </listitem>

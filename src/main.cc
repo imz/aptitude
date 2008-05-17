@@ -108,7 +108,7 @@ static void show_version()
 static void usage()
 {
   printf(PACKAGE " " VERSION "\n");
-  printf(_("Usage: aptitude [-S fname] [-u|-i]"));
+  printf(_("Usage: aptitude [-S fname] [-i]"));
   printf("\n");
   printf(_("       aptitude [options] <action> ..."));
   printf("\n");
@@ -154,7 +154,6 @@ static void usage()
   printf(_(" -o key=val     Directly set the configuration option named 'key'\n"));
   printf(_(" --with(out)-recommends	Specify whether or not to treat recommends as\n                strong dependencies\n"));
   printf(_(" -S fname       Read the aptitude extended status info from fname.\n"));
-  printf(_(" -u             Download new package lists on startup.\n"));
   printf(_(" -i             Perform an install run on startup.\n"));
   printf("\n");
   printf(_("                  This aptitude does not have Super Cow Powers.\n"));
@@ -216,7 +215,7 @@ int main(int argc, char *argv[])
     aptcfg->FindB(PACKAGE "::Simulate", false);
   bool download_only=aptcfg->FindB(PACKAGE "::CmdLine::Download-Only", false);;
 
-  bool update_only=false, install_only=false, queue_only=false;
+  bool install_only=false, queue_only=false;
   bool assume_yes=aptcfg->FindB(PACKAGE "::CmdLine::Assume-Yes", false);
   bool fix_broken=aptcfg->FindB(PACKAGE "::CmdLine::Fix-Broken", false);
   bool showvers=aptcfg->FindB(PACKAGE "::CmdLine::Show-Versions", false);
@@ -247,7 +246,7 @@ int main(int argc, char *argv[])
     aptcfg->Set(PACKAGE "::Delete-Unused-Pattern", "");
 
   // Read the arguments:
-  while((curopt=getopt_long(argc, argv, "DVZvhS:uiF:w:sO:fdyPt:q::Rro:", opts, NULL))!=-1)
+  while((curopt=getopt_long(argc, argv, "DVZvhS:iF:w:sO:fdyPt:q::Rro:", opts, NULL))!=-1)
     {
       switch(curopt)
 	{
@@ -257,9 +256,6 @@ int main(int argc, char *argv[])
 	case 'h':
 	  usage();
 	  exit(0);
-	case 'u':
-	  update_only=true;
-	  break;
 	case 'i':
 	  install_only=true;
 	  break;
@@ -391,19 +387,10 @@ int main(int argc, char *argv[])
   if(simulate)
     aptcfg->SetNoUser(PACKAGE "::Simulate", true);
 
-  // Sanity-check
-  if(update_only && install_only)
+  if(install_only && optind!=argc)
     {
       fprintf(stderr, "%s",
-	      _("Only one of -u and -i may be specified\n"));
-      usage();
-      exit(1);
-    }
-
-  if((update_only || install_only) && optind!=argc)
-    {
-      fprintf(stderr, "%s",
-	      _("-u and -i may not be specified in command-line mode (eg, with 'install')"));
+	      _("-i may not be specified in command-line mode (eg, with 'install')"));
       usage();
       exit(1);
     }
@@ -421,10 +408,10 @@ int main(int argc, char *argv[])
 	  signal(SIGWINCH, update_screen_width);
 	  update_screen_width();
 
-	  if(update_only || install_only)
+	  if(install_only)
 	    {
 	      fprintf(stderr, "%s",
-		      _("-u and -i may not be specified with a command"));
+		      _("-i may not be specified with a command"));
 	      usage();
 	      exit(1);
 	    }
@@ -523,13 +510,7 @@ int main(int argc, char *argv[])
   try
     {
       vs_progress_ref p=gen_progress_bar();
-      // We can avoid reading in the package lists in the case that
-      // we're about to update them (since they'd be closed and
-      // reloaded anyway).  Obviously we still need them for installs,
-      // since we have to get information about what to install from
-      // somewhere...
-      if(!update_only)
-	apt_init(p.unsafe_get_ref(), true, status_fname);
+      apt_init(p.unsafe_get_ref(), true, status_fname);
       if(status_fname)
 	free(status_fname);
       check_apt_errors();
@@ -546,9 +527,7 @@ int main(int argc, char *argv[])
       p->destroy();
       p = NULL;
 
-      if(update_only)
-	do_update_lists();
-      else if(install_only)
+      if(install_only)
 	do_package_run_or_show_preview();
       //install_or_remove_packages();
 

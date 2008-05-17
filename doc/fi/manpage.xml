@@ -105,8 +105,7 @@
     <cmdsynopsis>
       <command>aptitude</command>
       <arg choice='opt'>-S <replaceable>tnimi</replaceable></arg>
-      <group choice='opt'><arg choice='plain'>-u</arg> <arg
-      choice='plain'>-i</arg></group>
+      <arg choice='opt'>-i</arg>
     </cmdsynopsis>
 
     <cmdsynopsis>
@@ -1030,27 +1029,13 @@ ihA raptor-utils                    - Raptor RDF Parser utilities</screen>
       </varlistentry>
 
       <varlistentry>
-	<term><literal>-u</literal></term>
-
-	<listitem>
-	  <para>
-            Aloita pakettiluettelon päivitys heti käynnistyksen
-            jälkeen.  Tätä valitsinta ei voi käyttää yhdessä
-            valitsimen <literal>-i</literal> kanssa.
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
 	<term><literal>-i</literal></term>
 
 	<listitem>
 	  <para>
             Näytä esikatseluruutu heti käynnistyksen jälkeen (sama
             kuin käynnistäisi ohjelman ja painaisi
-            <quote><keycap>g</keycap></quote>).  Tätä valitsinta ei
-            voi käyttää yhdessä valitsimen
-            <quote><literal>-u</literal></quote> kanssa.
+            <quote><keycap>g</keycap></quote>).
 	  </para>
 	</listitem>
       </varlistentry>
