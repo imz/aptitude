@@ -23,6 +23,7 @@
 #include "config_signal.h"
 #include "download_signal_log.h"
 
+#include <apt-pkg/acquire-item.h>
 #include <apt-pkg/cachefile.h>
 #include <apt-pkg/clean.h>
 #include <apt-pkg/error.h>
@@ -84,6 +85,25 @@ bool download_update_manager::prepare(OpProgress &progress,
     }
 
   fetcher = new pkgAcquire(&acqlog);
+
+  if(!src_list.GetReleases(fetcher))
+    {
+      delete fetcher;
+      fetcher = NULL;
+      return false;
+    }
+
+  bool Failed = false;
+  fetcher->Run();
+  for (pkgAcquire::ItemIterator I = fetcher->ItemsBegin(); I != fetcher->ItemsEnd(); I++)
+    {
+      if ((*I)->Status == pkgAcquire::Item::StatDone)
+	continue;
+      (*I)->Finished();
+      Failed = true;
+    }
+  if (Failed == true)
+    _error->Warning(_("Release files for some repositories could not be retrieved or authenticated. Such repositories are being ignored."));
 
   if(!src_list.GetIndexes(fetcher))
     {
