@@ -356,29 +356,6 @@ bool pkg_item::dispatch_key(const key &k, vs_tree *owner)
       else
 	delete grp;
     }
-  else if(bindings->key_matches(k, "BugReport"))
-    {
-      // Try to report a bug on the package.  (ew quoting ew)
-      string cmd=string("reportbug '")+package.Name()+"'";
-
-      // Default to reporting a bug on the current version.
-      pkgCache::VerIterator ver=package.CurrentVer();
-      if(ver.end())
-	ver=visible_version();
-      if(ver.end())
-	ver=package.VersionList();
-
-      if(!ver.end())
-	cmd+=string(" -V '")+ver.VerStr()+"'";
-
-      vscreen_suspend();
-
-      printf(_("Reporting a bug in %s:\n"), package.Name());
-
-      system(cmd.c_str());
-
-      vscreen_resume();
-    }
   else
     return pkg_tree_node::dispatch_key(k, owner);
 

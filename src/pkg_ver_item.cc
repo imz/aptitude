@@ -715,44 +715,6 @@ bool pkg_ver_item::dispatch_key(const key &k, vs_tree *owner)
 
       return true;
     }
-  else if(bindings->key_matches(k, "BugReport"))
-    {
-      // Try to report a bug on the package.  (ew quoting ew)
-      string cmd=string("reportbug '")+version.ParentPkg().Name()+"' -V '"+version.VerStr()+"'";
-
-
-      struct sigaction oldact;
-      struct sigaction act;
-
-      memset(&act,0,sizeof(act));
-      act.sa_handler = SIG_DFL;
-      sigemptyset(&act.sa_mask);
-
-      sigaction(SIGCONT, &act, &oldact);
-
-      vscreen_suspend();
-
-      apt_cache_file->ReleaseLock();
-
-      printf(_("Reporting a bug in %s:\n"), version.ParentPkg().Name());
-
-
-
-
-      system(cmd.c_str());
-
-      sigaction(SIGCONT, &oldact, NULL);
-
-
-
-      vscreen_resume();
-
-      vs_progress_ref p = gen_progress_bar();
-      apt_reload_cache(p.unsafe_get_ref(), true);
-      p->destroy();
-
-      return true;
-    }
   else
     return pkg_tree_node::dispatch_key(k, owner);
 }

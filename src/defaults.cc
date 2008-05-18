@@ -19,7 +19,6 @@ static void init_keybindings()
 
   global_bindings.set("QuitProgram", key(L'Q', false));
 
-  global_bindings.set("UpdatePackageList", key(L'u', false));
   global_bindings.set("MarkUpgradable", key(L'U', false));
   global_bindings.set("ForgetNewPackages", key(L'f', false));
   global_bindings.set("ChangePkgTreeLimit", key(L'l', false));
@@ -55,21 +54,7 @@ static void init_keybindings()
   global_bindings.set("DescriptionDown", key(L'z', false));
   global_bindings.set("DescriptionCycle", key(L'i', false));
 
-  global_bindings.set("DpkgReconfigure", key(L'R', false));
-  global_bindings.set("BugReport", key(L'B', false));
-
   global_bindings.set("SearchBroken", key(L'b', false));
-
-  global_bindings.set("NextSolution", key(L'.', false));
-  global_bindings.set("PrevSolution", key(L',', false));
-  global_bindings.set("FirstSolution", key(L'<', false));
-  global_bindings.set("LastSolution", key(L'>', false));
-  global_bindings.set("ExamineSolution", key(L'e', false));
-  global_bindings.set("ApplySolution", key(L'!', false));
-  global_bindings.set("DumpResolver", key(L'*', false));
-
-  global_bindings.set("SolutionActionReject", key(L'r', false));
-  global_bindings.set("SolutionActionApprove", key(L'a', false));
 
   pkg_tree::init_bindings();
   pkg_tree_node::init_bindings();
@@ -114,9 +99,6 @@ static void init_styles()
 
   set_style("Bullet", style_fg(COLOR_YELLOW)+style_attrs_on(A_BOLD));
   set_style("TrustWarning", style_fg(COLOR_RED)+style_bg(COLOR_BLACK)+style_attrs_on(A_BOLD));
-
-  set_style("SolutionActionRejected", style_bg(COLOR_RED));
-  set_style("SolutionActionApproved", style_bg(COLOR_GREEN));
 }
 
 void init_defaults()
