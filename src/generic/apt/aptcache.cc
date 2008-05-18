@@ -459,64 +459,21 @@ void aptitudeDepCache::mark_all_upgradable(bool with_autoinst,
 
   begin_action_group();
 
-  for(int iter=0; iter==0 || (iter==1 && with_autoinst); ++iter)
+  pre_package_state_changed();
+  dirty = true;
+
+  pkgDistUpgrade(*this);
+
+  pkgProblemResolver Fix(this);
+  for (pkgCache::PkgIterator I = PkgBegin(); I.end() == false; I++)
     {
-      // Do this twice, only turning auto-install on the second time.
-      // A reason for this is the following scenario:
-      //
-      // Packages A and B are installed at 1.0.  Package C is not installed.
-      // Version 2.0 of each package is available.
-      //
-      // Version 2.0 of A depends on "C (= 2.0) | B (= 2.0)".
-      //
-      // Upgrading A if B is not upgraded will cause this dependency to
-      // break.  Auto-install will then cheerfully fulfill it by installing
-      // C.
-      //
-      // A real-life example of this is xemacs21, xemacs21-mule, and
-      // xemacs21-nomule; aptitude would keep trying to install the mule
-      // version on upgrades.
-      bool do_autoinstall=(iter==1);
-
-      for(pkgCache::PkgIterator i=PkgBegin(); !i.end(); i++)
-	{
-	  StateCache &state=(*this)[i];
-	  aptitude_state &estate=get_ext_state(i);
-
-	  if(i.CurrentVer().end())
-	    continue;
-
-	  bool do_upgrade = false;
-
-	  if(!ignore_removed)
-	    do_upgrade = state.Status > 0 && !is_held(i);
-	  else
-	    {
-	      switch(estate.selection_state)
-		{
-		  // This case shouldn't really happen:
-		case pkgCache::State::Unknown:
-		  estate.selection_state=pkgCache::State::Install;
-
-		  // Fall through
-		case pkgCache::State::Install:
-		  if(state.Status > 0 && !is_held(i))
-		    do_upgrade = true;
-		  break;
-		default:
-		  break;
-		}
-	    }
-
-	  if(do_upgrade)
-	    {
-	      pre_package_state_changed();
-	      dirty = true;
-
-	      MarkInstall(i, do_autoinstall);
-	    }
-	}
+      if (is_held(I))
+        {
+          Fix.Protect(I);
+          MarkKeep(I);
+        }
     }
+  Fix.Resolve(true);
 
   // will handle setting undos, mark-and-sweep, etc:
   end_action_group(undo);
