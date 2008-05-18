@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: aptitude
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Terminal-based apt frontend
@@ -73,6 +73,13 @@ touch ChangeLog
 %doc doc/en/output-html/*
 
 %changelog
+* Sat May 17 2008 Sir Raorn <raorn@altlinux.ru> 0.4.5-alt1
+- [0.4.5]
+- Fix CLI "update" and disable UI "UpdatePackageList" (closes: #10204)
+- Use libapt-pkg when calculating dist-upgrade instead of dburrows-invented
+  square-wheeled bicycle (this means you can use aptitude dist-upgrade and
+  get sane results)
+
 * Thu Dec 14 2006 Sir Raorn <raorn@altlinux.ru> 0.4.4-alt1
 - [0.4.4]
 
