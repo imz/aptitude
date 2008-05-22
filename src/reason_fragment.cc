@@ -136,8 +136,11 @@ fragment *prvfrag(pkgCache::PkgIterator pkg,
       if((currver.end() || provided_cand) &&
 	 (currver.end() || provided_curr) &&
 	 (provided_cand || provided_curr))
-	fragments.push_back(text_fragment(P->Name(),
-					  pkg_item::pkg_style(*P, false)));
+	{
+	  if (strcmp(pkg.Name(), P->Name()))
+	    fragments.push_back(text_fragment(P->Name(),
+					      pkg_item::pkg_style(*P, false)));
+	}
       else if(provided_cand || provided_curr)
 	{
 	  pkgCache::VerIterator &pv=provided_cand?candver:currver;
