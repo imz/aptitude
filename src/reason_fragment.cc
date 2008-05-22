@@ -215,14 +215,6 @@ fragment *dep_singlefrag(pkgCache::PkgIterator pkg,
 		    text_fragment(dep.TargetVer(), verstyle));
     }
 
-  // Display a note if the package that is depended upon is not in
-  // main and is not the package being displayed.
-  string sec=dep.TargetPkg().Section()?dep.TargetPkg().Section():"";
-  if(sec.find('/')==sec.npos || dep.TargetPkg()==pkg)
-    sec="";
-  else
-    sec=string(sec, 0, sec.find('/'));
-
   bool available=false;
 
   for(pkgCache::VerIterator i=dep.TargetPkg().VersionList(); !i.end(); i++)
@@ -233,10 +225,9 @@ fragment *dep_singlefrag(pkgCache::PkgIterator pkg,
     if(_system->VS->CheckDep(i.ProvideVersion(), dep->CompareOp, dep.TargetVer()))
       available=true;
 
-  return fragf("%F%s%F%F%s",
+  return fragf("%F%F%F%s",
 	       text_fragment(dep.TargetPkg().Name(),
 			     pkg_item::pkg_style(dep.TargetPkg(), false)),
-	       sec.empty() || sec=="main"?"":(" ["+sec+']').c_str(),
 	       verfrag,
 	       prvfrag(dep.TargetPkg(),
 		       dep.ParentPkg(),
@@ -264,18 +255,9 @@ fragment *dep_or_frag(pkgCache::PkgIterator pkg,
     else
       fragments.push_back(dep_singlefrag(pkg, D));
 
-  // Display a note if the source of the dependency is not in main and
-  // is not the package being displayed.
-  string sec=dep.ParentVer().Section()?dep.ParentVer().Section():"";
-  if(sec.find('/')==sec.npos || dep.ParentPkg()==pkg)
-    sec="";
-  else
-    sec=string(sec, 0, sec.find('/'));
-
-  return fragf(_("%F%s %F %F"),
+  return fragf(_("%F %F %F"),
 	       text_fragment(dep.ParentPkg().Name(),
 			     pkg_item::pkg_style(dep.ParentPkg(), false)),
-	       sec.empty() || sec=="main"?"":(" ["+sec+']').c_str(),
 	       depname_frag(dep),
 	       sequence_fragment(fragments));
 }
