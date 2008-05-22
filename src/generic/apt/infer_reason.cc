@@ -166,9 +166,10 @@ void infer_reason(pkgCache::PkgIterator pkg, set<reason> &reasons)
     {
       // Look for *other* packages that conflict with this one.
       for(rev_dep_iterator d(pkg.CurrentVer()); !d.end(); ++d)
-	if((*d)->Type==pkgCache::Dep::Conflicts &&
+	if(((*d)->Type==pkgCache::Dep::Conflicts &&
 	   relevant_dep(pkg.CurrentVer(), *d) &&
-	   !is_simple_self_conflict(*d))
+	   !is_simple_self_conflict(*d)) ||
+	   (*d)->Type==pkgCache::Dep::Obsoletes)
 	  reasons.insert(reason((*d).ParentPkg(), *d));
 
       for(pkgCache::DepIterator d=pkg.CurrentVer().DependsList(); !d.end(); ++d)
