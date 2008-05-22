@@ -745,6 +745,13 @@ void aptitudeDepCache::cleanup_after_change(undo_group *undo, bool alter_stickie
 		      if(pkg.CurrentVer().end() ||
 			 backup_state.PkgState[pkg->ID].Delete())
 			package_states[pkg->ID].install_reason=libapt;
+
+		      for (pkgCache::DepIterator d = PkgState[pkg->ID].InstVerIter(GetCache()).DependsList(); d.end() == false; d++)
+			if (d->Type == pkgCache::Dep::Obsoletes &&
+			    PkgState[d.TargetPkg()->ID].Delete() &&
+			    PkgState[d.TargetPkg()->ID].Mode != backup_state.PkgState[d.TargetPkg()->ID].Mode &&
+			    package_states[pkg->ID].install_reason > backup_state.AptitudeState[d.TargetPkg()->ID].install_reason)
+			  package_states[pkg->ID].install_reason = backup_state.AptitudeState[d.TargetPkg()->ID].install_reason;
 		    }
 		  break;
 		}
@@ -1374,6 +1381,7 @@ void aptitudeDepCache::mark_and_sweep(undo_group *undo)
   for(pkgCache::PkgIterator p=PkgBegin(); !p.end(); ++p)
     {
       if(package_states[p->ID].install_reason==manual ||
+	 (PkgState[p->ID].Install() && p.CurrentVer().end()) ||
 	 (p->Flags & pkgCache::Flag::Essential) ||
 	 (matcher && ((PkgState[p->ID].Keep() &&
 		       !p.CurrentVer().end() &&
