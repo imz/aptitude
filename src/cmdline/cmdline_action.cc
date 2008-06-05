@@ -53,8 +53,11 @@ bool cmdline_applyaction(cmdline_pkgaction_type action,
 	  for(pkgCache::PrvIterator prv=pkg.ProvidesList();
 	      !prv.end(); ++prv)
 	    {
-	      if((*apt_cache_file)[prv.OwnerPkg()].CandidateVerIter(*apt_cache_file)==prv.OwnerVer())
-		cands.push_back(prv.OwnerPkg());
+	      pkgCache::VerIterator PrvPkgCandVer = (*apt_cache_file)[prv.OwnerPkg()].CandidateVerIter(*apt_cache_file);
+
+	      for(; PrvPkgCandVer.end() == false; ++PrvPkgCandVer)
+		if(PrvPkgCandVer == prv.OwnerVer())
+		  cands.push_back(prv.OwnerPkg());
 	    }
 
 	  if(cands.size()==0)

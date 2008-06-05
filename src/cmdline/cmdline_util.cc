@@ -126,6 +126,8 @@ bool cmdline_parse_source(const string &input,
   source=cmdline_version_cand;
   sourcestr="";
 
+  if((*apt_cache_file)->FindPkg(package.c_str()).end())
+    {
   if(scratch.find('/')!=scratch.npos)
     {
       source=cmdline_version_archive;
@@ -149,6 +151,7 @@ bool cmdline_parse_source(const string &input,
 
       sourcestr=string(scratch, loc+1);
       scratch.erase(loc);
+    }
     }
 
   package=scratch;

@@ -34,6 +34,7 @@
 
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
+#include <generic/apt/download_signal_log.h>
 
 #include <vscreen/config/keybindings.h>
 #include <vscreen/transcode.h>
@@ -46,6 +47,7 @@
 #include <cmdline/cmdline_download.h>
 #include <cmdline/cmdline_forget_new.h>
 #include <cmdline/cmdline_moo.h>
+#include <cmdline/cmdline_progress.h>
 #include <cmdline/cmdline_prompt.h>
 #include <cmdline/cmdline_search.h>
 #include <cmdline/cmdline_show.h>
@@ -54,8 +56,11 @@
 
 #include <sigc++/functors/ptr_fun.h>
 
+#include <apt-pkg/acquire-item.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/init.h>
+
+#include <vector>
 
 #include "ui.h"
 
@@ -157,6 +162,41 @@ static void usage()
   printf(_(" -i             Perform an install run on startup.\n"));
   printf("\n");
   printf(_("                  This aptitude does not have Super Cow Powers.\n"));
+}
+
+// Ripped from apt...
+bool DownloadPackages(std::vector<std::string> &URLLst)
+{
+
+  // Create the download object
+  std::auto_ptr<download_signal_log> log(gen_cmdline_download_progress());
+  pkgAcquire Fetcher(log.get());
+
+  // Load the requestd sources into the fetcher
+  std::vector<std::string>::const_iterator I = URLLst.begin();
+  for (; I != URLLst.end(); I++)
+      new pkgAcqFile(&Fetcher,*I,"",0,*I,flNotDir(*I));
+
+  // Run it
+  if (Fetcher.Run() == pkgAcquire::Failed)
+      return false;
+
+  // Print error messages
+  bool Failed = false;
+  for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin(); I != Fetcher.ItemsEnd(); I++)
+    {
+      if ((*I)->Status == pkgAcquire::Item::StatDone &&
+          (*I)->Complete == true)
+        continue;
+
+      fprintf(stderr,_("Failed to fetch %s  %s\n"),(*I)->DescURI().c_str(),
+	      (*I)->ErrorText.c_str());
+      Failed = true;
+    }
+  if (Failed == true)
+    return _error->Error(_("Failed to fetch some archives."));
+
+  return true;
 }
 
 // This handles options with no single-character equivalent
@@ -377,6 +417,26 @@ int main(int argc, char *argv[])
 		  _("WEIRDNESS: unknown option code received\n"));
 	  break;
 	}
+    }
+
+  if(optind!=argc)
+    {
+      std::vector<std::string> URLLst;
+      for(int I = optind + 1; I < argc; I++)
+	if(strstr(argv[I], "://") != NULL)
+	  {
+	    URLLst.push_back(argv[I]);
+	    argv[I] = strrchr(argv[I], '/')+1;
+	  }
+
+      if(URLLst.empty() == false && DownloadPackages(URLLst) == false)
+	{
+	  _error->DumpErrors();
+	  return 100;
+	}
+
+      for(int I = optind + 1; I < argc; I++)
+	aptcfg->SetNoUser("APT::Arguments::", argv[I]);
     }
 
   if(quiet == 0 && !isatty(1))
