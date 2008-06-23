@@ -1621,7 +1621,7 @@ typedef ref_ptr<help_bar> help_bar_ref;
 
 void ui_init()
 {
-  vscreen_init();
+  vscreen_init(aptcfg->FindB(PACKAGE "::UI::Disable-Mouse", false));
   init_defaults();
 
   // The basic behavior of the package state signal is to update the

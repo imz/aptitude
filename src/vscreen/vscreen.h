@@ -64,7 +64,7 @@ public:
 
 class vscreen_widget;
 
-void vscreen_init();
+void vscreen_init(bool no_mouse=false);
 // Performs initialization tasks (including calling init_curses())
 
 void vscreen_install_sighandlers();

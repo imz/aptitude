@@ -111,6 +111,8 @@ option_item ui_options[]={
 	      PACKAGE "::UI::HelpBar", true),
   option_item(N_("Hide the menubar when it is not being used"),
 	      PACKAGE "::UI::Menubar-Autohide", false),
+  option_item(N_("Disable mouse (for use with broken terminals)"),
+	      PACKAGE "::UI::Disable-Mouse", false),
   option_item(N_("Use a minibuffer-style prompt when possible"),
 	      PACKAGE "::UI::Minibuf-Prompts", false),
   option_item(N_("Show partial search results (incremental search)"),

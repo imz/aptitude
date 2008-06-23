@@ -624,7 +624,7 @@ public:
 
 timeout_thread timeout_thread::instance;
 
-void vscreen_init()
+void vscreen_init(bool no_mouse)
 {
   threads::mutex::lock l(vscreen_get_mutex());
 
@@ -685,7 +685,8 @@ void vscreen_init()
 
   init_curses();
 
-  mousemask(ALL_MOUSE_EVENTS, NULL);
+  if (!no_mouse)
+    mousemask(ALL_MOUSE_EVENTS, NULL);
 
   curses_avail=true;
   cbreak();
