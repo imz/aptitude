@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -73,6 +73,13 @@ touch ChangeLog
 %doc doc/en/output-html/*
 
 %changelog
+* Wed Aug 13 2008 Sir Raorn <raorn@altlinux.ru> 0.4.5-alt2
+- New option "Aptitude::UI::Disable-Mouse" - ignore mouse
+  events (for use with b0rken terminals)
+- Support for command-line package file installation
+- Better "autoinstalled" status assignment for packages that
+  obsolete other packages
+
 * Sat May 17 2008 Sir Raorn <raorn@altlinux.ru> 0.4.5-alt1
 - [0.4.5]
 - Fix CLI "update" and disable UI "UpdatePackageList" (closes: #10204)
