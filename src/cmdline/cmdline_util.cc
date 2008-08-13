@@ -126,18 +126,8 @@ bool cmdline_parse_source(const string &input,
   source=cmdline_version_cand;
   sourcestr="";
 
-  if((*apt_cache_file)->FindPkg(package.c_str()).end())
+  if((*apt_cache_file)->FindPkg(scratch.c_str()).end())
     {
-  if(scratch.find('/')!=scratch.npos)
-    {
-      source=cmdline_version_archive;
-      // Use the last one.
-      string::size_type loc=scratch.rfind('/');
-
-      sourcestr=string(scratch, loc+1);
-      scratch.erase(loc);
-    }
-
   if(scratch.find('=')!=scratch.npos)
     {
       if(source==cmdline_version_archive)
