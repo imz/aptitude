@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt2
+Release: alt2.1
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -29,6 +29,7 @@ can't be ported to apt-rpm.
 %package doc
 Summary: English manual for aptitude, a terminal-based apt frontend
 Group: Books/Computer books
+BuildArch: noarch
 Conflicts: %name < %version-%release
 Conflicts: %name > %version-%release
 
@@ -54,9 +55,9 @@ touch ChangeLog
 %make_build -C doc/en
 
 %install
-%__mkdir_p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_localstatedir/%name
 %make_install DESTDIR=%buildroot install
-%__rm -rf %buildroot%_mandir
+rm -rf %buildroot%_mandir
 
 %make_install DESTDIR=%buildroot -C doc/en install-man
 
@@ -73,6 +74,9 @@ touch ChangeLog
 %doc doc/en/output-html/*
 
 %changelog
+* Fri Dec 12 2008 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt2.1
+- Fixed build with g++ 4.3.x.
+
 * Wed Aug 13 2008 Sir Raorn <raorn@altlinux.ru> 0.4.5-alt2
 - New option "Aptitude::UI::Disable-Mouse" - ignore mouse
   events (for use with b0rken terminals)
