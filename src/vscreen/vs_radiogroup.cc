@@ -1,5 +1,7 @@
 // vs_radiogroup.cc
 
+#include <cstdlib>
+
 #include "vs_radiogroup.h"
 
 #include "vs_togglebutton.h"

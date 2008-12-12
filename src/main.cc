@@ -24,7 +24,8 @@
 #endif
 
 #include <getopt.h>
-#include <signal.h>
+#include <csignal>
+#include <memory>
 
 #include "aptitude.h"
 

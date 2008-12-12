@@ -20,8 +20,11 @@
 #include "transcode.h"
 
 #include <generic/util/eassert.h>
+#include <cstdlib>
+#include <cstring>
 #include <errno.h>
 #include <iconv.h>
+#include <langinfo.h>
 
 using namespace std;
 

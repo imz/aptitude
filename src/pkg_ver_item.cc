@@ -39,13 +39,14 @@
 
 #include <algorithm>
 #include <string>
+#include <memory>
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/policy.h>
 #include <apt-pkg/strutl.h>
 
-#include <signal.h>
+#include <csignal>
 
 using namespace std;
 

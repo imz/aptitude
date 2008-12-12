@@ -28,6 +28,7 @@
 #include "aptcache.h"
 
 #include <utility>
+#include <cstring>
 
 class OpProgress;
 class pkgRecords;

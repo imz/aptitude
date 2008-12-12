@@ -2,6 +2,8 @@
 //
 //  Copyright 2004 Daniel Burrows
 
+#include <memory>
+
 #include "cmdline_util.h"
 
 #include "cmdline_common.h"

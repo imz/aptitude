@@ -48,7 +48,9 @@
 // For _()
 #include "../aptitude.h"
 
-#include <signal.h>
+#include <cstdlib>
+#include <climits>
+#include <csignal>
 
 #include <generic/util/eassert.h>
 #include <sys/time.h>

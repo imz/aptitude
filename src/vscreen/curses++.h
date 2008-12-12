@@ -22,7 +22,7 @@
 #ifndef CURSES_PLUSPLUS_H
 #define CURSES_PLUSPLUS_H
 
-#include <string>
+#include <cstring>
 #include <ncurses/curses.h>
 
 #include <generic/util/eassert.h>
@@ -77,7 +77,7 @@ struct wchtype
 
   bool operator<(const wchtype &other) const
   {
-    return ch<other.ch || ch==other.ch && attrs<other.attrs;
+    return ch<other.ch || (ch==other.ch && attrs<other.attrs);
   }
 
   bool operator<=(const wchtype &other) const

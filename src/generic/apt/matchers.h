@@ -25,6 +25,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/version.h>
