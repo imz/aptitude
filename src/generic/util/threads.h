@@ -25,7 +25,7 @@
 #ifndef THREADS_H
 #define THREADS_H
 
-#include <errno.h>
+#include <cerrno>
 #include "exception.h"
 
 namespace threads

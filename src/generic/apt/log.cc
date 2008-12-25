@@ -30,7 +30,7 @@
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/strutl.h>
 
-#include <errno.h>
+#include <cerrno>
 
 #include <algorithm>
 

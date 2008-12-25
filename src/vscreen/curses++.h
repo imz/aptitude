@@ -28,7 +28,7 @@
 #include <generic/util/eassert.h>
 
 // For isspace
-#include <ctype.h>
+#include <cctype>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

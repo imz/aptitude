@@ -41,7 +41,7 @@
 
 #include <set>
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/pkgcache.h>
@@ -50,8 +50,8 @@
 #define pkgCheckDep _system->checkDep
 
 #include <generic/util/eassert.h>
-#include <ctype.h>
-#include <stdio.h>
+#include <cwctype>
+#include <cstdio>
 #include <regex.h>
 #include <sys/types.h>
 

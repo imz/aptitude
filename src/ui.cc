@@ -33,7 +33,7 @@
 #include <apt-pkg/packagemanager.h>
 
 #include <dirent.h>
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <sys/stat.h>

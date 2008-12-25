@@ -23,7 +23,7 @@
 
 #include <aptitude.h>
 
-#include <errno.h>
+#include <cerrno>
 
 namespace threads
 {

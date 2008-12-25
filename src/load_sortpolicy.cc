@@ -27,7 +27,7 @@
 #include <vector>
 #include <map>
 
-#include <ctype.h>
+#include <cwctype>
 
 #include <apt-pkg/error.h>
 

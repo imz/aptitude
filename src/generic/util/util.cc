@@ -19,13 +19,13 @@
 
 #include "util.h"
 
-#include <ctype.h>
-#include <errno.h>
+#include <cwctype>
+#include <cerrno>
 #include <pwd.h>
-#include <stdarg.h>
-#include <string.h>
+#include <cstdarg>
+#include <cstring>
 #include <sys/types.h>
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 
 #include "eassert.h"

@@ -41,8 +41,8 @@
 #include <vector>
 
 #include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
+#include <cstdio>
+#include <cerrno>
 #include <sys/stat.h>
 
 #include <generic/util/eassert.h>

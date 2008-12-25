@@ -35,7 +35,7 @@
 #include <map>
 #include <set>
 
-#include <ctype.h>
+#include <cwctype>
 
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/version.h>

@@ -14,7 +14,8 @@
 #include "config/keybindings.h"
 
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
+#include <cwctype>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/fcntl.h>

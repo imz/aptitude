@@ -48,7 +48,7 @@
 #include <sigc++/functors/mem_fun.h>
 #include <sigc++/functors/ptr_fun.h>
 
-#include <ctype.h>
+#include <cwctype>
 
 #include <string>
 

@@ -11,7 +11,9 @@
 #include <sigc++/adaptors/bind.h>
 #include <sigc++/functors/mem_fun.h>
 
+#include <algorithm>
 #include <numeric>
+#include <cstdlib>
 
 using namespace std;
 

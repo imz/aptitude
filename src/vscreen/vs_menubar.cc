@@ -27,6 +27,8 @@
 #include <sigc++/adaptors/bind.h>
 #include <sigc++/functors/mem_fun.h>
 
+#include <cstdlib>
+
 using namespace std;
 
 keybindings *vs_menubar::bindings=NULL;

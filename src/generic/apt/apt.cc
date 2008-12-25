@@ -42,10 +42,10 @@
 #include <fstream>
 
 #include <generic/util/eassert.h>
-#include <signal.h>
+#include <csignal>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <cerrno>
 
 using namespace std;
 

@@ -15,7 +15,7 @@
 
 #include <vscreen/transcode.h>
 
-#include <ctype.h>
+#include <cwctype>
 
 using namespace std;
 

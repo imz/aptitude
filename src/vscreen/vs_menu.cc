@@ -27,7 +27,7 @@
 #include <sigc++/functors/mem_fun.h>
 
 #include <algorithm>
-#include <ctype.h>
+#include <cwctype>
 
 using namespace std;
 

@@ -32,7 +32,7 @@
 #include <apt-pkg/error.h>
 #endif
 
-#include <ctype.h>
+#include <cwctype>
 
 #include <algorithm>
 #include <map>

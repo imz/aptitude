@@ -27,11 +27,11 @@
 
 #include <aptitude.h>
 
-#include <stdio.h>
-#include <errno.h>
+#include <cstdio>
+#include <cerrno>
 #include <unistd.h>
 #include <fcntl.h>
-#include <signal.h>
+#include <csignal>
 #include <sys/stat.h>
 
 #include <apt-pkg/error.h>
