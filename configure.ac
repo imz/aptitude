@@ -58,28 +58,6 @@ AC_CHECK_HEADER(locale.h, [AC_DEFINE([HAVE_LOCALE_H], [], [Define if locale.h is
 
 AC_CHECK_DECL(setlocale, [AC_DEFINE([HAVE_SETLOCALE], [], [Define if setlocale is available in locale.h])], , [#include <locale.h>])
 
-HASH_INC=""
-HASH_CLS=""
-
-AC_CHECK_HEADER(hash_map,
-		[HASH_INC="hash_map"
-		 HASH_CLS="hash_map"
-		 AC_DEFINE(HAVE_HASH_MAP, ,
-			  [Define if the g++ extension hash_map is available])],
-	  	[AC_CHECK_HEADER(ext/hash_map,
-				 [HASH_INC="ext/hash_map"
-				  HASH_CLS="hash_map"
-				  AC_DEFINE(HAVE_EXT_HASH_MAP, , [Define if the g++ extension ext/hash_map is available])])])
-
-AC_CHECK_HEADER(hash_set,
-		[HASH_INC="hash_set"
-		 HASH_CLS="hash_set"
-		 AC_DEFINE(HAVE_HASH_SET,  , [Define if the g++ extension hash_set is available])],
-		[AC_CHECK_HEADER(ext/hash_set,
-				[HASH_INC="ext/hash_set"
-				 HASH_CLS="hash_set"
-				 AC_DEFINE(HAVE_EXT_HASH_SET,  , [Define if the g++ extension ext/hash_set is available])])])
-
 AC_MSG_CHECKING([whether apt supports ddtp])
 
 AC_COMPILE_IFELSE(AC_LANG_PROGRAM([[#include <apt-pkg/pkgcache.h>]],

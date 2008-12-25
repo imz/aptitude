@@ -44,7 +44,6 @@
 #include <sigc++/trackable.h>
 
 using namespace std;
-using namespace __gnu_cxx;
 
 pkg_grouppolicy_factory::~pkg_grouppolicy_factory()
 {
@@ -105,7 +104,7 @@ pkg_grouppolicy *pkg_grouppolicy_end_factory::instantiate(pkg_signal *_sig,
 
 class pkg_grouppolicy_section:public pkg_grouppolicy
 {
-  typedef hash_map<string, pair<pkg_grouppolicy *, pkg_subtree *> > section_map;
+  typedef std::map<string, pair<pkg_grouppolicy *, pkg_subtree *> > section_map;
   section_map sections;
 
   pkg_grouppolicy_factory *chain;
@@ -114,8 +113,8 @@ class pkg_grouppolicy_section:public pkg_grouppolicy
   int split_mode;
   bool passthrough;
 
-  // The descriptions are in the style used by package descriptions.
-  static hash_map<string, wstring> section_descriptions;
+  // The descriptions are in the cw::style used by package descriptions.
+  static std::map<string, wstring> section_descriptions;
   static void init_section_descriptions();
 public:
   pkg_grouppolicy_section(int _split_mode,
@@ -145,7 +144,7 @@ pkg_grouppolicy *pkg_grouppolicy_section_factory::instantiate(pkg_signal *_sig,
 				     _sig, _desc_sig);
 }
 
-hash_map<string, wstring> pkg_grouppolicy_section::section_descriptions;
+std::map<string, wstring> pkg_grouppolicy_section::section_descriptions;
 
 // Should this be externally configurable?
 void pkg_grouppolicy_section::init_section_descriptions()

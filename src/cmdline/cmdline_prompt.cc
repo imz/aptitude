@@ -25,6 +25,8 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/pkgsystem.h>
 
+#include <algorithm>
+
 using namespace std;
 
 string StdinEOFException::errmsg() const

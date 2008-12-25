@@ -36,8 +36,6 @@
 
 #include <generic/apt/apt.h>
 
-#include <generic/util/strhash.h>
-
 #include <apt-pkg/error.h>
 
 #include <map>
