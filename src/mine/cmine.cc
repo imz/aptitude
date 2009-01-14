@@ -16,6 +16,7 @@
 #include <vscreen/vscreen_widget.h>
 #include <vscreen/vscreen.h>
 
+#include <generic/util/util.h>
 #include <vscreen/transcode.h>
 #include <vscreen/vs_button.h>
 #include <vscreen/vs_center.h>
@@ -105,26 +106,22 @@ void cmine::paint_header(const style &st)
       getmaxyx(height,width);
 
       wstring header=transcode(_("Minesweeper"));
-      wchar_t buf[200];
+      wstring buf;
 
       if(board->get_state()==mine_board::playing)
-	swprintf(buf,
-		 sizeof(buf),
-		 transcode(_("%i/%i mines  %d %s")).c_str(),
-		 board->get_nummines()-board->get_numflags(),
-		 board->get_nummines(),
-		 (int) board->get_duration(),
-		 board->get_duration()==1?_("second"):_("seconds"));
+	buf = swsprintf(transcode("%i/%i mines  %d %s").c_str(),
+			board->get_nummines()-board->get_numflags(),
+			board->get_nummines(),
+			(int) board->get_duration(),
+			board->get_duration()==1?_("second"):_("seconds"));
       else
-	swprintf(buf,
-		 sizeof(buf),
-		 transcode(_("    %s in %d %s")).c_str(),
-		 board->get_state()==mine_board::won?_("Won"):_("Lost"),
-		 (int) board->get_duration(),
-		 board->get_duration()==1?_("second"):_("seconds"));
+	buf = swsprintf(transcode("    %s in %d %s").c_str(),
+			board->get_state()==mine_board::won?_("Won"):_("Lost"),
+			(int) board->get_duration(),
+			board->get_duration()==1?_("second"):_("seconds"));
 
       int headerw=wcswidth(header.c_str(), header.size());
-      int bufw=wcswidth(buf, wcslen(buf));
+      int bufw=wcswidth(buf.c_str(), buf.size());
 
       while(headerw+bufw < width)
 	{
@@ -135,7 +132,7 @@ void cmine::paint_header(const style &st)
       unsigned int loc=0;
       while(headerw < width)
 	{
-	  eassert(buf[loc]!=0);
+	  eassert(loc < buf.size());
 
 	  wchar_t wch=buf[loc];
 	  header+=buf;
@@ -161,9 +158,7 @@ void cmine::do_load_game(wstring ws)
       ifstream in(s.c_str());
       if(!in)
 	{
-	  char buf[512];
-
-	  snprintf(buf, 512, _("Could not open file \"%s\""), s.c_str());
+	  const std::string buf(ssprintf(_("Could not open file \"%s\""), s.c_str()));
 
 	  popup_widget(vs_dialog_ok(transcode(buf), NULL,
 				    get_style("Error")));
@@ -176,10 +171,8 @@ void cmine::do_load_game(wstring ws)
 	  // user tries to load a game from, say, /etc/passwd.
 	  if(!brd->load(in))
 	    {
-	      char buf[512];
-
-	      snprintf(buf, 512, _("Could not load game from %s"),
-		       s.c_str());
+	      const std::string buf(ssprintf(_("Could not load game from %s"),
+						       s.c_str()));
 
 	      popup_widget(vs_dialog_ok(transcode(buf), NULL,
 					get_style("Error")));
@@ -205,9 +198,7 @@ void cmine::do_save_game(wstring ws)
       ofstream out(s.c_str());
       if(!out)
 	{
-	  char buf[512];
-
-	  snprintf(buf, 512, _("Could not open file \"%s\""), s.c_str());
+	  const std::string buf = ssprintf(_("Could not open file \"%s\""), s.c_str());
 
 	  popup_widget(vs_dialog_ok(transcode(buf), NULL,
 				    get_style("Error")));
@@ -539,9 +530,7 @@ void cmine::checkend()
 		  break;
 		}
 
-	      char buf[512];
-
-	      snprintf(buf, 512, _("Your wand of %s breaks apart and explodes!  --More--"));
+	      const std::string buf(ssprintf(_("Your wand of %s breaks apart and explodes!  --More--")));
 
 	      add_status_widget(vs_label::create(buf,
 						 retr_status_color()));
@@ -666,15 +655,13 @@ bool cmine::handle_key(const key &k)
 		  &save_history);
   else if(bindings->key_matches(k, "Help"))
     {
-      char buf[512];
-
-      snprintf(buf, 512, HELPDIR "/%s", _("mine-help.txt"));
+      std::string buf(ssprintf(HELPDIR "/%s", _("mine-help.txt")));
 
       const char *encoding=P_("Encoding of mine-help.txt|UTF-8");
 
-      if(access(buf, R_OK)!=0)
+      if(access(buf.c_str(), R_OK)!=0)
 	{
-	  strncpy(buf, HELPDIR "/mine-help.txt", 512);
+	  buf = HELPDIR "/mine-help.txt";
 	  encoding="UTF-8";
 	}
 
