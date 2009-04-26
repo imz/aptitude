@@ -27,7 +27,6 @@ arquivo README para obter uma listagem das mesmas.
                 atualizações
   "_":          Solicita que um pacote e todos os seus arquivos de
                 configuração sejam removidos
-  "L":          Solicita que um pacote seja reinstalado
   "M":		      Marca um pacote como tendo sido automaticamente instalando.
 		            Pacotes automaticamente instalados são removidos caso nenhum
                 pacote instalado manualmente necessitem dos mesmos.

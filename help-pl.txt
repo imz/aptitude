@@ -25,7 +25,6 @@ klawiszach znajdują się w pliku README.
   "-":           Zaznacza pakiet do usunięcia
   "=":           Wstrzymuje uaktualnienia pakietu
   "_":           Zaznacza pakiet do usunięcia wraz z plikami konfiguracyjnymi
-  "L":           Zaznacza pakiet do reinstalacji
 
   "u":           Uaktualnia listę dostępnych pakietów
   "g":           Wykonuje wszystkie instalacje, uaktualnienia i usunięcia

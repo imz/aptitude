@@ -28,7 +28,6 @@ README.
   ":":          Mantiene un pacchetto alla versione attuale, senza però
                 impedire aggiornamenti futuri.
   "_":          Elimina un pacchetto e tutti i suoi file di configurazione.
-  "L":          Reinstalla un pacchetto.
   "M":          Segna un pacchetto come installato automaticamente; i
                 pacchetti installati automaticamente vengono rimossi se non
                 ci sono pacchetti installati manualmente che li richiedono.

@@ -54,8 +54,6 @@ bool pkg_tree_node::dispatch_key(const key &k, vs_tree *owner)
     hold(grp);
   else if(bindings->key_matches(k, "Keep"))
     keep(grp);
-  else if(bindings->key_matches(k, "Reinstall"))
-    reinstall(grp);
   else if(bindings->key_matches(k, "SetAuto"))
     set_auto(true, grp);
   else if(bindings->key_matches(k, "ClearAuto"))

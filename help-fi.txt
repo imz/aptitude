@@ -29,7 +29,6 @@ toimintoja; README-tiedostossa on lista näistä.
  ":":           Säilytä paketti nykyisessä versiossaan.  Tämä ei estä
                 myöhempiä päivityksiä toisin kuin jäädytys
  "_":           Määritä paketti asetustietoineen poistettavaksi
- "L":           Määritä paketti asennettavaksi uudelleen
  "M":           Merkitse paketti automaattisesti asennetuksi.
                 Automaattisesti asennetut paketit poistetaan, jos
                 mikään käsin asennettu paketti ei riipu niistä.

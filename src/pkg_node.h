@@ -42,7 +42,6 @@ public:
   virtual void hold(undo_group *undo)=0;
   virtual void keep(undo_group *undo)=0;
   virtual void remove(undo_group *undo)=0;
-  virtual void reinstall(undo_group *undo)=0;
   // set_auto is idempotent!  No stupid toggling stuff.
   virtual void set_auto(bool isauto, undo_group *undo)=0;
 

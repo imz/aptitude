@@ -37,7 +37,6 @@ screens.  Other keys are available; consult the README for a list of these.
   ":":          Keep a package at its current version.  Unlike hold, this
                 will not prevent future upgrades.
   "_":          Request that a package and all its conffiles be removed.
-  "L":          Request that a package be reinstalled.
   "M":		Mark a package as being automatically installed.
 		Automatically installed packages are removed if no
 		manually installed package requires them.

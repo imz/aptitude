@@ -26,7 +26,6 @@ kısayol tuşlarıdır. Devamı için BENİOKU dosyasına başvurun.
   ":":		Paketi mevcut sürümde tut. Hold'dan farkı ileri ki 
   		güncelemeleri engellemez.
   "_":		Paketi yapılandırma dosyalarıyla birlikte sil.
-  "L":		Paketi yeniden kur.
   "M":		Paketi otomatik kurulmuş olarak işaretle.
   		Elle kurulmuş paketler için bağımlılık oluşturmuyorsa
 		bu paketler otomatik olarak kaldırılır.

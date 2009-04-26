@@ -29,7 +29,6 @@ consulte el fichero README para obtener una lista completa.
   		bloqueo, no previene futuras actualizaciones.
   "_":          Eliminar un paquete con todos sus conffiles (N.T.ficheros de
   		configuración).
-  "L":          Reinstalar un paquete.
   "M":		Marcar un paquete como si hubiese sido instalado automáticamente.
 		Los paquetes instalados automáticamente se eliminan si ningún
   		paquete instalado manualmente lo necesita.

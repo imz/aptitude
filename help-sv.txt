@@ -28,7 +28,6 @@
   ":":          Håll kvar ett paket i nuvarande version. Kommer inte att 
                 undvika framtida uppgraderingar.
   "_":          Ställ in att ett paket och all dess konfiguration tas bort.
-  "L":          Ställ in att ett paket ska installeras om.
   "M":		Markera ett paket som automatiskt installerat.
                 Automatiskt installerade paket tas bort om inga manuellt 
                 installerade paket kräver dem.

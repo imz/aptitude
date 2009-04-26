@@ -25,7 +25,6 @@ všech kláves naleznete v souboru README.
   ":":          Ponechá balík v aktuální verzi. Na rozdíl od podržení
                 nezabrání budoucím autualizacím.
   "_":          Odstraní balík i s jeho konfiguračními soubory.
-  "L":          Vyžádá, aby byl balík přeinstalován.
   "M":		Označí balík jako instalovaný automaticky.
 		Pokud je jiný balík nevyžaduje, jsou automaticky
                 instalované balíky odstraněny.

@@ -24,7 +24,6 @@ zerrenda batetarako.
   "-":          Palete bat ezabatu.
   "=":          Hiztu paketa dagoen bertsioa eguneraketak ez egiteko.
   "_":          Pakete bat eta bere konfigurazio guztiak ezabatzeko eskaria.
-  "L":          Pakete bat berrinstalatzeko eskaria.
   "M":		Pakete bat automatikoki instalatu balitz bezala markatu.
 		Autmomatikoki instalatutako paketeak ezabatu egingo dira 
 		eskuz instalatutako paketeek ez badute behar.

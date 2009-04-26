@@ -89,16 +89,6 @@ void pkg_subtree::remove(undo_group *undo)
   (*apt_cache_file)->end_action_group(undo);
 }
 
-void pkg_subtree::reinstall(undo_group *undo)
-{
-  (*apt_cache_file)->begin_action_group();
-
-  for(child_iterator i=get_children_begin(); i!=get_children_end(); i++)
-    (*i)->reinstall(undo);
-
-  (*apt_cache_file)->end_action_group(undo);
-}
-
 void pkg_subtree::set_auto(bool isauto, undo_group *undo)
 {
   (*apt_cache_file)->begin_action_group();

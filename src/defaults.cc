@@ -34,7 +34,6 @@ static void init_keybindings()
   global_bindings.set("SetAuto", key(L'M', false));
   global_bindings.set("ClearAuto", key(L'm', false));
   global_bindings.set("ForbidUpgrade", key(L'F', false));
-  global_bindings.set("Reinstall", key(L'L', false));
 
   global_bindings.set("Dependencies", key(L'd', false));
   global_bindings.set("ReverseDependencies", key(L'r', false));

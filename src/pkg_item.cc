@@ -179,15 +179,6 @@ void pkg_item::remove(undo_group *undo)
     }
 }
 
-void pkg_item::reinstall(undo_group *undo)
-{
-  if(!package.CurrentVer().end())
-    (*apt_cache_file)->mark_install(package,
-				    aptcfg->FindB(PACKAGE "::Auto-Install", true),
-				    true,
-				    undo);
-}
-
 void pkg_item::forbid_upgrade(undo_group *undo)
 {
   pkgCache::VerIterator curver=package.CurrentVer();

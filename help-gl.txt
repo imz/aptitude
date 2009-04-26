@@ -42,7 +42,6 @@ README para ver unha lista delas.
                   da retención, isto non impide que se actualice.
   "_":            Solicitar a eliminación dun paquete e os seus ficheiros de
                   configuración.
-  "L":            Solicitar a reinstalación dun paquete.
   "M":            Marcar un paquete coma instalado automaticamente.
                   Os paquetes instalados automaticamente elimínanse se
                   ningún paquete instalado manualmente precisa deles.

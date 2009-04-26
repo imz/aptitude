@@ -623,15 +623,6 @@ void pkg_ver_item::keep(undo_group *undo)
   // Do nothing for now.
 }
 
-void pkg_ver_item::reinstall(undo_group *undo)
-{
-  if(version.ParentPkg().CurrentVer()==version)
-    (*apt_cache_file)->mark_install(version.ParentPkg(),
-				    aptcfg->FindB(PACKAGE "::Auto-Install", true),
-				    true,
-				    undo);
-}
-
 void pkg_ver_item::set_auto(bool isauto, undo_group *undo)
 {
   (*apt_cache_file)->mark_auto_installed(version.ParentPkg(), isauto, undo);

@@ -44,7 +44,10 @@ int cmdline_do_action(int argc, char *argv[],
   if(!strcasecmp(argv[0], "install"))
     default_action=cmdline_install;
   else if(!strcasecmp(argv[0], "reinstall"))
-    default_action=cmdline_reinstall;
+    {
+      default_action=cmdline_reinstall;
+      aptcfg->SetNoUser("APT::Get::ReInstall", true);
+    }
   else if(!strcasecmp(argv[0], "full-upgrade") ||
 	  !strcasecmp(argv[0], "dist-upgrade"))
     {
