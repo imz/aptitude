@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt2.1
+Release: alt3
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -29,7 +29,6 @@ can't be ported to apt-rpm.
 %package doc
 Summary: English manual for aptitude, a terminal-based apt frontend
 Group: Books/Computer books
-BuildArch: noarch
 Conflicts: %name < %version-%release
 Conflicts: %name > %version-%release
 
@@ -74,6 +73,10 @@ rm -rf %buildroot%_mandir
 %doc doc/en/output-html/*
 
 %changelog
+* Sun Apr 26 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt3
+- Fixed segfault when Aptitude::UI::Minibuf-Prompts set to true
+- Fixed "reinstall" action, disabled UI reinstall (closes: #17164)
+
 * Fri Dec 12 2008 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt2.1
 - Fixed build with g++ 4.3.x.
 
