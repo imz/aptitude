@@ -17,6 +17,8 @@
 
 #include <aptitude.h>
 
+#include <cstdio>
+
 #include <apt-pkg/algorithms.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>

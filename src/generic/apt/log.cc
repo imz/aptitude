@@ -31,6 +31,7 @@
 #include <apt-pkg/strutl.h>
 
 #include <cerrno>
+#include <cstdio>
 
 #include <algorithm>
 

@@ -7,6 +7,8 @@
 
 #include <aptitude.h>
 
+#include <cstdio>
+
 #include <generic/apt/apt.h>
 #include <generic/apt/config_signal.h>
 #include <generic/apt/matchers.h>

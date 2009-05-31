@@ -23,11 +23,12 @@
 
 #include "config/colors.h"
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include <algorithm>
 
-#include <wctype.h>
+#include <cstring>
+#include <cwctype>
 
 using namespace std;
 
@@ -1201,12 +1202,12 @@ string char_to_str(char code)
   return s;
 }
 
-fragment *fragf(const char *format, ...)
+fragment *fragf(char *format, ...)
 {
   int argcount=0;
   int posargcount=0;
 
-  const char *start=format;
+  char *start=format;
   // find all the arguments.
   char *nextpercent=strchr(start, '%');
 

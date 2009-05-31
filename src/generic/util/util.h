@@ -22,6 +22,7 @@
 
 #include <string>
 #include <utility>
+#include <cstdarg>
 
 struct tm;
 

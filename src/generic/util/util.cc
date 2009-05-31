@@ -23,6 +23,7 @@
 #include <cerrno>
 #include <pwd.h>
 #include <cstdarg>
+#include <cstdio>
 #include <cstring>
 #include <sys/types.h>
 #include <ctime>
