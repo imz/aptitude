@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt3
+Release: alt4
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -41,6 +41,7 @@ the English version of the aptitude user's manual in HTML format.
 %patch -p1
 
 %build
+%add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs
 # STFU, automake!
@@ -73,6 +74,10 @@ rm -rf %buildroot%_mandir
 %doc doc/en/output-html/*
 
 %changelog
+* Sun May 31 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt4
+- Fixed build with g++ 4.4.x
+- Disabled strict aliasing optimization
+
 * Sun Apr 26 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt3
 - Fixed segfault when Aptitude::UI::Minibuf-Prompts set to true
 - Fixed "reinstall" action, disabled UI reinstall (closes: #17164)
