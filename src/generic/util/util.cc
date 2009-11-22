@@ -19,15 +19,22 @@
 
 #include "util.h"
 
+#include "dirent_safe.h"
+
+#include <aptitude.h>
+
 #include <cwctype>
 #include <cerrno>
 #include <pwd.h>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <ctime>
 #include <unistd.h>
+
+#include <apt-pkg/error.h>
 
 #include "eassert.h"
 
@@ -231,4 +238,61 @@ string get_homedir()
 
   return "";
 #endif
+}
+
+namespace aptitude
+{
+  namespace util
+  {
+    bool recursive_remdir(const std::string &dirname)
+    {
+      struct stat stbuf;
+
+      if(lstat(dirname.c_str(), &stbuf) != 0)
+	_error->Errno("recursive_remdir", _("Unable to stat \"%s\""), dirname.c_str());
+
+      if(S_ISLNK(stbuf.st_mode) || !S_ISDIR(stbuf.st_mode))
+	{
+	  if(unlink(dirname.c_str()) != 0)
+	    {
+	      _error->Errno("recursive_remdir", _("Unable to remove \"%s\""), dirname.c_str());
+	      return false;
+	    }
+	  else
+	    return true;
+	}
+
+      DIR *dir = opendir(dirname.c_str());
+      if(dir == NULL)
+	{
+	  _error->Errno("recursive_remdir", _("Unable to list files in \"%s\""), dirname.c_str());
+	  return false;
+	}
+
+      bool rval = true;
+
+      dirent_safe dent;
+      dirent *tmp;
+      for(int dirent_result = readdir_r(dir, &dent.d, &tmp);
+	  dirent_result == 0 && tmp != NULL;
+	  dirent_result = readdir_r(dir, &dent.d, &tmp))
+	if(strcmp(dent.d.d_name, ".") != 0 &&
+	   strcmp(dent.d.d_name, "..") != 0)
+	  rval = (rval && recursive_remdir(dirname + "/" + dent.d.d_name));
+
+      if(closedir(dir) != 0)
+	{
+	  _error->Errno("recursive_remdir", _("Failure closing directory \"%s\""), dirname.c_str());
+	  rval = false;
+	}
+
+      if(rmdir(dirname.c_str()) != 0)
+	{
+	  _error->Errno("recursive_remdir", _("Unable to remove directory \"%s\""), dirname.c_str());
+	  rval = false;
+	}
+
+      return rval;
+    }
+  }
 }
