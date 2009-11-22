@@ -346,6 +346,6 @@ fragment *fragment_columns(const std::vector<fragment_column_entry> &columns);
  *  \param format the format string
  *  \return the formatted fragment, or NULL if there is an error in the format.
  */
-fragment *fragf(char *format, ...);
+fragment *fragf(const char *format, ...);
 
 #endif

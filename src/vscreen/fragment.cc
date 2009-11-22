@@ -1202,14 +1202,14 @@ string char_to_str(char code)
   return s;
 }
 
-fragment *fragf(char *format, ...)
+fragment *fragf(const char *format, ...)
 {
   int argcount=0;
   int posargcount=0;
 
-  char *start=format;
+  const char *start=format;
   // find all the arguments.
-  char *nextpercent=strchr(start, '%');
+  const char *nextpercent=strchr(start, '%');
 
   // loop 1: count the arguments.
   while(nextpercent!=NULL)
