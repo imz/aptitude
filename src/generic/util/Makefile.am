@@ -8,6 +8,7 @@ noinst_LIBRARIES = libgeneric-util.a
 libgeneric_util_a_SOURCES = \
 	bool_accumulate.h \
 	dense_setset.h \
+	dirent_safe.h \
 	eassert.cc \
 	eassert.h \
 	event_queue.h \
