@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt4
+Release: alt5
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -29,6 +29,15 @@ can't be ported to apt-rpm.
 %package doc
 Summary: English manual for aptitude, a terminal-based apt frontend
 Group: Books/Computer books
+# Can't use noarch:
+#--- aptitude-doc-0.4.5-alt5.noarch.rpm.i586     2009-12-21 18:23:35 +0300
+#+++ aptitude-doc-0.4.5-alt5.noarch.rpm.x86_64   2009-12-21 18:23:35 +0300
+#@@ -77,35 +77,35 @@
+# /usr/share/doc/aptitude-doc-0.4.5/index.html
+#-/usr/share/doc/aptitude-doc-0.4.5/ld-id2608397.html
+#+/usr/share/doc/aptitude-doc-0.4.5/ld-id3016206.html
+#...
+#BuildArch: noarch
 Conflicts: %name < %version-%release
 Conflicts: %name > %version-%release
 
@@ -60,11 +69,13 @@ mkdir -p %buildroot%_localstatedir/%name
 rm -rf %buildroot%_mandir
 
 %make_install DESTDIR=%buildroot -C doc/en install-man
+install -p -m644 doc/en/README.en %buildroot%_datadir/%name/README
+rm -f %buildroot%_datadir/%name/function_*
 
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS FAQ NEWS README* TODO %name-hackers-guide.txt
+%doc AUTHORS FAQ NEWS
 %_bindir/*
 %_datadir/%name
 %_man8dir/%name.8*
@@ -74,6 +85,10 @@ rm -rf %buildroot%_mandir
 %doc doc/en/output-html/*
 
 %changelog
+* Sun Nov 22 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt5
+- Packaged User's Manual, dropped useless data and developer README's
+- Resurrected changelog viewer
+
 * Sun May 31 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt4
 - Fixed build with g++ 4.4.x
 - Disabled strict aliasing optimization
