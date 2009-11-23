@@ -25,6 +25,8 @@ aptitude_SOURCES= 	\
 	apt_options.h	\
 	apt_undo_tree.cc \
 	apt_undo_tree.h \
+	changelog_parse.cc \
+	changelog_parse.h  \
 	defaults.cc	\
 	defaults.h	\
 	dep_item.cc	\
@@ -82,5 +84,7 @@ aptitude_SOURCES= 	\
 	ui.h		\
 	ui_download_manager.cc \
 	ui_download_manager.h  \
+	view_changelog.cc \
+	view_changelog.h \
 	vs_progress.cc  \
 	vs_progress.h

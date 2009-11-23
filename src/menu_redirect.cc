@@ -39,6 +39,8 @@ bool menu_redirect::package_forbid_enabled() { return false; }
 bool menu_redirect::package_forbid() { return false; }
 bool menu_redirect::package_information_enabled() { return false; }
 bool menu_redirect::package_information() { return false; }
+bool menu_redirect::package_changelog_enabled() { return false; }
+bool menu_redirect::package_changelog() { return false; }
 bool menu_redirect::find_search_enabled() { return false; }
 bool menu_redirect::find_search() { return false; }
 bool menu_redirect::find_search_back_enabled() { return false; }
@@ -141,6 +143,15 @@ void create_menu_bindings(menu_redirect *menu_handler,
 					 menu_handler,
 					 &menu_redirect::package_information));
 
+  package_changelog_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
+					       valve.weak_ref(),
+					       menu_handler,
+					       &menu_redirect::package_changelog_enabled));
+
+  package_changelog.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
+				       valve.weak_ref(),
+				       menu_handler,
+				       &menu_redirect::package_changelog));
 
   find_search_enabled.connect(sigc::bind(sigc::ptr_fun(do_menu_callback),
 					 valve.weak_ref(),

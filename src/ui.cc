@@ -141,6 +141,7 @@ sigc::signal0<void> package_states_changed;
 sigc::signal0<bool, accumulate_or> package_menu_enabled;
 sigc::signal0<bool, accumulate_or> package_forbid_enabled;
 sigc::signal0<bool, accumulate_or> package_information_enabled;
+sigc::signal0<bool, accumulate_or> package_changelog_enabled;
 
 sigc::signal0<bool, accumulate_or> find_search_enabled;
 sigc::signal0<bool, accumulate_or> find_search_back_enabled;
@@ -158,6 +159,7 @@ sigc::signal0<bool, accumulate_or> package_mark_auto;
 sigc::signal0<bool, accumulate_or> package_unmark_auto;
 sigc::signal0<bool, accumulate_or> package_forbid;
 sigc::signal0<bool, accumulate_or> package_information;
+sigc::signal0<bool, accumulate_or> package_changelog;
 
 sigc::signal0<bool, accumulate_or> find_search;
 sigc::signal0<bool, accumulate_or> find_search_back;
@@ -1355,6 +1357,10 @@ vs_menu_info package_menu[]={
 	       N_("Display more information about the selected package"),
 	       sigc::hide_return(package_information.make_slot()),
 	       package_information_enabled.make_slot()),
+  vs_menu_info(vs_menu_info::VS_MENU_ITEM, N_("^Changelog"), "Changelog",
+	       N_("Display changelog of the selected package"),
+	       sigc::hide_return(package_changelog.make_slot()),
+	       package_changelog_enabled.make_slot()),
   VS_MENU_END
 };
 

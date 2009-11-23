@@ -128,6 +128,12 @@ public:
   bool package_forbid();
 
   /** \return \b true if a package or a package version is selected. */
+  bool package_changelog_enabled();
+
+  /** If a package or version is selected, show its changelog. */
+  bool package_changelog();
+
+  /** \return \b true if a package or a package version is selected. */
   bool package_information_enabled();
 
   /** If a package or version is selected, show its information. */

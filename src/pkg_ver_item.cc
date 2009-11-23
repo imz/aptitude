@@ -29,6 +29,7 @@
 #include "pkg_ver_item.h"
 #include "pkg_sortpolicy.h"
 #include "ui.h"
+#include "view_changelog.h"
 #include "vs_progress.h"
 
 #include <generic/apt/apt.h>
@@ -695,6 +696,11 @@ bool pkg_ver_item::dispatch_key(const key &k, vs_tree *owner)
       show_information();
       return true;
     }
+  else if(bindings->key_matches(k, "Changelog"))
+    {
+      view_changelog(version);
+      return true;
+    }
   else if(bindings->key_matches(k, "ForbidUpgrade"))
     {
       undo_group *grp=new apt_undo_group;
@@ -731,6 +737,17 @@ bool pkg_ver_item::package_forbid()
     delete grp;
 
   package_states_changed();
+  return true;
+}
+
+bool pkg_ver_item::package_changelog_enabled()
+{
+  return true;
+}
+
+bool pkg_ver_item::package_changelog()
+{
+  view_changelog(get_version());
   return true;
 }
 

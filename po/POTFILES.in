@@ -7,8 +7,12 @@ src/apt_options.cc
 src/apt_options.h
 src/apt_undo_tree.cc
 src/apt_undo_tree.h
+src/changelog_parse.cc
+src/changelog_parse.h
 src/cmdline/cmdline_action.cc
 src/cmdline/cmdline_action.h
+src/cmdline/cmdline_changelog.cc
+src/cmdline/cmdline_changelog.h
 src/cmdline/cmdline_clean.cc
 src/cmdline/cmdline_clean.h
 src/cmdline/cmdline_common.h
@@ -153,6 +157,8 @@ src/ui.cc
 src/ui_download_manager.cc
 src/ui_download_manager.h
 src/ui.h
+src/view_changelog.cc
+src/view_changelog.h
 src/vscreen/columnify.cc
 src/vscreen/columnify.h
 src/vscreen/config/colors.cc

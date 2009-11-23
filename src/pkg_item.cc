@@ -30,6 +30,7 @@
 #include "pkg_columnizer.h"
 #include "pkg_item.h"
 #include "ui.h"
+#include "view_changelog.h"
 #include "vs_progress.h"
 
 #include <generic/apt/apt.h>
@@ -206,6 +207,11 @@ void pkg_item::show_information()
   insert_main_widget(w, menulabel, "", tablabel);
 }
 
+void pkg_item::show_changelog()
+{
+   view_changelog(visible_version());
+}
+
 style pkg_item::get_highlight_style()
 {
   return vs_treeitem::get_normal_style() + pkg_style(package, true);
@@ -325,6 +331,9 @@ bool pkg_item::dispatch_key(const key &k, vs_tree *owner)
     }
   else if(bindings->key_matches(k, "InfoScreen"))
     show_information();
+  else if(bindings->key_matches(k, "Changelog") &&
+	  !visible_version().end())
+    show_changelog();
   else if(bindings->key_matches(k, "InstallSingle"))
     {
       if((*apt_cache_file)[package].CandidateVerIter(*apt_cache_file).end())
@@ -432,6 +441,17 @@ bool pkg_item::package_forbid()
 
   package_states_changed();
 
+  return true;
+}
+
+bool pkg_item::package_changelog_enabled()
+{
+  return true;
+}
+
+bool pkg_item::package_changelog()
+{
+  show_changelog();
   return true;
 }
 

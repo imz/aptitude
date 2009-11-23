@@ -25,6 +25,7 @@
 #include "pkg_tree.h" // For pkg_tree::bindings(?!?!)
 #include "pkg_ver_item.h"
 #include "ui.h"
+#include "view_changelog.h"
 
 #include <generic/apt/apt.h>
 #include <generic/apt/apt_undo_group.h>
@@ -133,6 +134,16 @@ bool menu_tree::package_forbid_enabled()
 bool menu_tree::package_forbid()
 {
   return proxy_redirect(&menu_redirect::package_forbid);
+}
+
+bool menu_tree::package_changelog_enabled()
+{
+  return proxy_redirect(&menu_redirect::package_changelog_enabled);
+}
+
+bool menu_tree::package_changelog()
+{
+  return proxy_redirect(&menu_redirect::package_changelog);
 }
 
 bool menu_tree::package_information_enabled()

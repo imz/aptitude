@@ -5,6 +5,7 @@
 #include "cmdline_prompt.h"
 
 #include "cmdline_action.h"
+#include "cmdline_changelog.h"
 #include "cmdline_show.h"
 #include "cmdline_util.h"
 
@@ -615,6 +616,36 @@ static void cmdline_parse_show(string response,
   prompt_string(_("Press Return to continue."));
 }
 
+// Erm.  Merge w/ above?
+static void cmdline_parse_changelog(string response)
+{
+  // assume response[0]=='i'
+  string::size_type i=1;
+
+  vector<string> packages;
+
+  while(i<response.size())
+    {
+      while(i<response.size() && isspace(response[i]))
+	++i;
+
+      string pkgname;
+      // Could support quoting, etc?
+      while(i<response.size() && !isspace(response[i]))
+	pkgname+=response[i++];
+
+      if(!pkgname.empty())
+	packages.push_back(pkgname);
+    }
+
+  if(packages.empty())
+    printf(_("No packages found -- enter the package names on the line after 'c'.\n"));
+  else
+    do_cmdline_changelog(packages);
+
+  prompt_string(_("Press Return to continue"));
+}
+
 static inline fragment *flowindentbox(int i1, int irest, fragment *f)
 {
   return indentbox(i1, irest, flowbox(f));
@@ -626,6 +657,7 @@ static void prompt_help(ostream &out)
 			fragf(_("y: %F"
 				"n: %F"
 				"i: %F"
+				"c: %F"
 				"d: %F"
 				"s: %F"
 				"v: %F"
@@ -646,6 +678,8 @@ static void prompt_help(ostream &out)
 					    fragf(_("abort and quit"))),
 			      flowindentbox(0, 3,
 					    fragf(_("show information about one or more packages; the package names should follow the 'i'"))),
+			      flowindentbox(0, 3,
+					    fragf(_("show changelogs of one or more packages; the package names should follow the 'c'"))),
 			      flowindentbox(0, 3,
 					    fragf(_("toggle the display of dependency information"))),
 			      flowindentbox(0, 3,
@@ -764,6 +798,9 @@ bool cmdline_do_prompt(bool as_upgrade,
 		  break;
 		case 'I':
 		  cmdline_parse_show(response, verbose);
+		  break;
+		case 'C':
+		  cmdline_parse_changelog(response);
 		  break;
 		case '+':
 		case '-':

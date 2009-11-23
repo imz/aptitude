@@ -91,6 +91,11 @@ extern sigc::signal0<bool, accumulate_or> package_information_enabled;
 /** Emitted for Package -> Package Information. */
 extern sigc::signal0<bool, accumulate_or> package_information;
 
+/** Tests whether Package -> Changelog is enabled. */
+extern sigc::signal0<bool, accumulate_or> package_changelog_enabled;
+
+/** Emitted for Package -> Changelog. */
+extern sigc::signal0<bool, accumulate_or> package_changelog;
 
 /** Tests whether Search -> Find is enabled. */
 extern sigc::signal0<bool, accumulate_or> find_search_enabled;

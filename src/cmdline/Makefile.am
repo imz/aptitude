@@ -5,6 +5,8 @@ noinst_LIBRARIES=libcmdline.a
 libcmdline_a_SOURCES=\
 	cmdline_action.cc \
 	cmdline_action.h \
+	cmdline_changelog.cc \
+	cmdline_changelog.h \
 	cmdline_clean.cc \
 	cmdline_clean.h \
 	cmdline_common.h \

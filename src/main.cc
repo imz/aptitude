@@ -42,6 +42,7 @@
 #include <vscreen/vscreen.h>
 #include <vscreen/vs_util.h>
 
+#include <cmdline/cmdline_changelog.h>
 #include <cmdline/cmdline_clean.h>
 #include <cmdline/cmdline_common.h>
 #include <cmdline/cmdline_do_action.h>
@@ -138,6 +139,7 @@ static void usage()
   printf(_(" show         - Display detailed information about a package\n"));
   printf(_(" clean        - Erase downloaded package files\n"));
   printf(_(" autoclean    - Erase old downloaded package files\n"));
+  printf(_(" changelog    - View a package's changelog\n"));
   printf(_(" download     - Download the .deb file for a package\n"));
   printf(_(" reinstall    - Download and (possibly) reinstall a currently installed package\n"));
   printf("\n");
@@ -519,6 +521,8 @@ int main(int argc, char *argv[])
 				   queue_only, verbose);
 	  else if(!strcasecmp(argv[optind], "download"))
 	    return cmdline_download(argc-optind, argv+optind);
+	  else if(!strcasecmp(argv[optind], "changelog"))
+	    return cmdline_changelog(argc-optind, argv+optind);
 	  else if(!strcasecmp(argv[optind], "moo"))
 	    return cmdline_moo(argc-optind, argv+optind, verbose);
 	  else if(!strcasecmp(argv[optind], "show"))

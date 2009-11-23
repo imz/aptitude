@@ -74,6 +74,11 @@ public:
    */
   virtual bool package_information();
 
+  /** \return \b true if the selected item has a changelog. */
+  virtual bool package_changelog_enabled();
+
+  /** View the changelog of the selected package. */
+  virtual bool package_changelog();
 
   /** \return \b true if this view knows how to search. */
   virtual bool find_search_enabled();

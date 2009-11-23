@@ -90,6 +90,8 @@ public:
   // Menu redirections:
   bool package_forbid_enabled();
   bool package_forbid();
+  bool package_changelog_enabled();
+  bool package_changelog();
   bool package_information_enabled();
   bool package_information();
 };
