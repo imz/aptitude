@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt5
+Release: alt5.qa1
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -14,7 +14,7 @@ Packager: Sir Raorn <raorn@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: %{get_dep libapt}
+Requires: libapt
 
 BuildRequires(pre): libapt-devel >= 0.5.15cnc5-alt1
 
@@ -85,6 +85,13 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Wed May 18 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.5-alt5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * specfile-macros-get_dep-is-deprecated for aptitude
+  * postclean-03-private-rpm-macros for ([not specified])
+  * postclean-05-filetriggers for ([not specified])
+
 * Sun Nov 22 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.5-alt5
 - Packaged User's Manual, dropped useless data and developer README's
 - Resurrected changelog viewer
