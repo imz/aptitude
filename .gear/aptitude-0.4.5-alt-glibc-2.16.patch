@@ -1,0 +1,13 @@
+diff --git a/src/aptitude.h b/src/aptitude.h
+index 895d361..27ca0af 100644
+--- a/src/aptitude.h
++++ b/src/aptitude.h
+@@ -8,6 +8,8 @@
+ #ifndef APTITUDE_H
+ #define APTITUDE_H
+ 
++#include <unistd.h>
++
+ #ifdef HAVE_CONFIG_H
+ #include <config.h>
+ #endif
