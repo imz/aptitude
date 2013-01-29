@@ -10,6 +10,7 @@ AC_LANG([C++])
 dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_RANLIB
+AC_SYS_LARGEFILE
 dnl Checks for programs.
 AC_PATH_PROG(PO4A, po4a)
 if test "x$PO4A" = "x" ; then

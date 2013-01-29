@@ -1,5 +1,4 @@
 spec: aptitude.spec
-copy: .gear/*.patch
 tar: @version@:.
 diff: @version@:. .
 

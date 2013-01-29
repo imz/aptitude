@@ -20,6 +20,7 @@
 #ifndef DIRENT_SAFE_H
 #define DIRENT_SAFE_H
 
+#include <stddef.h>
 #include <dirent.h>
 
 /** \brief A version of dirent that's safe to use with readdir_r

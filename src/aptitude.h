@@ -12,6 +12,8 @@
 #include <config.h>
 #endif
 
+#include <unistd.h>
+
 /* Take care of NLS matters.  */
 
 #ifdef HAVE_LOCALE_H
