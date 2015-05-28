@@ -42,7 +42,7 @@ dnl PKG_CHECK_MODULES(SIGC, sigc++-1.2)
 
 PKG_CHECK_MODULES(SIGC, sigc++-2.0)
 
-CXXFLAGS="$CXXFLAGS $SIGC_CFLAGS"
+CXXFLAGS="-std=gnu++11 $CXXFLAGS $SIGC_CFLAGS"
 LIBS="$LIBS $SIGC_LIBS"
 AC_DEFINE_UNQUOTED(SIGC_VERSION, ["$(pkg-config --modversion sigc++-2.0)"], [The version of libsigc++ with which the program was compiled])
 
