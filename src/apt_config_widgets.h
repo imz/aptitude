@@ -31,8 +31,6 @@
 #include <vscreen/vs_editline.h>
 #include <vscreen/vs_radiogroup.h>
 
-#include <sigc++/object.h>
-
 #include <string>
 #include <vector>
 
