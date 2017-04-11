@@ -1027,7 +1027,7 @@ public:
 	  }
       }
 
-    return false;
+    return NULL;
   }
 };
 
@@ -1519,7 +1519,7 @@ public:
 	  return new result_pair(r, new unitary_result(_("Provides")));
       }
 
-    return false;
+    return NULL;
   }
 };
 
@@ -1565,7 +1565,7 @@ public:
 				 new unitary_result(_("Provided by")));
       }
 
-    return false;
+    return NULL;
   }
 };
 
