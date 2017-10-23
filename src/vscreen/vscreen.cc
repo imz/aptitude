@@ -829,7 +829,7 @@ void vscreen_updatecursor()
 
 void vscreen_updatecursornow()
 {
-  threads::mutex::lock(vscreen_get_mutex());
+  threads::mutex::lock l(vscreen_get_mutex());
 
   if(toplevel->get_cursorvisible())
     {
