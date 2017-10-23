@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt8
+Release: alt9
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
