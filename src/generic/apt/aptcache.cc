@@ -389,17 +389,17 @@ bool aptitudeDepCache::build_selection_list(OpProgress &Prog, bool WithLock,
 		     ver.ParentPkg()->CurrentState != pkgCache::State::ConfigFiles)))
 		  SetCandidateVersion(ver);
 
-	      MarkInstall(i, false);
+	      MarkInstall(i, pkgDepCache::AutoMarkFlag::Manual, false);
 	    }
 	  else
 	    if(i.CurrentVer().end())
-	      MarkInstall(i, false);
+	      MarkInstall(i, pkgDepCache::AutoMarkFlag::Manual, false);
 	    else
 	      {
 		SetReInstall(i, estate.reinstall);
 
 		if(estate.upgrade && state.Upgradable())
-		  MarkInstall(i, false);
+		  MarkInstall(i, pkgDepCache::AutoMarkFlag::Manual, false);
 	      }
 	  break;
 	case pkgCache::State::Hold:
@@ -788,7 +788,7 @@ void aptitudeDepCache::internal_mark_install(const PkgIterator &Pkg,
     get_ext_state(Pkg).install_reason=manual;
 
   if(!ReInstall)
-    pkgDepCache::MarkInstall(Pkg, AutoInst);
+    pkgDepCache::MarkInstall(Pkg, pkgDepCache::AutoMarkFlag::Manual, AutoInst);
   else
     pkgDepCache::MarkKeep(Pkg, AutoInst);
 
@@ -1004,7 +1004,7 @@ void aptitudeDepCache::mark_single_install(const PkgIterator &Pkg, undo_group *u
   for(PkgIterator i=PkgBegin(); !i.end(); i++)
     pkgDepCache::MarkKeep(i, true);
 
-  pkgDepCache::MarkInstall(Pkg, true);
+  pkgDepCache::MarkInstall(Pkg, pkgDepCache::AutoMarkFlag::Manual, true);
 
   if(group_level==0)
     {
@@ -1066,7 +1066,7 @@ bool aptitudeDepCache::all_upgrade(bool with_autoinst, undo_group *undo)
 
       if(!is_held(pkg) &&
 	 !pkg.CurrentVer().end() && !(*this)[pkg].Install())
-	MarkInstall(pkg, with_autoinst);
+	MarkInstall(pkg, pkgDepCache::AutoMarkFlag::Manual, with_autoinst);
     }
 
   if(group_level==0)
