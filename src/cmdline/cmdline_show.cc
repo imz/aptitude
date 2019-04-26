@@ -224,13 +224,11 @@ static fragment *version_change_fragment(const char *statestr,
 					 pkgCache::VerIterator curver,
 					 pkgCache::VerIterator instver)
 {
-  const char *curverstr=curver.VerStr();
-  const char *instverstr=instver.VerStr();
+  const char *curverstr=asprintf("%s %s %d", curver.VerStr(), curver.DistTag(), curver.BTime());
+  const char *instverstr=asprintf("%s %s %d", instver.VerStr(), instver.DistTag(), instver.BTime());
 
-  int vercmp=_system->VS->DoCmpVersion(curverstr,
-				       curverstr+strlen(curverstr),
-				       instverstr,
-				       instverstr+strlen(instverstr));
+  int vercmp=CompareEVRDT(curver.VerStr(), curver.DistTag(), curver.BTime(),
+                          instver.VerStr(), instver.DistTag(), instver.BTime());
 
   if(vercmp>0)
     return fragf(_("%s%s; will be downgraded [%s -> %s]"),
