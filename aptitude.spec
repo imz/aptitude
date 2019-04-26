@@ -85,6 +85,11 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Fri Apr 26 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt9.M80P.1
+- (no user visible changes) Removed "interesting" dead code (related
+  to Recommends, not present in ALT rpm), which didn't compile after
+  we changed apt's API recently.
+
 * Thu Nov 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt10
 - NMU: fixed build with new libapt.
 
