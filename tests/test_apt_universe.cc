@@ -40,7 +40,6 @@ class AptUniverseTest : public CppUnit::TestFixture
 
   CPPUNIT_TEST(testSolves);
   CPPUNIT_TEST(testBrokenList);
-  CPPUNIT_TEST(testInteresting);
   CPPUNIT_TEST(testReverseConnectivity);
 
   CPPUNIT_TEST_SUITE_END();
@@ -234,53 +233,6 @@ public:
     delete undo;
   }
 
-  // Ensure that all dependencies in the world really are interesting.
-  void testInteresting()
-  {
-    aptitude_universe u(*apt_cache_file);
-
-    for(aptitude_universe::dep_iterator di = u.deps_begin();
-	!di.end(); ++di)
-      {
-	if(!is_interesting_dep((*di).get_dep(), *apt_cache_file))
-	  {
-	    std::ostringstream out;
-
-	    out << *di << " is uninteresting but is in the global dep list.";
-
-	    CPPUNIT_FAIL(out.str());
-	  }
-      }
-
-    for(aptitude_universe::package_iterator pi
-	  = u.packages_begin(); !pi.end(); ++pi)
-      for(aptitude_universe::package::version_iterator vi
-	    = (*pi).versions_begin(); !vi.end(); ++vi)
-	{
-	  for(aptitude_universe::version::dep_iterator di
-		= (*vi).deps_begin(); !di.end(); ++di)
-	    if(!is_interesting_dep((*di).get_dep(), *apt_cache_file))
-	      {
-		std::ostringstream out;
-
-		out << *di << " is uninteresting but is in the dep list for " << (*pi).get_name() << " " << (*vi).get_name();
-
-		CPPUNIT_FAIL(out.str());
-	      }
-
-	  for(aptitude_universe::version::revdep_iterator rdi
-		= (*vi).revdeps_begin(); !rdi.end(); ++rdi)
-	    if(!is_interesting_dep((*rdi).get_dep(), *apt_cache_file))
-	      {
-		std::ostringstream out;
-
-		out << *rdi << " is uninteresting but is in the reverse dep list for " << (*pi).get_name() << " " << (*vi).get_name();
-
-		CPPUNIT_FAIL(out.str());
-	      }
-	}
-  }
-
   void dump_revdeps(std::ostream &out, const aptitude_universe::version v)
   {
     out << "Reverse dependencies of "
@@ -312,9 +264,6 @@ public:
 	if(d.TargetVer() != NULL)
 	  out << "(" << d.CompType() << " " << d.TargetVer() << ")";
 
-	if(is_interesting_dep(d, *apt_cache_file))
-	  out << "[INTERESTING]";
-
 	out << std::endl;
       }
   }
@@ -334,14 +283,6 @@ public:
       for(aptitude_universe::dep::solver_iterator si
 	    = (*di).solvers_begin(); !si.end(); ++si)
 	{
-	  if(!is_interesting_dep((*di).get_dep(), *apt_cache_file))
-	    {
-	      std::ostringstream out;
-	      out << "Encountered uninteresting dep:"
-		  << *di;
-	      CPPUNIT_FAIL(out.str());
-	    }
-
 	  if(!(*di).solved_by(*si))
 	    {
 	      std::ostringstream out;

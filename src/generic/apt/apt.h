@@ -189,17 +189,6 @@ struct location_compare
   }
 };
 
-/** \return \b true if the given dependency is "interesting":
- *          specifically, if it's either critical or a Recommends
- *          that's "new" or currently satisfied.
- *
- *  \param d the dependency to test
- *  \param cache the cache in which to check d (used to find out whether
- *         d is currently satisfied).
- */
-bool is_interesting_dep(const pkgCache::DepIterator &d,
-			pkgDepCache *cache);
-
 /** Sort packages by name. */
 struct pkg_name_lt
 {
