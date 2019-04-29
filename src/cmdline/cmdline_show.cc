@@ -89,13 +89,34 @@ static fragment *dep_lst_frag(pkgCache::DepIterator dep,
 			   flowbox(join_fragments(fragments, L", "))));
 }
 
-typedef std::pair<std::string, std::string> pkgverpair;
+#include <tuple>
+typedef std::tuple<std::string,
+                   std::optional<std::string>,
+                   int> vertuple;
+typedef std::pair<std::string,
+                  vertuple> pkgverpair;
+
+static const char * c_str_from_opt(const std::optional<std::string> & s)
+{
+  return s ? s->c_str() : NULL;
+}
+
+static int CompareVerTuples(const vertuple &x, const vertuple &y)
+{
+  return CompareEVRDT(std::get<0>(x),
+                      c_str_from_opt(std::get<1>(x)),
+                      std::get<2>(x),
+                      std::get<0>(y),
+                      c_str_from_opt(std::get<1>(y)),
+                      std::get<2>(y));
+}
+
 struct package_version_pair_cmp
 {
   bool operator()(const pkgverpair &x, const pkgverpair &y) const
   {
     return x.first < y.first
-      || _system->VS->CmpVersion(x.second, y.second) < 0;
+                     || CompareVerTuples(x.second, y.second) < 0;
   }
 };
 
@@ -114,16 +135,23 @@ static fragment *prv_lst_frag(pkgCache::PrvIterator prv,
 	{
 	  string name         = prv.OwnerPkg().Name();
 	  const char *version = prv.OwnerVer().VerStr();
+	  const char *disttag = prv.OwnerVer().DistTag();
+	  int btime = prv.OwnerVer().BTime();
 
 	  if(version != NULL)
-	    packagevers.insert(pkgverpair(name, version));
+	    packagevers.insert(pkgverpair(name, vertuple(version,
+                                                         disttag ? std::optional(disttag) : std::optional(),
+                                                         btime)));
 	  else
-	    packagevers.insert(pkgverpair(name, ""));
+	    packagevers.insert(pkgverpair(name, vertuple("", std::optional(), 0)));
 	}
 
       for(std::set<pkgverpair>::const_iterator it = packagevers.begin();
 	  it != packagevers.end(); ++it)
-	fragments.push_back(fragf("%s (%s)", it->first.c_str(), it->second.c_str()));
+	fragments.push_back(fragf("%s (%s %s %d)", it->first.c_str(),
+                                  std::get<0>(it->second).c_str(),
+                                  c_str_from_opt(std::get<1>(it->second)) ? : "",
+                                  std::get<2>(it->second)));
     }
   else
     {
