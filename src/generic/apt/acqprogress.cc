@@ -182,7 +182,7 @@ void AcqTextStatus::Pulse(pkgAcquire *Owner, download_signal_log &manager,
       ScreenWidth = sizeof(Buffer)-1;
 
    // Put in the percent done
-   snprintf(S,1024,"%ld%%",long(double((CurrentBytes + CurrentItems)*100.0)/double(TotalBytes+TotalItems)));
+   snprintf(S,1024,"%lld%%",((long long)(double((CurrentBytes + CurrentItems)*100.0)/double(TotalBytes+TotalItems))));
 
    bool Shown = false;
    for (pkgAcquire::Worker *I = Owner->WorkersBegin(); I != 0;
@@ -221,7 +221,7 @@ void AcqTextStatus::Pulse(pkgAcquire *Owner, download_signal_log &manager,
             
       // Add the current progress
       if (Mode == Long)
-	 snprintf(S,End-S," %lu",I->CurrentSize);
+	 snprintf(S,End-S," %llu",I->CurrentSize);
       else
       {
 	 if (Mode == Medium || I->TotalSize == 0)
@@ -233,11 +233,11 @@ void AcqTextStatus::Pulse(pkgAcquire *Owner, download_signal_log &manager,
       if (I->TotalSize > 0 && I->CurrentItem->Owner->Complete == false)
       {
 	 if (Mode == Short)
-	    snprintf(S,End-S," %lu%%",
-		     long(double(I->CurrentSize*100.0)/double(I->TotalSize)));
+	    snprintf(S,End-S," %llu%%",
+		     ((long long)(double(I->CurrentSize*100.0)/double(I->TotalSize))));
 	 else
-	    snprintf(S,End-S,"/%sB %lu%%",SizeToStr(I->TotalSize).c_str(),
-		     long(double(I->CurrentSize*100.0)/double(I->TotalSize)));
+	    snprintf(S,End-S,"/%sB %llu%%",SizeToStr(I->TotalSize).c_str(),
+		     ((long long)(double(I->CurrentSize*100.0)/double(I->TotalSize))));
       }      
       S += strlen(S);
       snprintf(S,End-S,"]");
@@ -287,7 +287,7 @@ void AcqTextStatus::Pulse(pkgAcquire *Owner, download_signal_log &manager,
 // AcqTextStatus::MediaChange - Media need to be swapped		/*{{{*/
 // ---------------------------------------------------------------------
 /* Prompt for a media swap */
-void AcqTextStatus::MediaChange(string Media, string Drive,
+void AcqTextStatus::MediaChange(const string &Media, const string &Drive,
 				download_signal_log &manager,
 				const sigc::slot1<void, bool> &k)
 {

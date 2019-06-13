@@ -91,19 +91,19 @@ public:
 		const sigc::slot0<void> &> Stop_sig;
   sigc::signal1<void, download_signal_log &> Complete_sig;
 
-  void Fetched(unsigned long Size, unsigned long ResumePoint);
+  virtual void Fetched(unsigned long long Size, unsigned long long ResumePoint) override;
   void MediaChange(const std::string &Media, const std::string &Drive,
 		   const sigc::slot1<void, bool> &k);
-  bool MediaChange(std::string Media, std::string Drive);
-  void IMSHit(pkgAcquire::ItemDesc &item);
-  void Fetch(pkgAcquire::ItemDesc &item);
-  void Done(pkgAcquire::ItemDesc &item);
-  void Fail(pkgAcquire::ItemDesc &item);
+  virtual bool MediaChange(const std::string &Media, const std::string &Drive) override;
+  virtual void IMSHit(pkgAcquire::ItemDesc &item) override;
+  virtual void Fetch(pkgAcquire::ItemDesc &item) override;
+  virtual void Done(pkgAcquire::ItemDesc &item) override;
+  virtual void Fail(pkgAcquire::ItemDesc &item) override;
   void Pulse(pkgAcquire *Owner, const sigc::slot1<void, bool> &k);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
+  virtual bool Pulse(pkgAcquire *Owner) override;
+  virtual void Start() override;
   void Stop(const sigc::slot0<void> &k);
-  void Stop();
+  virtual void Stop() override;
 
   // Called when EVERYTHING is over.  "Stop" is not sufficient, since
   // it is potentially called multiple times (eg, for installs spread across

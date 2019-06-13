@@ -58,7 +58,7 @@ pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, string URI,
 
 // Straight from acquire-item.cc
 /* Here we try other sources */
-void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
+void pkgAcqFileSane::Failed(const string &Message,pkgAcquire::MethodConfig *Cnf)
 {
   ErrorText = LookupTag(Message,"Message");
 
@@ -78,7 +78,7 @@ void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
 // Mostly copied from pkgAcqArchive.
 bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
 		 pkgRecords *Recs, pkgCache::VerIterator const &Version,
-		 string directory, string &StoreFilename)
+		 const string &directory, string &StoreFilename)
 {
   pkgCache::VerFileIterator Vf=Version.FileList();
 

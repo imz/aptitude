@@ -128,14 +128,14 @@ RVal do_foreground_execute(C *inst,
   return return_box.take();
 }
 
-void background_status::Fetched(unsigned long Size,
-				unsigned long ResumePoint)
+void background_status::Fetched(unsigned long long Size,
+				unsigned long long ResumePoint)
 {
   do_foreground_execute(real_status, Size, ResumePoint,
 			&download_signal_log::Fetched);
 }
 
-bool background_status::MediaChange(std::string Media, std::string Drive)
+bool background_status::MediaChange(const std::string &Media, const std::string &Drive)
 {
   threads::box<bool> return_box;
 
