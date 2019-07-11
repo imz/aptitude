@@ -39,7 +39,7 @@ void cmdline_show_stringlist(strvector &items)
 
   for(strvector::iterator i=items.begin(); i!=items.end(); ++i)
     {
-      if(loc+i->size()>screen_width-5)
+      if(loc+i->size()>size_t(screen_width-5))
 	{
 	  printf("\n  ");
 	  loc=2;

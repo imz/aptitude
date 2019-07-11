@@ -71,7 +71,7 @@ bool do_cmdline_changelog(const vector<string> &packages)
 		  tempdir = temp::dir("aptitude");
 		  tempname = temp::name(tempdir, "changelog");
 		}
-		catch(temp::TemporaryCreationFailure e)
+		catch(const temp::TemporaryCreationFailure &e)
 		{
 		  _error->Error("%s", e.errmsg().c_str());
 		  continue;

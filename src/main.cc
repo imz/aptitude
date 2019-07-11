@@ -554,7 +554,7 @@ int main(int argc, char *argv[])
 	      exit(1);
 	    }
 	}
-      catch(StdinEOFException)
+      catch(const StdinEOFException &)
 	{
 	  printf("%s", _("Abort.\n"));
 	  return -1;

@@ -127,6 +127,7 @@ wstring columnify(const layout &format, int width)
 	}
 
       if(shortfall>0) // Egad!  Truncate things at random, R->L..
+	  {
 	for(layout::reverse_iterator i=final_info.rbegin();
 	    i!=final_info.rend() && shortfall>0; i++)
 	  if(i->width<=shortfall)
@@ -139,6 +140,7 @@ wstring columnify(const layout &format, int width)
 	      i->width-=shortfall;
 	      shortfall=0;
 	    }
+	  }
     }
 
   int curwidth=0, nextwidth=0;
