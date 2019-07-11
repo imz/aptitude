@@ -50,9 +50,9 @@ public:
     set_bg_style(get_style("EditLine"));
   }
 
-  size size_request()
+  ::size size_request()
   {
-    return size(10, 0);
+    return ::size(10, 0);
   }
 
   bool focus_me() {return true;}
@@ -72,9 +72,9 @@ public:
     set_bg_style(st);
   }
 
-  size size_request()
+  ::size size_request()
   {
-    return size(0,0);
+    return ::size(0,0);
   }
 
   void paint()
@@ -456,7 +456,7 @@ int main(int argc, char *argv[])
   switcher->add_visible_widget(pager_test(), true);
   switcher->add_visible_widget(button_mania(), true);
 
-  switcher->add_visible_widget(vs_center::create(vs_size_box::create(size(20, 8), vs_frame::create(vs_center::create(vs_label::create(flowbox(fragf("This is another screen.%nNotice that this label is properly word-wrapped."))))))), true);
+  switcher->add_visible_widget(vs_center::create(vs_size_box::create(::size(20, 8), vs_frame::create(vs_center::create(vs_label::create(flowbox(fragf("This is another screen.%nNotice that this label is properly word-wrapped."))))))), true);
   switcher->add_visible_widget(vs_label::create("This is one screen."), true);
   switcher->add_visible_widget(vs_dialog_ok(transcode("Press any key to hide this widget")), true);
   switcher->add_visible_widget(make_test_treewidget(), true);
