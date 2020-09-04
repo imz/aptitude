@@ -1,4 +1,4 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+# vim: set ft=spec:
 
 Name: aptitude
 Version: 0.4.5
@@ -8,7 +8,6 @@ Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
 License: GPL
 Url: http://people.debian.org/~dburrows/aptitude
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 # git://git.altlinux.org/gears/a/aptitude.git
 Source: %name-%version.tar
