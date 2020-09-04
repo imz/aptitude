@@ -47,7 +47,7 @@ extern template void setup_package_deps<pkg_subtree>(const pkgCache::PkgIterator
 class pkg_grouppolicy_dep_factory:public pkg_grouppolicy_factory
 {
 public:
-  virtual pkg_grouppolicy *instantiate(pkg_signal *sig, desc_signal *desc_sig);
+  virtual pkg_grouppolicy *instantiate(pkg_signal *sig, desc_signal *desc_sig) override;
 };
 
 class pkg_dep_screen:public apt_info_tree

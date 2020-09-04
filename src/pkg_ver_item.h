@@ -139,7 +139,8 @@ public:
 class pkg_grouppolicy_ver_factory:public pkg_grouppolicy_factory
 {
 public:
-  virtual pkg_grouppolicy *instantiate(pkg_signal *sig, desc_signal *desc_sig);
+  virtual pkg_grouppolicy *instantiate(pkg_signal *sig, desc_signal *desc_sig)
+    override;
 };
 
 // The next class displays the available versions of a single package.

@@ -115,7 +115,7 @@ public:
     return true;
   }
 
-  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain)
+  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain) override
   {
     if(chain != NULL)
       throw GroupParseException("Internal error: non-NULL chain passed to terminal policy");
@@ -149,7 +149,7 @@ public:
     delete right;
   }
 
-  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain)
+  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain) override
   {
     return left->instantiate(right->instantiate(chain));
   }
@@ -162,7 +162,7 @@ template<class F>
 class policy_node0 : public group_policy_parse_node
 {
 public:
-  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain)
+  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain) override
   {
     return new F(chain);
   }
@@ -177,7 +177,7 @@ public:
   {
   }
 
-  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain)
+  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain) override
   {
     return new F(arg1, chain);
   }
@@ -194,7 +194,7 @@ public:
   {
   }
 
-  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain)
+  pkg_grouppolicy_factory *instantiate(pkg_grouppolicy_factory *chain) override
   {
     return new F(arg1, arg2, chain);
   }

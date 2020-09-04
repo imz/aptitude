@@ -101,7 +101,8 @@ class pkg_grouppolicy_end_factory:public pkg_grouppolicy_factory
   public:
   pkg_grouppolicy_end_factory() {}
   virtual pkg_grouppolicy *instantiate(pkg_signal *_sig,
-				       desc_signal *_desc_sig);
+				       desc_signal *_desc_sig)
+    override;
 };
 
 // The following policy groups packages by section.
@@ -130,7 +131,8 @@ public:
     :chain(_chain), split_mode(_split_mode), passthrough(_passthrough) {}
 
   virtual pkg_grouppolicy *instantiate(pkg_signal *_sig,
-				       desc_signal *_desc_sig);
+				       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_section_factory()
   {delete chain;}
@@ -144,7 +146,8 @@ public:
   pkg_grouppolicy_status_factory(pkg_grouppolicy_factory *_chain):chain(_chain) {}
 
   virtual pkg_grouppolicy *instantiate(pkg_signal *_sig,
-				       desc_signal *_desc_sig);
+				       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_status_factory()
   {delete chain;}
@@ -162,7 +165,8 @@ public:
     :chain(_chain), filter(_filter) {}
 
   virtual pkg_grouppolicy *instantiate(pkg_signal *_sig,
-				       desc_signal *_desc_sig);
+				       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_filter_factory();
 };
@@ -178,7 +182,8 @@ public:
   pkg_grouppolicy_mode_factory(pkg_grouppolicy_factory *_chain):chain(_chain) {}
 
   pkg_grouppolicy *instantiate(pkg_signal *_sig,
-			       desc_signal *_desc_sig);
+			       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_mode_factory()
   {delete chain;}
@@ -196,7 +201,8 @@ public:
   pkg_grouppolicy_firstchar_factory(pkg_grouppolicy_factory *_chain):chain(_chain) {}
 
   pkg_grouppolicy *instantiate(pkg_signal *_sig,
-			       desc_signal *_desc_sig);
+			       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_firstchar_factory()
   {delete chain;}
@@ -210,7 +216,8 @@ public:
   pkg_grouppolicy_priority_factory(pkg_grouppolicy_factory *_chain):chain(_chain) {}
 
   pkg_grouppolicy *instantiate(pkg_signal *_sig,
-			       desc_signal *_desc_sig);
+			       desc_signal *_desc_sig)
+    override;
 
   virtual ~pkg_grouppolicy_priority_factory()
   {delete chain;}
@@ -245,7 +252,8 @@ public:
   }
 
   pkg_grouppolicy *instantiate(pkg_signal *sig,
-			       desc_signal *_desc_sig);
+			       desc_signal *_desc_sig)
+    override;
 
   ~pkg_grouppolicy_matchers_factory();
 };
