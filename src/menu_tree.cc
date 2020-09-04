@@ -54,8 +54,8 @@ public:
       const pkg_ver_item *pvitem=dynamic_cast<const pkg_ver_item *>(&item);
 
       if(pvitem)
-	return matcher->matches(pvitem->get_package(),
-				pvitem->get_version());
+	return matcher->matches_with_ver(pvitem->get_package(),
+                                         pvitem->get_version());
       else
 	return false;
     }

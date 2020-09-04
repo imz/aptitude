@@ -52,13 +52,13 @@ class pkg_matcher
  */
 {
 public:
-  virtual bool matches(const pkgCache::PkgIterator &pkg,
-		       const pkgCache::VerIterator &ver)=0;
+  virtual bool matches_with_ver(const pkgCache::PkgIterator &pkg,
+                                const pkgCache::VerIterator &ver)=0;
   /** \return a match result, or \b NULL if there is no match.  It's
    *  the caller's responsibility to delete this.
    */
-  virtual pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-				      const pkgCache::VerIterator &ver)=0;
+  virtual pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                               const pkgCache::VerIterator &ver)=0;
 
   /** See whether this matches a versionless package.  This applies
    *  the matcher to every version of the package and returns \b true
@@ -136,7 +136,7 @@ inline bool pkg_matches(const string &s,
     return false;
   else
     {
-      bool rval=m.get()->matches(pkg, ver);
+      bool rval=m.get()->matches_with_ver(pkg, ver);
       return rval;
     }
 }
