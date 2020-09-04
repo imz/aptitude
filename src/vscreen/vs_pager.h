@@ -181,7 +181,7 @@ public:
 
   virtual bool handle_key(const key &k);
   virtual bool focus_me() {return true;}
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
 
   int width_request();
   int height_request(int w);

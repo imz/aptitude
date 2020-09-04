@@ -139,7 +139,7 @@ public:
   }
 
   bool focus_me();
-  void paint(const style &st);
+  void paint(const style &st) override;
   void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
 
   sigc::signal1<void, std::wstring> entered;

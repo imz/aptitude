@@ -59,7 +59,7 @@ public:
   /** \return the number of lines in the label. */
   int height_request(int width);
 
-  void paint(const style &st);
+  void paint(const style &st) override;
   void set_text(const std::string &_txt, const style &st);
   void set_text(const std::string &_txt);
   void set_text(const std::wstring &_txt, const style &st);

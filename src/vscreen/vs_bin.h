@@ -48,7 +48,7 @@ public:
 
   vs_widget_ref get_focus();
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 };
 
 #endif

@@ -53,7 +53,7 @@ public:
 
   point get_cursorloc();
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   bool get_checked() {return checked;}
   void set_checked(bool _checked)

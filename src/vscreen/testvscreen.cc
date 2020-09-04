@@ -77,7 +77,7 @@ public:
     return ::size(0,0);
   }
 
-  void paint()
+  void paint(const style &st) override
   {
   }
 };
@@ -89,9 +89,9 @@ public:
   silly_treeitem(const wstring &_txt):txt(_txt) {}
   silly_treeitem(const string &_txt):txt(transcode(_txt)) {}
 
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st)
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
   {
-    vs_treeitem::paint(win, y, hierarchical, txt);
+    paint_text(win, y, hierarchical, txt);
   }
 
   const wchar_t *tag() {return txt.c_str();}
@@ -108,9 +108,9 @@ public:
   silly_subtree(bool expanded, const string &_txt)
     :vs_subtree_generic(expanded), txt(transcode(_txt)) {}
 
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st)
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
   {
-    vs_subtree_generic::paint(win, y, hierarchical, txt);
+    paint_text(win, y, hierarchical, txt);
   }
 
   const wchar_t *tag() {return txt.c_str();}

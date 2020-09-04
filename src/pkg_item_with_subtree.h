@@ -74,6 +74,7 @@ public:
 
   virtual void paint(vs_tree *win, int y, bool hierarchical,
 		     const style &st)
+    override
   {
     int basex=2*get_depth();
     int width, height;

@@ -225,7 +225,7 @@ public:
   void move_selection_bottom();
 
   virtual bool focus_me();
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
   virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
 
   // Emitted when an item is highlighted or when the selection "goes away".

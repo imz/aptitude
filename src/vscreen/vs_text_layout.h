@@ -111,7 +111,7 @@ public:
   bool focus_me();
 
   /** Paint this widget. */
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   /** Move the view one line down. */
   void line_down();

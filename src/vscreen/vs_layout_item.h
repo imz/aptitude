@@ -49,7 +49,8 @@ protected:
     vs_layout_line(int _n, vs_layout_item &_parent);
 
     void paint(vs_tree *win, int y, bool hierarchical,
-	       const style &st);
+	       const style &st)
+      override;
 
     const wchar_t *tag();
     const wchar_t *label();
@@ -84,7 +85,8 @@ public:
 		  vs_tree *win, int y, bool hierarchical,
 		  const style &st);
   void paint(vs_tree *win, int y, bool hierarchical,
-	     const style &st);
+	     const style &st)
+    override;
 
   int get_normal_attr();
 

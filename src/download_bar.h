@@ -64,7 +64,7 @@ public:
   void Start();
   void Stop();
 
-  void paint(const style &st);
+  void paint(const style &st) override;
   bool handle_key(const key &k);
 
   int width_request();

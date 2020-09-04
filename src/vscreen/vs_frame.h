@@ -36,7 +36,7 @@ public:
    */
   int height_request(int width);
 
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
 };
 
 typedef ref_ptr<vs_frame> vs_frame_ref;

@@ -144,7 +144,7 @@ public:
   bool get_cursorvisible();
   point get_cursorloc();
   virtual bool focus_me() {return true;}
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
   virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
 
   /** \brief Directly sets the selection to the given element.

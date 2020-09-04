@@ -130,8 +130,8 @@ class vs_treeitem
    *                      entry in a 'hierarchical' tree
    *  FIXME: describe other params
    */
-  void paint(vs_tree *win, int y, bool hierarchical,
-	     const std::wstring &str, int depth_shift=2);
+  virtual void paint_text(vs_tree *win, int y, bool hierarchical,
+                          const std::wstring &str, int depth_shift=2);
 
   virtual const wchar_t *tag()=0;
   // The tag that this item should be sorted by [for the trivial version of

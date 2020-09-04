@@ -37,7 +37,7 @@ public:
     return new vs_progress;
   }
 
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
   virtual void Update();
   virtual void Done();
 

@@ -105,7 +105,7 @@ public:
     vscreen_update();
   }
 
-  void paint(const style &st)
+  void paint(const style &st) override
   {
     vs_widget_ref tmpref(this);
 

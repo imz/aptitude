@@ -42,7 +42,7 @@ class vs_stacked:public vs_passthrough
 
   void hide_widget();
 protected:
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   // The size passed in is used as a preferred size.  (what we get might be
   // larger or smaller)

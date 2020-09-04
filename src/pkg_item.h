@@ -51,7 +51,7 @@ public:
 	   const pkgCache::PkgIterator &,
 	   const pkgCache::VerIterator &> *sig);
 
-  virtual void paint(vs_tree *win, int y, bool hierarchical, const style &st);
+  virtual void paint(vs_tree *win, int y, bool hierarchical, const style &st) override;
 
   virtual const wchar_t *tag();
   virtual const wchar_t *label();

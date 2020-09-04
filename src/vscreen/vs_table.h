@@ -199,7 +199,7 @@ public:
    */
   int height_request(int w);
 
-  void paint(const style &st);
+  void paint(const style &st) override;
   void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
 
   static keybindings *bindings;

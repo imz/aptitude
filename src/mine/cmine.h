@@ -82,7 +82,7 @@ public:
   }
 
   bool handle_key(const key &k);
-  void paint(const style &st);
+  void paint(const style &st) override;
   ~cmine()
   {
     delete board;

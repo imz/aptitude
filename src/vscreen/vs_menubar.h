@@ -132,7 +132,7 @@ public:
   /** Remove the subwidget OR a menu. */
   void rem_widget(const vs_widget_ref &w);
 
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
   virtual bool focus_me();
   virtual void dispatch_mouse(short id, int x, int y, int z,
 			      mmask_t bmask);

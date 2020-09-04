@@ -107,7 +107,7 @@ public:
   // Returns the number of widgets in the multiplexer.
   unsigned int num_visible();
 
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
   void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
 
   void show_all();

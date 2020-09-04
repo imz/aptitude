@@ -49,7 +49,7 @@ public:
     return rval;
   }
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   int width_request();
   int height_request(int w);

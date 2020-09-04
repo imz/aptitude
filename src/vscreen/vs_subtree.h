@@ -95,8 +95,9 @@ public:
       (*i)->collapse_all();
   }
 
-  void paint(vs_tree *win, int y, bool hierarchical,
-	     const std::wstring &str, int depth_shift=2)
+  void paint_text(vs_tree *win, int y, bool hierarchical,
+                  const std::wstring &str, int depth_shift=2)
+    override
   {
     int width, height;
     int basex=hierarchical?depth_shift*get_depth():0;

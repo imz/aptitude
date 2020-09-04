@@ -72,7 +72,7 @@ public:
   int height_request(int w);
   void layout_me();
 
-  virtual void paint(const style &st);
+  virtual void paint(const style &st) override;
 
   void show_header();
   void show_status();

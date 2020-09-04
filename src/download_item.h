@@ -45,7 +45,8 @@ public:
   style get_normal_style();
 
   virtual void paint(vs_tree *win, int y, bool hierarchical,
-		     const style &st);
+		     const style &st)
+    override;
 
   void download_done(bool _hit) {hit=_hit;}
   void set_worker(pkgAcquire::Worker *_worker) {worker=_worker;}

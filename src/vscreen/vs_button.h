@@ -72,7 +72,7 @@ public:
     return rval;
   }
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   bool get_cursorvisible();
   point get_cursorloc();

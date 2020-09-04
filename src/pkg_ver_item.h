@@ -61,7 +61,8 @@ public:
   virtual style get_normal_style();
   virtual style get_highlighted_style();
   virtual void paint(vs_tree *win, int y, bool hierarchical,
-		     const style &st);
+		     const style &st)
+    override;
 
   virtual const wchar_t *tag();
   virtual const wchar_t *label();

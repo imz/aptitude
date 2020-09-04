@@ -68,7 +68,7 @@ public:
 
   bool focus_me() {return true;}
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   sigc::signal1<void, int> chosen;
   // Called when one of the choices is selected (the arguments is the

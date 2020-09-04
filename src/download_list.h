@@ -106,7 +106,7 @@ class download_list:public vscreen_widget
 
   void layout_me();
 protected:
-  void paint(const style &st);
+  void paint(const style &st) override;
   bool handle_key(const key &k);
 
   download_list(slot0arg _abortslot = NULL,
