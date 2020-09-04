@@ -51,6 +51,8 @@ find -type f -name '*.cc' -print0 |
 %build
 # Ensure the code can be compiled as C++11 (and the future GCC default dialect).
 %add_optflags -std=gnu++11
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
 %add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs
