@@ -128,7 +128,7 @@ class vs_treeitem
    *  \param y the y location at which to paint this item
    *  \param hierarchical if \b true, paint this item as an
    *                      entry in a 'hierarchical' tree
-   *  \param st the style with which this item is to be displayed.
+   *  FIXME: describe other params
    */
   void paint(vs_tree *win, int y, bool hierarchical,
 	     const std::wstring &str, int depth_shift=2);

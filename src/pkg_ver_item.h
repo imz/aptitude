@@ -127,8 +127,8 @@ class pkg_vertree_generic:public vs_subtree<pkg_ver_item, versort>
   std::wstring name;
 public:
   pkg_vertree_generic(std::wstring _name, bool _expanded):vs_subtree<pkg_ver_item, versort>(_expanded),name(_name) {}
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st)
-  {vs_subtree<pkg_ver_item, versort>::paint(win, y, hierarchical, name);}
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
+  {paint_text(win, y, hierarchical, name);}
   const wchar_t *tag() {return name.c_str();}
   const wchar_t *label() {return name.c_str();}
 };

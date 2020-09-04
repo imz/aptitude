@@ -50,7 +50,8 @@ public:
   pkg_depitem(pkgCache::DepIterator &_first, pkg_signal *_sig);
 
   void paint(vs_tree *win, int y, bool hierarchical,
-	     const style &st);
+	     const style &st)
+    override;
 
   style get_normal_style();
 
@@ -139,8 +140,8 @@ void pkg_depitem::paint(vs_tree *win, int y, bool hierarchical,
 
       wstring broken_str=transcode(available?_("UNSATISFIED"):_("UNAVAILABLE"));
 
-      vs_subtree<pkg_tree_node>::paint(win, y, hierarchical,
-				       get_name()+L" ("+broken_str+L")");
+      vs_subtree<pkg_tree_node>::paint_text(win, y, hierarchical,
+                                            get_name()+L" ("+broken_str+L")");
     }
   else
     pkg_subtree::paint(win, y, hierarchical,
