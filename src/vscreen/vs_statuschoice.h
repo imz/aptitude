@@ -43,7 +43,7 @@ class vs_statuschoice:public vscreen_widget
   // to be the "default".
 
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
   vs_statuschoice(const std::wstring &_prompt, const std::wstring &_choices)
     :vscreen_widget(), prompt(_prompt), choices(_choices)
@@ -60,15 +60,15 @@ public:
     return rval;
   }
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 
-  bool focus_me() {return true;}
+  bool focus_me() override {return true;}
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   sigc::signal1<void, int> chosen;
   // Called when one of the choices is selected (the arguments is the

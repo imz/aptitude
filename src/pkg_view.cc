@@ -85,7 +85,7 @@ public:
 
   ~pkg_handling_label() {delete columns;}
 
-  size size_request() {return size(1,1);}
+  ::size size_request() {return ::size(1,1);}
 
   void set_columns(column_definition_list *_columns)
   {
@@ -105,7 +105,7 @@ public:
     vscreen_update();
   }
 
-  void paint(const style &st)
+  void paint(const style &st) override
   {
     vs_widget_ref tmpref(this);
 

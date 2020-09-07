@@ -35,17 +35,17 @@ public:
   }
 
   /** \return the desired width of the subwidget. */
-  int width_request();
+  int width_request() override;
 
   /** Calculate the desired height of the subwidget.
    *
    *  \param width the width of this widget
    *  \return the desired height
    */
-  int height_request(int width);
+  int height_request(int width) override;
 
   /** \return \b true: vs_transients can always be focussed. */
-  bool focus_me();
+  bool focus_me() override;
 
   /** Destroy the transient.
    *

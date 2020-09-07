@@ -58,7 +58,7 @@ public:
   /** The actual underlying object. */
   vs_checkbutton_ref cb;
 
-  void commit();
+  void commit() override;
 };
 
 class apt_string_widget : public apt_config_widget
@@ -76,7 +76,7 @@ public:
   /** The enclosing size box. */
   vs_widget_ref w;
 
-  void commit();
+  void commit() override;
 };
 
 /** Manages a multi-choice option by providing radio buttons.  The
@@ -98,7 +98,7 @@ public:
   /** The underlying interface object. */
   vs_radiogroup rg;
 
-  void commit();
+  void commit() override;
 };
 
 #endif

@@ -50,14 +50,14 @@ public:
     set_bg_style(get_style("EditLine"));
   }
 
-  size size_request()
+  ::size size_request()
   {
-    return size(10, 0);
+    return ::size(10, 0);
   }
 
-  bool focus_me() {return true;}
+  bool focus_me() override {return true;}
 
-  bool handle_key(const key &k)
+  bool handle_key(const key &k) override
   {
     set_text(readable_keyname(k));
     return true;
@@ -72,12 +72,12 @@ public:
     set_bg_style(st);
   }
 
-  size size_request()
+  ::size size_request()
   {
-    return size(0,0);
+    return ::size(0,0);
   }
 
-  void paint()
+  void paint(const style &st) override
   {
   }
 };
@@ -89,13 +89,13 @@ public:
   silly_treeitem(const wstring &_txt):txt(_txt) {}
   silly_treeitem(const string &_txt):txt(transcode(_txt)) {}
 
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st)
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
   {
-    vs_treeitem::paint(win, y, hierarchical, txt);
+    paint_text(win, y, hierarchical, txt);
   }
 
-  const wchar_t *tag() {return txt.c_str();}
-  const wchar_t *label() {return txt.c_str();}
+  const wchar_t *tag() override {return txt.c_str();}
+  const wchar_t *label() override {return txt.c_str();}
 };
 
 class silly_subtree:public vs_subtree_generic
@@ -108,13 +108,13 @@ public:
   silly_subtree(bool expanded, const string &_txt)
     :vs_subtree_generic(expanded), txt(transcode(_txt)) {}
 
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st)
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
   {
-    vs_subtree_generic::paint(win, y, hierarchical, txt);
+    paint_text(win, y, hierarchical, txt);
   }
 
-  const wchar_t *tag() {return txt.c_str();}
-  const wchar_t *label() {return txt.c_str();}
+  const wchar_t *tag() override {return txt.c_str();}
+  const wchar_t *label() override {return txt.c_str();}
 };
 
 void do_toggle_hierarchical(vs_tree &tree)
@@ -456,7 +456,7 @@ int main(int argc, char *argv[])
   switcher->add_visible_widget(pager_test(), true);
   switcher->add_visible_widget(button_mania(), true);
 
-  switcher->add_visible_widget(vs_center::create(vs_size_box::create(size(20, 8), vs_frame::create(vs_center::create(vs_label::create(flowbox(fragf("This is another screen.%nNotice that this label is properly word-wrapped."))))))), true);
+  switcher->add_visible_widget(vs_center::create(vs_size_box::create(::size(20, 8), vs_frame::create(vs_center::create(vs_label::create(flowbox(fragf("This is another screen.%nNotice that this label is properly word-wrapped."))))))), true);
   switcher->add_visible_widget(vs_label::create("This is one screen."), true);
   switcher->add_visible_widget(vs_dialog_ok(transcode("Press any key to hide this widget")), true);
   switcher->add_visible_widget(make_test_treewidget(), true);

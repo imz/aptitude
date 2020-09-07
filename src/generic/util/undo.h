@@ -25,7 +25,7 @@ class undo_group:public undoable
 {
   std::list<undoable *> items;
 public:
-  virtual void undo()
+  virtual void undo() override
   {
     for(std::list<undoable *>::iterator i=items.begin(); i!=items.end(); i++)
       (*i)->undo();

@@ -40,7 +40,7 @@ class pkg_item::pkg_columnizer:public column_generator
   // Set up the translated format widths.
   static void init_formatting();
 protected:
-  virtual column_disposition setup_column(int type);
+  virtual column_disposition setup_column(int type) override;
   const pkgCache::PkgIterator &get_pkg() {return pkg;}
   const pkgCache::VerIterator &get_visible_ver() {return visible_ver;}
 public:

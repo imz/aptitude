@@ -54,23 +54,23 @@ public:
     return rval;
   }
 
-  bool MediaChange(std::string Media, std::string Drive);
+  bool MediaChange(std::string Media, std::string Drive) override;
 
-  void IMSHit(pkgAcquire::ItemDesc &itm);
-  void Fetch(pkgAcquire::ItemDesc &itm);
-  void Done(pkgAcquire::ItemDesc &itm);
-  void Fail(pkgAcquire::ItemDesc &itm);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
-  void Stop();
+  void IMSHit(pkgAcquire::ItemDesc &itm) override;
+  void Fetch(pkgAcquire::ItemDesc &itm) override;
+  void Done(pkgAcquire::ItemDesc &itm) override;
+  void Fail(pkgAcquire::ItemDesc &itm) override;
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
+  void Stop() override;
 
-  void paint(const style &st);
-  bool handle_key(const key &k);
+  void paint(const style &st) override;
+  bool handle_key(const key &k) override;
 
-  int width_request();
-  int height_request(int);
-  bool get_cursorvisible() {return false;}
-  point get_cursorloc() {return point(0,0);}
+  int width_request() override;
+  int height_request(int) override;
+  bool get_cursorvisible() override {return false;}
+  point get_cursorloc() override {return point(0,0);}
 };
 
 typedef ref_ptr<download_status_bar> download_status_bar_ref;

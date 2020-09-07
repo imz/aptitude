@@ -95,7 +95,7 @@ class vs_menubar:public vs_container
   void got_focus();
   void lost_focus();
 protected:
-  virtual bool handle_key(const key &k);
+  virtual bool handle_key(const key &k) override;
 
   vs_menubar(bool _always_visible);
 public:
@@ -109,12 +109,12 @@ public:
   ~vs_menubar();
 
   /** The 'active' widget of a menubar is always its subwidget. */
-  vs_widget_ref get_active_widget();
+  vs_widget_ref get_active_widget() override;
 
-  void destroy();
+  void destroy() override;
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
   void layout_me();
 
   void set_subwidget(const vs_widget_ref &w);
@@ -125,20 +125,21 @@ public:
     append_item(title, vs_menu_ref(&menu));
   }
 
-  void show_all();
+  void show_all() override;
 
   /** Add a widget as the new subwidget, like a bin. */
-  void add_widget(const vs_widget_ref &w);
+  void add_widget(const vs_widget_ref &w) override;
   /** Remove the subwidget OR a menu. */
-  void rem_widget(const vs_widget_ref &w);
+  void rem_widget(const vs_widget_ref &w) override;
 
-  virtual void paint(const style &st);
-  virtual bool focus_me();
+  virtual void paint(const style &st) override;
+  virtual bool focus_me() override;
   virtual void dispatch_mouse(short id, int x, int y, int z,
-			      mmask_t bmask);
+			      mmask_t bmask)
+    override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 
   bool get_always_visible() {return always_visible;}
   void set_always_visible(bool _always_visible);

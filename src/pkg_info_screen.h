@@ -31,17 +31,12 @@
 #include <apt-pkg/cacheiterators.h>
 #include <string>
 
-class pkg_grouppolicy_info_factory:public pkg_grouppolicy_factory
-{
-public:
-  pkg_grouppolicy *instantiate();
-};
-
 class pkg_info_screen:public apt_info_tree
 {
 protected:
   vs_treeitem *setup_new_root(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver);
+			      const pkgCache::VerIterator &ver)
+    override;
   pkg_info_screen(const pkgCache::PkgIterator &pkg, const pkgCache::VerIterator &ver);
 public:
   static ref_ptr<pkg_info_screen>

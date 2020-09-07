@@ -1,4 +1,4 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+# vim: set ft=spec:
 
 Name: aptitude
 Version: 0.4.5
@@ -8,7 +8,6 @@ Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
 License: GPL
 Url: http://people.debian.org/~dburrows/aptitude
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 # git://git.altlinux.org/gears/a/aptitude.git
 Source: %name-%version.tar
@@ -50,6 +49,13 @@ find -type f -name '*.cc' -print0 |
 	xargs -r0 sed -i '1,1 s/^/#include "config.h"\n/' --
 
 %build
+# Ensure the code can be compiled as C++11 (and the future GCC default dialect).
+%add_optflags -std=gnu++11
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
+# A style enforcement: always use the keyword, which helps to avoid API misuse
+%add_optflags -Werror=suggest-override
+%add_optflags -Werror=return-type
 %add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs

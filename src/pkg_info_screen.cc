@@ -47,7 +47,7 @@ public:
 		       desc_signal *_desc_sig)
     :pkg_grouppolicy(_sig, _desc_sig) {}
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root);
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override;
 
   static void setup_package_info(const pkgCache::PkgIterator &pkg,
 				 const pkgCache::VerIterator &ver,

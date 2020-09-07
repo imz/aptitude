@@ -13,8 +13,8 @@ void vs_treeitem::highlighted(vs_tree *win)
 {
 }
 
-void vs_treeitem::paint(vs_tree *win, int y, bool hierarchical,
-			const wstring &str, int depth_shift)
+void vs_treeitem::paint_text(vs_tree *win, int y, bool hierarchical,
+                             const wstring &str, int depth_shift)
 {
   int width, height;
   int basex=hierarchical?depth_shift*get_depth():0;

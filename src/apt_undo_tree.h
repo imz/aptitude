@@ -38,13 +38,13 @@ public:
   }
 
   /** \return \b true if the global APT undo queue is non-empty. */
-  bool undo_undo_enabled();
+  bool undo_undo_enabled() override;
 
   /** Execute the top undo from the global APT undo queue.
    *
    *  \return \b true.
    */
-  bool undo_undo();
+  bool undo_undo() override;
 };
 
 #endif // APT_UNDO_TREE_H

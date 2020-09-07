@@ -68,7 +68,7 @@ private:
    */
   wchar_t get_char(size_t n);
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
   vs_editline(const std::wstring &_prompt,
 	      const std::wstring &_text=L"",
@@ -138,9 +138,9 @@ public:
     clear_on_first_edit = value;
   }
 
-  bool focus_me();
-  void paint(const style &st);
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  bool focus_me() override;
+  void paint(const style &st) override;
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
   sigc::signal1<void, std::wstring> entered;
   // Called when the user presses Enter to confirm the text
@@ -155,11 +155,11 @@ public:
    */
   void set_text(std::string _text);
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 
-  int width_request();
-  int height_request(int height);
+  int width_request() override;
+  int height_request(int height) override;
 
   static void add_to_history(std::wstring s,
 			     history_list *history);

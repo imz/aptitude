@@ -42,15 +42,15 @@ class background_status : public pkgAcquireStatus
 {
   download_signal_log *real_status;
 public:
-  void Fetched(unsigned long Size, unsigned long ResumePoint);
-  bool MediaChange(std::string Media, std::string Drive);
-  void IMSHit(pkgAcquire::ItemDesc &);
-  void Fetch(pkgAcquire::ItemDesc &);
-  void Done(pkgAcquire::ItemDesc &);
-  void Fail(pkgAcquire::ItemDesc &);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
-  void Stop();
+  void Fetched(unsigned long Size, unsigned long ResumePoint) override;
+  bool MediaChange(std::string Media, std::string Drive) override;
+  void IMSHit(pkgAcquire::ItemDesc &) override;
+  void Fetch(pkgAcquire::ItemDesc &) override;
+  void Done(pkgAcquire::ItemDesc &) override;
+  void Fail(pkgAcquire::ItemDesc &) override;
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
+  void Stop() override;
   void Complete();
 
   background_status(download_signal_log *_real_status)

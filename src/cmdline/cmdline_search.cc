@@ -39,12 +39,12 @@ public:
     delete r;
   }
 
-  int param_count()
+  int param_count() override
   {
     return r->num_groups();
   }
 
-  wstring get_param(int n)
+  wstring get_param(int n) override
   {
     return transcode(r->group(n));
   }
