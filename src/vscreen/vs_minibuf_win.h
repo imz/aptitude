@@ -64,12 +64,12 @@ public:
 
   ~vs_minibuf_win();
 
-  void destroy();
+  void destroy() override;
 
   void set_main_widget(const vs_widget_ref &w);
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
   void layout_me();
 
   virtual void paint(const style &st) override;
@@ -84,19 +84,19 @@ public:
   // Set the status and header lines of the window, respectively.
   // These routines do NOT call refresh()!
 
-  vs_widget_ref get_focus();
+  vs_widget_ref get_focus() override;
 
   static const style &retr_header_style() {return get_style("Header");}
   static const style &retr_status_style() {return get_style("Status");}
   void display_error(std::string err);
 
-  void add_widget(const vs_widget_ref &widget);
+  void add_widget(const vs_widget_ref &widget) override;
   // Adds a widget.  Widgets are automatically shown if they're the first
   // one to be added, otherwise show() should be called.
-  void rem_widget(const vs_widget_ref &widget);
+  void rem_widget(const vs_widget_ref &widget) override;
   // Removes a widget
 
-  void show_all();
+  void show_all() override;
 };
 
 typedef ref_ptr<vs_minibuf_win> vs_minibuf_win_ref;

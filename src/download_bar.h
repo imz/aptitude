@@ -65,12 +65,12 @@ public:
   void Stop() override;
 
   void paint(const style &st) override;
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
-  int width_request();
-  int height_request(int);
-  bool get_cursorvisible() {return false;}
-  point get_cursorloc() {return point(0,0);}
+  int width_request() override;
+  int height_request(int) override;
+  bool get_cursorvisible() override {return false;}
+  point get_cursorloc() override {return point(0,0);}
 };
 
 typedef ref_ptr<download_status_bar> download_status_bar_ref;

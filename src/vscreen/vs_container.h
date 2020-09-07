@@ -57,7 +57,7 @@ public:
   virtual vs_widget_ref get_active_widget() = 0;
 
   /** Display this widget and all its subwidgets. */
-  virtual void show_all()=0;
+  virtual void show_all() override = 0;
 };
 
 #endif

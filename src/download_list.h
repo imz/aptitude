@@ -107,7 +107,7 @@ class download_list:public vscreen_widget
   void layout_me();
 protected:
   void paint(const style &st) override;
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
   download_list(slot0arg _abortslot = NULL,
 		bool _display_messages = true,
@@ -135,16 +135,16 @@ public:
   void Stop(download_signal_log &manager, const sigc::slot0<void> &k);
   void Complete(download_signal_log &manager);
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 
-  bool get_cursorvisible() {return false;}
-  point get_cursorloc() {return point(0,0);}
-  bool focus_me() {return true;}
+  bool get_cursorvisible() override {return false;}
+  point get_cursorloc() override {return point(0,0);}
+  bool focus_me() override {return true;}
 
   // FIXME: overriding this is a terrible hack.  A cancel() hook should be
   // used instead.
-  void destroy();
+  void destroy() override;
 
   // Used to move around in the list (can be called manually to
   // simulate these actions)

@@ -41,8 +41,8 @@ public:
 
   void paint(vs_tree *win, int y, bool hierarchical, const style &style) override
   {paint_text(win, y, hierarchical, L"ERROR: SHOULD NOT APPEAR");}
-  const wchar_t * tag() {return L"download tree";}
-  const wchar_t * label() {return L"download tree";}
+  const wchar_t * tag() override {return L"download tree";}
+  const wchar_t * label() override {return L"download tree";}
 };
 
 class download_screen:public vs_tree, public pkgAcquireStatus
@@ -74,7 +74,7 @@ class download_screen:public vs_tree, public pkgAcquireStatus
   }
 
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
 public:
   download_screen():prev(NULL),finished(false),cancelled(false) {contents=new download_tree; set_root(contents);}
@@ -88,7 +88,7 @@ public:
   void Start() override;
   void Stop() override;
 
-  bool get_cursorvisible() {return false;}
+  bool get_cursorvisible() override {return false;}
 
   //void paint_status();
 

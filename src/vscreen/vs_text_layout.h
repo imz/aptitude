@@ -70,7 +70,7 @@ public:
   /** Handle the given keypress.  Returns \b true if the keystroke
    *  was "consumed" by this widget.
    */
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
   /** Change the fragment being displayed in this layout widget. */
   void set_fragment(fragment *f);
@@ -94,21 +94,21 @@ public:
   /** Return the requested width of this widget.  The requested width
    *  will be the largest possible width of any line.
    */
-  int width_request();
+  int width_request() override;
 
   /** Return the requested height of this widget given its width, by
    *  running the fragment-layout algorithm.
    */
-  int height_request(int w);
+  int height_request(int w) override;
 
   /** Return \b true iff the cursor is visible in this widget. */
-  bool get_cursorvisible();
+  bool get_cursorvisible() override;
 
   /** Return the location of the cursor in this widget. */
-  point get_cursorloc();
+  point get_cursorloc() override;
 
   /** Return \b true iff this widget should be given focus. */
-  bool focus_me();
+  bool focus_me() override;
 
   /** Paint this widget. */
   void paint(const style &st) override;

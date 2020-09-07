@@ -38,7 +38,7 @@ class pkg_item_with_subtree:public vs_subtree<child, sorter>, public pkg_item
   {
     bool expanded, hierarchical;
   protected:
-    column_disposition setup_column(int type)
+    column_disposition setup_column(int type) override
       {
 	if(type==name)
 	  {
@@ -93,7 +93,7 @@ public:
     win->mvaddnstr(y, 0, disp, width);
   }
 
-  bool dispatch_key(const key &k, vs_tree *owner)
+  bool dispatch_key(const key &k, vs_tree *owner) override
   {
     if(vs_subtree<child, sorter>::dispatch_key(k, owner))
       return true;
@@ -101,7 +101,7 @@ public:
       return pkg_item::dispatch_key(k, owner);
   }
 
-  void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner)
+  void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner) override
   {
     pkg_item::dispatch_mouse(id, x, bstate, owner);
   }

@@ -71,18 +71,18 @@ class vs_tree_root_iterator:public vs_tree_levelref
   vs_treeitem *val;
   vs_treeitem *prevval;
 
-  vs_treeitem *get_item() {return val;}
+  vs_treeitem *get_item() override {return val;}
  public:
   vs_tree_root_iterator(vs_treeitem *_val):val(_val), prevval(NULL) {}
   vs_tree_root_iterator(const vs_tree_root_iterator &x):vs_tree_levelref(x), val(x.val), prevval(x.prevval) {}
 
-  void advance_next() {if(val) { prevval=val; val=NULL;} }
-  void return_prev() {if(prevval) {val=prevval; prevval=NULL;} }
+  void advance_next() override {if(val) { prevval=val; val=NULL;} }
+  void return_prev() override {if(prevval) {val=prevval; prevval=NULL;} }
 
-  vs_tree_root_iterator *clone() const {return new vs_tree_root_iterator(*this);}
+  vs_tree_root_iterator *clone() const override {return new vs_tree_root_iterator(*this);}
 
-  bool is_end() {return !val;}
-  bool is_begin() {return prevval==NULL;}
+  bool is_end() override {return !val;}
+  bool is_begin() override {return prevval==NULL;}
 
   // Returns an "end iterator" for this tree
   vs_tree_root_iterator *end()
@@ -369,7 +369,7 @@ public:
 class tag_sort_policy:public sortpolicy
 {
 public:
-  bool operator()(vs_treeitem *item1, vs_treeitem *item2)
+  bool operator()(vs_treeitem *item1, vs_treeitem *item2) override
   {
     return (wcscmp(item1->tag(), item2->tag())<0);
   }

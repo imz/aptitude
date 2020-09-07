@@ -53,9 +53,9 @@ public:
 	     const style &st)
     override;
 
-  style get_normal_style();
+  style get_normal_style() override;
 
-  void select(undo_group *undo);
+  void select(undo_group *undo) override;
   // A special case -- installs the 'best' target package (using
   // SmartTargetPkg() )
 };
@@ -183,7 +183,7 @@ public:
   pkg_grouppolicy_dep(pkg_signal *_sig, desc_signal *_desc_sig)
     :pkg_grouppolicy(_sig, _desc_sig) {}
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     pkg_item_with_generic_subtree *newtree=new pkg_item_with_generic_subtree(pkg,
 									     get_sig());

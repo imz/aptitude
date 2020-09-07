@@ -52,8 +52,8 @@ protected:
 	       const style &st)
       override;
 
-    const wchar_t *tag();
-    const wchar_t *label();
+    const wchar_t *tag() override;
+    const wchar_t *label() override;
   };
 
   // Assumes that children.size()>0
@@ -66,19 +66,19 @@ protected:
     levelref(const levelref &x);
     levelref(size_t n, const child_list &_lines);
 
-    vs_treeitem *get_item();
-    virtual void advance_next();
-    virtual void return_prev();
-    bool is_begin();
-    bool is_end();
-    levelref *clone() const;
+    vs_treeitem *get_item() override;
+    virtual void advance_next() override;
+    virtual void return_prev() override;
+    bool is_begin() override;
+    bool is_end() override;
+    levelref *clone() const override;
   };
 
 public:
   vs_layout_item(fragment *f);
 
-  const wchar_t *tag();
-  const wchar_t *label();
+  const wchar_t *tag() override;
+  const wchar_t *label() override;
 
   /** Paints the nth line of this item at the given location in 'win'. */
   void paint_line(int n,
@@ -90,9 +90,9 @@ public:
 
   int get_normal_attr();
 
-  levelref *begin();
-  levelref *end();
-  bool has_visible_children();
+  levelref *begin() override;
+  levelref *end() override;
+  bool has_visible_children() override;
 
   const fragment_line &get_line(vs_tree *win, size_t n, int basex,
 				const style &st);

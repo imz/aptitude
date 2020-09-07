@@ -62,7 +62,7 @@ class pkg_tree:public apt_undo_tree
   void init(const char *limitstr);
 
 protected:
-  virtual bool handle_key(const key &k);
+  virtual bool handle_key(const key &k) override;
 
   pkg_tree(const std::string &groupingstr,
 	   pkg_grouppolicy_factory *_grouping,
@@ -130,16 +130,16 @@ public:
   std::wstring get_limit_str() {return limitstr;}
 
   /** Return \b true. */
-  bool find_limit_enabled();
+  bool find_limit_enabled() override;
 
   /** Pop up the limit selection dialog. */
-  bool find_limit();
+  bool find_limit() override;
 
   /** Return \b true if a limit is already set. */
-  bool find_reset_limit_enabled();
+  bool find_reset_limit_enabled() override;
 
   /** Reset the limit. */
-  bool find_reset_limit();
+  bool find_reset_limit() override;
 
   // Local bindings:
   static keybindings *bindings;

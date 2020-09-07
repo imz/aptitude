@@ -26,7 +26,7 @@ public:
   /** \return the desired width of the frame.  A frame is 2 larger
    *   than its contents in every direction.
    */
-  int width_request();
+  int width_request() override;
 
   /** Calculate the desired height of the frame.  A frame is 2 larger
    *  than its contents in every direction.
@@ -34,7 +34,7 @@ public:
    *  \param width the width of the frame
    *  \return the desired height
    */
-  int height_request(int width);
+  int height_request(int width) override;
 
   virtual void paint(const style &st) override;
 };

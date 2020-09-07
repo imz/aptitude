@@ -71,7 +71,7 @@ public:
     my_tag+=pkg_subtree::tag();
   }
 
-  virtual const wchar_t *tag()
+  virtual const wchar_t *tag() override
   {
     return my_tag.c_str();
   }
@@ -85,7 +85,7 @@ public:
   pkg_grouppolicy_end(pkg_signal *_sig, desc_signal *_desc_sig)
     :pkg_grouppolicy(_sig, _desc_sig) {}
 
-  virtual void add_package(const pkgCache::PkgIterator &i, pkg_subtree *root)
+  virtual void add_package(const pkgCache::PkgIterator &i, pkg_subtree *root) override
     {
       root->add_child(new pkg_item(i, get_sig()));
     }
@@ -128,7 +128,7 @@ public:
     init_section_descriptions();
   }
 
-  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root);
+  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override;
 
   virtual ~pkg_grouppolicy_section()
     {
@@ -255,7 +255,7 @@ public:
 	}
     }
 
-  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root);
+  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override;
 
   virtual ~pkg_grouppolicy_status()
     {
@@ -354,7 +354,7 @@ public:
   {
   }
 
-  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  virtual void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     if(filter->matches(pkg))
       chain->add_package(pkg, root);
@@ -396,7 +396,7 @@ public:
       }
   }
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     int group=find_pkg_state(pkg);
     if(group!=pkg_unchanged)
@@ -511,7 +511,7 @@ public:
       delete i->second.first;
   }
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     eassert(pkg.Name());
 
@@ -572,7 +572,7 @@ public:
       delete i->second.first;
   }
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     unsigned char priority;
     const char *pstr;
@@ -762,6 +762,7 @@ public:
 
   void add_package(const pkgCache::PkgIterator &pkg,
 		   pkg_subtree *root)
+    override
   {
     for(vector<match_pair>::const_iterator i = subgroups.begin();
 	i != subgroups.end(); ++i)

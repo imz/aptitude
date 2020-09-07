@@ -44,7 +44,7 @@ class pkg_matcher_search:public vs_tree_search_func
 public:
   pkg_matcher_search(pkg_matcher *_matcher):matcher(_matcher) {}
 
-  bool operator()(const vs_treeitem &item)
+  bool operator()(const vs_treeitem &item) override
   {
     // EWW
     const pkg_item *pitem=dynamic_cast<const pkg_item *>(&item);

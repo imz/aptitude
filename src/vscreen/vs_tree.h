@@ -56,7 +56,7 @@ class vs_tree_search_string:public vs_tree_search_func
 public:
   vs_tree_search_string(const std::wstring &_s):s(_s) {}
 
-  virtual bool operator()(const vs_treeitem &item);
+  virtual bool operator()(const vs_treeitem &item) override;
 };
 
 class vs_tree:public vscreen_widget
@@ -107,7 +107,7 @@ protected:
   //  It'll be the first thing to be removed in the next version..
   //  -- well, it wasn't.
 
-  virtual bool handle_key(const key &k);
+  virtual bool handle_key(const key &k) override;
 
 protected:
   vs_tree();
@@ -133,19 +133,19 @@ public:
   void set_root(vs_treeitem *_root, bool showroot=false);
 
   /** \return the desired width of the widget. */
-  int width_request();
+  int width_request() override;
 
   /** \param w the width of the widget.
    *
    *  \return the desired height of the widget for the given width.
    */
-  int height_request(int w);
+  int height_request(int w) override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
-  virtual bool focus_me() {return true;}
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
+  virtual bool focus_me() override {return true;}
   virtual void paint(const style &st) override;
-  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
   /** \brief Directly sets the selection to the given element.
    *

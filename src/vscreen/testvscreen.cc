@@ -55,9 +55,9 @@ public:
     return ::size(10, 0);
   }
 
-  bool focus_me() {return true;}
+  bool focus_me() override {return true;}
 
-  bool handle_key(const key &k)
+  bool handle_key(const key &k) override
   {
     set_text(readable_keyname(k));
     return true;
@@ -94,8 +94,8 @@ public:
     paint_text(win, y, hierarchical, txt);
   }
 
-  const wchar_t *tag() {return txt.c_str();}
-  const wchar_t *label() {return txt.c_str();}
+  const wchar_t *tag() override {return txt.c_str();}
+  const wchar_t *label() override {return txt.c_str();}
 };
 
 class silly_subtree:public vs_subtree_generic
@@ -113,8 +113,8 @@ public:
     paint_text(win, y, hierarchical, txt);
   }
 
-  const wchar_t *tag() {return txt.c_str();}
-  const wchar_t *label() {return txt.c_str();}
+  const wchar_t *tag() override {return txt.c_str();}
+  const wchar_t *label() override {return txt.c_str();}
 };
 
 void do_toggle_hierarchical(vs_tree &tree)

@@ -58,7 +58,7 @@ public:
   pkgCache::PkgIterator get_package() const {return version.ParentPkg();}
   const pkgCache::VerIterator &get_version() const {return version;}
 
-  virtual style get_normal_style();
+  virtual style get_normal_style() override;
   virtual style get_highlighted_style();
   virtual void paint(vs_tree *win, int y, bool hierarchical,
 		     const style &st)
@@ -67,20 +67,20 @@ public:
   virtual const wchar_t *tag();
   virtual const wchar_t *label();
 
-  virtual void select(undo_group *undo);
-  virtual void hold(undo_group *undo);
-  virtual void keep(undo_group *undo);
-  virtual void remove(undo_group *undo);
-  virtual void set_auto(bool isauto, undo_group *undo);
+  virtual void select(undo_group *undo) override;
+  virtual void hold(undo_group *undo) override;
+  virtual void keep(undo_group *undo) override;
+  virtual void remove(undo_group *undo) override;
+  virtual void set_auto(bool isauto, undo_group *undo) override;
 
   virtual void forbid_version(undo_group *undo);
 
-  virtual void highlighted(vs_tree *win);
-  virtual void unhighlighted(vs_tree *win);
+  virtual void highlighted(vs_tree *win) override;
+  virtual void unhighlighted(vs_tree *win) override;
 
   void show_information();
 
-  bool dispatch_key(const key &k, vs_tree *owner);
+  bool dispatch_key(const key &k, vs_tree *owner) override;
 
   pkg_ver_item *get_sig();
 
@@ -89,12 +89,12 @@ public:
 
 
   // Menu redirections:
-  bool package_forbid_enabled();
-  bool package_forbid();
-  bool package_changelog_enabled();
-  bool package_changelog();
-  bool package_information_enabled();
-  bool package_information();
+  bool package_forbid_enabled() override;
+  bool package_forbid() override;
+  bool package_changelog_enabled() override;
+  bool package_changelog() override;
+  bool package_information_enabled() override;
+  bool package_information() override;
 };
 
 class versort:public sortpolicy
@@ -109,7 +109,7 @@ public:
     return _system->VS->CmpVersion(item1->get_version().VerStr(), item2->get_version().VerStr());
   }
 
-  bool operator()(vs_treeitem *item1, vs_treeitem *item2)
+  bool operator()(vs_treeitem *item1, vs_treeitem *item2) override
   {
     // FIXME: this is horrible.
     const pkg_ver_item *pitem1=dynamic_cast<const pkg_ver_item *>(item1);
@@ -130,8 +130,8 @@ public:
   pkg_vertree_generic(std::wstring _name, bool _expanded):vs_subtree<pkg_ver_item, versort>(_expanded),name(_name) {}
   void paint(vs_tree *win, int y, bool hierarchical, const style &st) override
   {paint_text(win, y, hierarchical, name);}
-  const wchar_t *tag() {return name.c_str();}
-  const wchar_t *label() {return name.c_str();}
+  const wchar_t *tag() override {return name.c_str();}
+  const wchar_t *label() override {return name.c_str();}
 };
 
 // The following policy will make each package given to it into a
@@ -150,7 +150,8 @@ class pkg_ver_screen:public apt_info_tree
 {
 protected:
   virtual vs_treeitem *setup_new_root(const pkgCache::PkgIterator &pkg,
-				      const pkgCache::VerIterator &ver);
+				      const pkgCache::VerIterator &ver)
+    override;
   pkg_ver_screen(const pkgCache::PkgIterator &pkg);
 public:
   static ref_ptr<pkg_ver_screen> create(const pkgCache::PkgIterator &pkg)

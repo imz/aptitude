@@ -90,7 +90,7 @@ public:
   {
   }
 
-  void undo()
+  void undo() override
   {
     if(prev_flags&ReInstall)
       owner->internal_mark_install(pkg, false, true, NULL, false);
@@ -136,7 +136,7 @@ public:
     return packages.empty();
   }
 
-  void undo()
+  void undo() override
   {
     for(vector<pkgCache::PkgIterator>::iterator i=packages.begin(); i!=packages.end(); i++)
       owner->set_new_flag(*i, true);
@@ -159,7 +159,7 @@ public:
   {
   }
 
-  void undo()
+  void undo() override
   {
     owner->set_candidate_version(oldver, NULL);
   }

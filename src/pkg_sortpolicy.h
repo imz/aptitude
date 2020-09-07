@@ -72,7 +72,7 @@ public:
   pkg_sortpolicy_wrapper(pkg_sortpolicy *_chain):chain(_chain) {}
 
   int compare(vs_treeitem *item1, vs_treeitem *item2) const;
-  bool operator()(vs_treeitem *item1, vs_treeitem *item2)
+  bool operator()(vs_treeitem *item1, vs_treeitem *item2) override
   {
     return (compare(item1, item2)<0);
   }

@@ -110,7 +110,7 @@ template<class F>
 class policy_terminal_node0 : public group_policy_parse_node
 {
 public:
-  bool terminal()
+  bool terminal() override
   {
     return true;
   }
@@ -138,7 +138,7 @@ public:
   {
   }
 
-  bool terminal()
+  bool terminal() override
   {
     return right->terminal();
   }
@@ -237,6 +237,7 @@ public:
 
   group_policy_parse_node *parse(string::const_iterator &begin,
 				 const string::const_iterator &end)
+    override
   {
     string name;
     auto_ptr<group_policy_parse_node> rval(NULL);
@@ -307,6 +308,7 @@ public:
 
   group_policy_parse_node *parse(string::const_iterator &begin,
 				 const string::const_iterator &end)
+    override
   {
     vector<string> args;
 
@@ -347,7 +349,7 @@ public:
 class section_policy_parser : public string_policy_parser
 {
 public:
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     int split_mode=pkg_grouppolicy_section_factory::split_none;
     bool passthrough=false;
@@ -386,7 +388,7 @@ public:
 class status_policy_parser : public string_policy_parser
 {
 public:
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("By-status grouping policies take no arguments"));
@@ -400,6 +402,7 @@ class filter_policy_parser : public group_policy_parser
 public:
   group_policy_parse_node *parse(string::const_iterator &begin,
 				 const string::const_iterator &end)
+    override
   {
     // Backwards compatibility cruft:
     static const string missing = "missing";
@@ -464,7 +467,7 @@ public:
 class mode_policy_parser : public string_policy_parser
 {
 public:
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("By-mode grouping policies take no arguments"));
@@ -475,7 +478,7 @@ public:
 
 class firstchar_policy_parser : public string_policy_parser
 {
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("First-character grouping policies take no arguments"));
@@ -487,7 +490,7 @@ class firstchar_policy_parser : public string_policy_parser
 
 class ver_policy_parser : public string_policy_parser
 {
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("Version-generating grouping policies take no arguments"));
@@ -498,7 +501,7 @@ class ver_policy_parser : public string_policy_parser
 
 class dep_policy_parser: public string_policy_parser
 {
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("Dep-generating grouping policies take no arguments"));
@@ -509,7 +512,7 @@ class dep_policy_parser: public string_policy_parser
 
 class priority_policy_parser : public string_policy_parser
 {
-  group_policy_parse_node *create_node(const vector<string> &args)
+  group_policy_parse_node *create_node(const vector<string> &args) override
   {
     if(args.size()!=0)
       throw GroupParseException(_("By-priority grouping policies take no arguments"));
@@ -522,6 +525,7 @@ class pattern_policy_parser : public group_policy_parser
 {
   group_policy_parse_node *parse(string::const_iterator &begin,
 				 const string::const_iterator &end)
+    override
   {
     while(begin != end && isspace(*begin))
       ++begin;

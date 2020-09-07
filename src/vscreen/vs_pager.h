@@ -179,14 +179,14 @@ public:
 
   // vscreen overrides:
 
-  virtual bool handle_key(const key &k);
-  virtual bool focus_me() {return true;}
+  virtual bool handle_key(const key &k) override;
+  virtual bool focus_me() override {return true;}
   virtual void paint(const style &st) override;
 
-  int width_request();
-  int height_request(int w);
-  bool get_cursorvisible() {return true;}
-  point get_cursorloc() {return point(0,0);}
+  int width_request() override;
+  int height_request(int w) override;
+  bool get_cursorvisible() override {return true;}
+  point get_cursorloc() override {return point(0,0);}
 
   /** Announces that the user has scrolled vertically. */
   sigc::signal2<void, int, int> line_changed;

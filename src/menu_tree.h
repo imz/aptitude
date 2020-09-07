@@ -99,90 +99,90 @@ public:
   ~menu_tree();
 
   /** \return \b true iff a pkg_node descendant is currently selected. */
-  bool package_enabled();
+  bool package_enabled() override;
 
   /** If a pkg_node is currently selected, execute its "install" operation. */
-  bool package_install();
+  bool package_install() override;
 
   /** If a pkg_node is currently selected, execute its "remove" operation. */
-  bool package_remove();
+  bool package_remove() override;
 
   /** If a pkg_node is currently selected, execute its "keep" operation. */
-  bool package_keep();
+  bool package_keep() override;
 
   /** If a pkg_node is currently selected, execute its "hold" operation. */
-  bool package_hold();
+  bool package_hold() override;
 
   /** If a pkg_node is currently selected, execute its "set auto" operation. */
-  bool package_mark_auto();
+  bool package_mark_auto() override;
 
   /** If a pkg_node is currently selected, execute its "set manual" operation. */
-  bool package_unmark_auto();
+  bool package_unmark_auto() override;
 
   /** \return \b true if a package or a package version is selected. */
-  bool package_forbid_enabled();
+  bool package_forbid_enabled() override;
 
   /** If a package or a version is selected, perform a "forbid"
    *  operation on it.
    */
-  bool package_forbid();
+  bool package_forbid() override;
 
   /** \return \b true if a package or a package version is selected. */
-  bool package_changelog_enabled();
+  bool package_changelog_enabled() override;
 
   /** If a package or version is selected, show its changelog. */
-  bool package_changelog();
+  bool package_changelog() override;
 
   /** \return \b true if a package or a package version is selected. */
-  bool package_information_enabled();
+  bool package_information_enabled() override;
 
   /** If a package or version is selected, show its information. */
-  bool package_information();
+  bool package_information() override;
 
 
   /** \return \b true; all package trees know how to search. */
-  bool find_search_enabled();
+  bool find_search_enabled() override;
 
   /** \return \b true; all package trees know how to search. */
-  bool find_search_back_enabled();
+  bool find_search_back_enabled() override;
 
   /** Execute the 'search' menu command. */
-  bool find_search();
+  bool find_search() override;
 
   /** Execute the 'search backwards' menu command. */
-  bool find_search_back();
+  bool find_search_back() override;
 
   /** \return \b true if there is a "previous search". */
-  bool find_research_enabled();
+  bool find_research_enabled() override;
 
   /** Execute the 're-search' menu command. */
-  bool find_research();
+  bool find_research() override;
 
   /** \return \b true if there is a "previous search". */
-  bool find_repeat_search_back_enabled();
+  bool find_repeat_search_back_enabled() override;
 
   /** Execute the 'repeat search in opposite direction' menu command. */
-  bool find_repeat_search_back();
+  bool find_repeat_search_back() override;
 
   /** \return \b false. */
-  bool find_limit_enabled();
+  bool find_limit_enabled() override;
 
   /** Does nothing. */
-  bool find_limit();
+  bool find_limit() override;
 
   /** \return \b false. */
-  bool find_reset_limit_enabled();
+  bool find_reset_limit_enabled() override;
 
   /** Does nothing. */
-  bool find_reset_limit();
+  bool find_reset_limit() override;
 
   /** \return \b true if this view is active. */
-  bool find_broken_enabled();
+  bool find_broken_enabled() override;
 
   /** Find the next broken package (searches for '~b'). */
-  bool find_broken();
+  bool find_broken() override;
 
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 };
 
 typedef ref_ptr<menu_tree> menu_tree_ref;

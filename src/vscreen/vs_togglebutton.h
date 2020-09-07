@@ -51,7 +51,7 @@ public:
     return rval;
   }
 
-  point get_cursorloc();
+  point get_cursorloc() override;
 
   void paint(const style &st) override;
 

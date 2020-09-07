@@ -41,7 +41,7 @@ namespace temp
     {
     }
 
-    std::string errmsg() const;
+    std::string errmsg() const override;
   };
 
   /** This object represents a directory in which temporary files can

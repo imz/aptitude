@@ -124,9 +124,9 @@ pkg_matcher::~pkg_matcher()
 class empty_match_result : public pkg_match_result
 {
 public:
-  unsigned int num_groups() {return 0;}
+  unsigned int num_groups() override {return 0;}
 
-  const string &group(unsigned int n) {abort();}
+  const string &group(unsigned int n) override {abort();}
 };
 
 class pkg_nonstring_matcher : public pkg_matcher
@@ -146,9 +146,9 @@ class unitary_result : public pkg_match_result
 public:
   unitary_result(const string &_s):s(_s) {}
 
-  unsigned int num_groups() {return 1;}
+  unsigned int num_groups() override {return 1;}
 
-  const string &group(unsigned int n)
+  const string &group(unsigned int n) override
   {
     if(n != 0)
       abort();
@@ -173,12 +173,12 @@ public:
     delete r2;
   }
 
-  unsigned int num_groups()
+  unsigned int num_groups() override
   {
     return r1->num_groups() + r2->num_groups();
   }
 
-  const string &group(unsigned int n)
+  const string &group(unsigned int n) override
   {
     unsigned int num_groups_r1 = r1->num_groups();
 
@@ -242,8 +242,8 @@ class pkg_string_matcher : public pkg_matcher
 	}
     }
 
-    unsigned int num_groups() {return matches.size();}
-    const string &group(unsigned int n) {return matches[n];}
+    unsigned int num_groups() override {return matches.size();}
+    const string &group(unsigned int n) override {return matches[n];}
   };
 public:
   pkg_string_matcher (const string &_pattern)
@@ -335,6 +335,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     return match_target(true, pkg.Name());
   }
@@ -347,6 +348,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -364,6 +366,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -381,6 +384,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -403,6 +407,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");

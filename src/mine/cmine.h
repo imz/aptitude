@@ -81,7 +81,7 @@ public:
     return rval;
   }
 
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
   void paint(const style &st) override;
   ~cmine()
   {
@@ -89,12 +89,12 @@ public:
     vscreen_deltimeout(timeout_num);
   }
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 
-  bool get_cursorvisible() {return false;}
-  point get_cursorloc() {return point(0,0);}
-  bool focus_me() {return true;}
+  bool get_cursorvisible() override {return false;}
+  point get_cursorloc() override {return point(0,0);}
+  bool focus_me() override {return true;}
 
   static keybindings *bindings;
   static void init_bindings();

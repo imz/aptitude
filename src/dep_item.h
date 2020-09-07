@@ -55,7 +55,8 @@ class pkg_dep_screen:public apt_info_tree
   bool reverse;
 protected:
   vs_treeitem *setup_new_root(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver);
+			      const pkgCache::VerIterator &ver)
+    override;
 
   pkg_dep_screen(const pkgCache::PkgIterator &pkg,
 		 const pkgCache::VerIterator &ver,

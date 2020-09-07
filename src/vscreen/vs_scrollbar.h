@@ -51,12 +51,12 @@ public:
 
   void paint(const style &st) override;
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
   void set_slider(int newval, int newmax);
 
