@@ -49,8 +49,12 @@ find -type f -name '*.cc' -print0 |
 	xargs -r0 sed -i '1,1 s/^/#include "config.h"\n/' --
 
 %build
-# Ensure the code can be compiled as C++11 (and the future GCC default dialect).
-%add_optflags -std=gnu++11
+# Needed for APT API (e.g., std::optional):
+%ifnarch %e2k
+%add_optflags -std=gnu++17
+%else
+%add_optflags -std=gnu++14
+%endif
 # To avoid some errors on API change:
 %add_optflags -Werror=overloaded-virtual
 # A style enforcement: always use the keyword, which helps to avoid API misuse
