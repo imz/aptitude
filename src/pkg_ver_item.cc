@@ -481,7 +481,7 @@ style pkg_ver_item::get_normal_style()
   return vs_treeitem::get_normal_style() + ver_style(version, false);
 }
 
-style pkg_ver_item::get_highlighted_style()
+style pkg_ver_item::get_highlight_style()
 {
   return vs_treeitem::get_normal_style() + ver_style(version, true);
 }

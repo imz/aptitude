@@ -59,13 +59,13 @@ public:
   const pkgCache::VerIterator &get_version() const {return version;}
 
   virtual style get_normal_style() override;
-  virtual style get_highlighted_style();
+  virtual style get_highlight_style() override;
   virtual void paint(vs_tree *win, int y, bool hierarchical,
 		     const style &st)
     override;
 
-  virtual const wchar_t *tag();
-  virtual const wchar_t *label();
+  virtual const wchar_t *tag() override;
+  virtual const wchar_t *label() override;
 
   virtual void select(undo_group *undo) override;
   virtual void hold(undo_group *undo) override;
