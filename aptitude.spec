@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt12
+Release: alt13
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -95,6 +95,10 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Mon Sep  7 2020 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt13
+- Reverted some changes from the previous release, since we recently reverted
+  some changes in the APT API in apt-0.5.15lorg2-alt72.
+
 * Thu Jun 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt12
 - Rebuilt with new Apt
 
