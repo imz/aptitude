@@ -1140,6 +1140,7 @@ protected:
 		     string pkg,
 		     string ver,
 		     struct stat &stat)
+    override
   {
     if(unlink(file)==0)
       total_size+=stat.st_size;

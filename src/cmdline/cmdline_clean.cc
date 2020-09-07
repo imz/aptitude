@@ -83,7 +83,7 @@ class LogCleaner : public pkgArchiveCleaner
   long total_size;
 
 protected:
-  virtual void Erase(const char *File,string Pkg,string Ver,struct stat &St) 
+  virtual void Erase(const char *File,string Pkg,string Ver,struct stat &St) override
   {
     printf(_("Del %s %s [%sB]\n"),
 	   Pkg.c_str(),
@@ -97,7 +97,7 @@ protected:
       }
     else
       total_size+=St.st_size;
-  };
+  }
 public:
   LogCleaner(bool _simulate):simulate(_simulate), total_size(0) { }
 

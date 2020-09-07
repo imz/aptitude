@@ -54,15 +54,15 @@ public:
     return rval;
   }
 
-  bool MediaChange(std::string Media, std::string Drive);
+  bool MediaChange(std::string Media, std::string Drive) override;
 
-  void IMSHit(pkgAcquire::ItemDesc &itm);
-  void Fetch(pkgAcquire::ItemDesc &itm);
-  void Done(pkgAcquire::ItemDesc &itm);
-  void Fail(pkgAcquire::ItemDesc &itm);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
-  void Stop();
+  void IMSHit(pkgAcquire::ItemDesc &itm) override;
+  void Fetch(pkgAcquire::ItemDesc &itm) override;
+  void Done(pkgAcquire::ItemDesc &itm) override;
+  void Fail(pkgAcquire::ItemDesc &itm) override;
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
+  void Stop() override;
 
   void paint(const style &st) override;
   bool handle_key(const key &k);

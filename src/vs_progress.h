@@ -38,8 +38,8 @@ public:
   }
 
   virtual void paint(const style &st) override;
-  virtual void Update();
-  virtual void Done();
+  virtual void Update() override;
+  virtual void Done() override;
 
   int width_request();
   int height_request(int w);

@@ -79,14 +79,14 @@ protected:
 public:
   download_screen():prev(NULL),finished(false),cancelled(false) {contents=new download_tree; set_root(contents);}
 
-  bool MediaChange(string media, string drive);
-  void IMSHit(pkgAcquire::ItemDesc &itmdesc);
-  void Fetch(pkgAcquire::ItemDesc &itmdesc);
-  void Done(pkgAcquire::ItemDesc &itmdesc);
-  void Fail(pkgAcquire::ItemDesc &itmdesc);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
-  void Stop();
+  bool MediaChange(string media, string drive) override;
+  void IMSHit(pkgAcquire::ItemDesc &itmdesc) override;
+  void Fetch(pkgAcquire::ItemDesc &itmdesc) override;
+  void Done(pkgAcquire::ItemDesc &itmdesc) override;
+  void Fail(pkgAcquire::ItemDesc &itmdesc) override;
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
+  void Stop() override;
 
   bool get_cursorvisible() {return false;}
 
