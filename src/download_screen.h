@@ -79,7 +79,7 @@ protected:
 public:
   download_screen():prev(NULL),finished(false),cancelled(false) {contents=new download_tree; set_root(contents);}
 
-  bool MediaChange(string media, string drive) override;
+  bool MediaChange(const string &media, const string &drive) override;
   void IMSHit(pkgAcquire::ItemDesc &itmdesc) override;
   void Fetch(pkgAcquire::ItemDesc &itmdesc) override;
   void Done(pkgAcquire::ItemDesc &itmdesc) override;

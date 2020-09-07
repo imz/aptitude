@@ -32,8 +32,8 @@ class my_cleaner:public pkgArchiveCleaner
 {
 protected:
   virtual void Erase(const char *file,
-		     string pkg,
-		     string ver,
+		     const string &pkg,
+		     const string &ver,
 		     struct stat &stat)
     override
   {

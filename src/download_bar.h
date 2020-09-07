@@ -54,7 +54,7 @@ public:
     return rval;
   }
 
-  bool MediaChange(std::string Media, std::string Drive) override;
+  bool MediaChange(const std::string &Media, const std::string &Drive) override;
 
   void IMSHit(pkgAcquire::ItemDesc &itm) override;
   void Fetch(pkgAcquire::ItemDesc &itm) override;
