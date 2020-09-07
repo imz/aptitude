@@ -55,7 +55,7 @@ public:
 
   virtual const wchar_t *tag();
   virtual const wchar_t *label();
-  virtual bool matches(const std::string &s) const;
+  virtual bool matches(const std::wstring &s) const override;
 
   virtual void select(undo_group *undo);
   virtual void hold(undo_group *undo);

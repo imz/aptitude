@@ -371,9 +371,9 @@ void pkg_item::dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner)
     show_information();
 }
 
-bool pkg_item::matches(const string &s) const
+bool pkg_item::matches(const std::wstring &s) const
 {
-  return pkg_matches(s, package, visible_version());
+  return pkg_matches(transcode(s), package, visible_version());
 }
 
 pkgCache::VerIterator pkg_item::visible_version(const pkgCache::PkgIterator &pkg)
