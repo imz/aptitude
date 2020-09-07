@@ -49,6 +49,8 @@ find -type f -name '*.cc' -print0 |
 	xargs -r0 sed -i '1,1 s/^/#include "config.h"\n/' --
 
 %build
+# Ensure the code can be compiled as C++11 (and the future GCC default dialect).
+%add_optflags -std=gnu++11
 %add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs
