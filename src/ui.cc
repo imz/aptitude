@@ -1137,8 +1137,8 @@ class my_cleaner:public pkgArchiveCleaner
   long total_size;
 protected:
   virtual void Erase(const char *file,
-		     string pkg,
-		     string ver,
+		     const string &pkg,
+		     const string &ver,
 		     struct stat &stat)
     override
   {

@@ -55,7 +55,7 @@ void download_signal_log::MediaChange(const string &Media, const string &Drive,
   MediaChange_sig(Media, Drive, *this, k);
 }
 
-bool download_signal_log::MediaChange(string Media, string Drive)
+bool download_signal_log::MediaChange(const string &Media, const string &Drive)
 {
   int rval = -1;
 
