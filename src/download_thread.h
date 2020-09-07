@@ -43,7 +43,7 @@ class background_status : public pkgAcquireStatus
   download_signal_log *real_status;
 public:
   void Fetched(unsigned long Size, unsigned long ResumePoint) override;
-  bool MediaChange(std::string Media, std::string Drive) override;
+  bool MediaChange(const std::string &Media, const std::string &Drive) override;
   void IMSHit(pkgAcquire::ItemDesc &) override;
   void Fetch(pkgAcquire::ItemDesc &) override;
   void Done(pkgAcquire::ItemDesc &) override;

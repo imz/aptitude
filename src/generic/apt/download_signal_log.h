@@ -94,7 +94,7 @@ public:
   void Fetched(unsigned long Size, unsigned long ResumePoint) override;
   void MediaChange(const std::string &Media, const std::string &Drive,
 		   const sigc::slot1<void, bool> &k);
-  bool MediaChange(std::string Media, std::string Drive) override;
+  bool MediaChange(const std::string &Media, const std::string &Drive) override;
   void IMSHit(pkgAcquire::ItemDesc &item) override;
   void Fetch(pkgAcquire::ItemDesc &item) override;
   void Done(pkgAcquire::ItemDesc &item) override;
