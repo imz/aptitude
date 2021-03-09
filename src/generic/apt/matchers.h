@@ -131,7 +131,7 @@ inline bool pkg_matches(const string &s,
 			const pkgCache::VerIterator &ver)
 {
   std::string::const_iterator start=s.begin();
-  std::auto_ptr<pkg_matcher> m(parse_pattern(start, s.end()));
+  const std::unique_ptr<pkg_matcher> m(parse_pattern(start, s.end()));
   if(m.get() == NULL)
     return false;
   else
