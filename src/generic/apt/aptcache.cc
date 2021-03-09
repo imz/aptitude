@@ -1481,7 +1481,7 @@ bool aptitudeCacheFile::Open(OpProgress &Progress, bool do_initselections,
   if(!_error->empty())
     _error->Warning(_("You may want to update the package lists to correct these missing files"));
 
-  Cache=new pkgCache(Map);
+  Cache=new pkgCache(*Map);
   if(_error->PendingError())
     return false;
 
