@@ -1439,14 +1439,13 @@ void aptitudeDepCache::mark_and_sweep(undo_group *undo)
 }
 
 aptitudeCacheFile::aptitudeCacheFile()
-  :Map(NULL), Cache(NULL), DCache(NULL), have_system_lock(false), Policy(NULL)
+  :Cache(NULL), DCache(NULL), have_system_lock(false), Policy(NULL)
 {
 }
 
 aptitudeCacheFile::~aptitudeCacheFile()
 {
   delete Cache;
-  delete Map;
   ReleaseLock();
 
   delete DCache;
@@ -1472,10 +1471,11 @@ bool aptitudeCacheFile::Open(OpProgress &Progress, bool do_initselections,
     return _error->Error(_("The list of sources could not be read."));
 
   // Read the caches:
-  bool Res=pkgMakeStatusCache(List, Progress, &Map, !WithLock);
+  Map=pkgMakeStatusCache(List, Progress, !WithLock);
   Progress.Done();
 
-  if(!Res)
+  // pkgCache ctor below dereferences Map, so we can't continue if it's null
+  if (Map == nullptr)
     return _error->Error(_("The package lists or status file could not be parsed or opened."));
 
   if(!_error->empty())

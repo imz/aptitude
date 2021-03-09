@@ -38,6 +38,7 @@
 #include <sigc++/trackable.h>
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 class undoable;
@@ -396,7 +397,7 @@ class aptitudeCacheFile
 // Hack around problems in libapt.  Most of the code associated with this
 // class was copied directly from libapt and reindented..
 {
-  MMap *Map;
+  std::unique_ptr<MMap> Map;
 
   pkgCache *Cache;
   aptitudeDepCache *DCache;
