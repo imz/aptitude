@@ -60,6 +60,9 @@ find -type f -name '*.cc' -print0 |
 # A style enforcement: always use the keyword, which helps to avoid API misuse
 %add_optflags -Werror=suggest-override
 %add_optflags -Werror=return-type
+# Prohibit implicit copy assignment operators or constructors
+# if some special resource management is possibly needed:
+%add_optflags -Werror=deprecated-copy
 %add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs
