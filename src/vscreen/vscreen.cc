@@ -432,8 +432,8 @@ class timeout_thread
 	timeval result,curtime;
 	gettimeofday(&curtime, 0);
 
-	if((timeval_subtract(&result, &i->second.activate_time, &curtime) == 1) ||
-	   (result.tv_sec == 0 && result.tv_usec <= 10))
+	if(timeval_subtract(&result, &i->second.activate_time, &curtime) == 1 ||
+	   result.tv_sec == 0 && result.tv_usec <= 10)
 	  {
 	    vscreen_post_event(i->second.ev);
 	    timeouts.erase(i);
@@ -462,16 +462,16 @@ class timeout_thread
 	j = i;
 	j++;
 	timeval diff;
-	if((timeval_subtract(&diff, &i->second.activate_time, &curtime) == 1) ||
-	   ((diff.tv_sec == 0) && (diff.tv_usec <= 10)))
+	if(timeval_subtract(&diff, &i->second.activate_time, &curtime) == 1 ||
+	   diff.tv_sec == 0 && diff.tv_usec <= 10)
 	  {
 	    tv_out = curtime;
 	    return true;
 	  }
 	else
 	  {
-	    if((diff.tv_sec < mintime.tv_sec) ||
-	       (((diff.tv_sec == mintime.tv_sec) && (diff.tv_usec < mintime.tv_usec))))
+	    if(diff.tv_sec < mintime.tv_sec ||
+	       (diff.tv_sec == mintime.tv_sec && diff.tv_usec < mintime.tv_usec))
 	      {
 		found_one = true;
 		mintime = i->second.activate_time;

@@ -556,7 +556,7 @@ static bool cmdline_show_preview(bool as_upgrade, pkgset &to_install,
   printf(_("%lu to remove and %lu not upgraded.\n"),
 	 (*apt_cache_file)->DelCount(),(*apt_cache_file)->KeepCount());
 
-  fetchinfo f{};
+  fetchinfo f;
   if(get_fetchinfo(f))
     {
       if(f.DebBytes!=f.FetchBytes)
