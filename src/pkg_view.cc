@@ -85,7 +85,7 @@ public:
 
   ~pkg_handling_label() {delete columns;}
 
-  ::size size_request() {return ::size(1,1);}
+  size size_request() {return size(1,1);}
 
   void set_columns(column_definition_list *_columns)
   {

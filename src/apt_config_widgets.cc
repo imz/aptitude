@@ -56,7 +56,7 @@ apt_string_widget::apt_string_widget(const string &_item,
 				     const string &_default)
   :item(_item), my_default(_default),
    el(vs_editline::create("", aptcfg->Find(_item, _default.c_str()))),
-   w(vs_size_box::create(::size(5, 1), el))
+   w(vs_size_box::create(size(5, 1), el))
 {
 }
 

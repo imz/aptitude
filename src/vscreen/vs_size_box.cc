@@ -10,7 +10,7 @@
 
 using namespace std;
 
-vs_size_box::vs_size_box(::size s, const vs_widget_ref &w):min_size(s)
+vs_size_box::vs_size_box(size s, const vs_widget_ref &w):min_size(s)
 {
   set_subwidget(w);
   set_opaque(false);
