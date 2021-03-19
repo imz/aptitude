@@ -42,7 +42,7 @@ static void set_bool(bool val, int *out)
   *out = val ? 1 : 0;
 }
 
-void download_signal_log::Fetched(unsigned long long Size, unsigned long long ResumePoint)
+void download_signal_log::Fetched(unsigned long Size, unsigned long ResumePoint)
 {
   pkgAcquireStatus::Fetched(Size, ResumePoint);
 
@@ -55,7 +55,7 @@ void download_signal_log::MediaChange(const string &Media, const string &Drive,
   MediaChange_sig(Media, Drive, *this, k);
 }
 
-bool download_signal_log::MediaChange(const string &Media, const string &Drive)
+bool download_signal_log::MediaChange(string Media, string Drive)
 {
   int rval = -1;
 

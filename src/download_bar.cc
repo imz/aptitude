@@ -42,7 +42,7 @@ download_status_bar::download_status_bar()
 {
 }
 
-bool download_status_bar::MediaChange(const string &media, const string &drive)
+bool download_status_bar::MediaChange(string media, string drive)
 {
   vs_widget_ref tmpref(this);
 

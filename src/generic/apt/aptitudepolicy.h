@@ -20,7 +20,7 @@ public:
   aptitudePolicy(pkgCache *Owner)
     :pkgPolicy(Owner) {}
 
-  virtual bool IsImportantDep(pkgCache::DepIterator dep) override;
+  bool IsImportantDep(pkgCache::DepIterator dep);
 };
 
 #endif

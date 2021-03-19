@@ -46,7 +46,7 @@ static void set_and_exit(bool &target, bool val)
   vscreen_exitmain();
 }
 
-bool download_screen::MediaChange(const string &Media, const string &Drive)
+bool download_screen::MediaChange(string Media, string Drive)
 {
   vs_widget_ref tmpref(this);
 

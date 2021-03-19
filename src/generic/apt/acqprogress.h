@@ -31,7 +31,7 @@ class AcqTextStatus : public sigc::trackable
 
    public:
    
-   virtual void MediaChange(const std::string &Media,const std::string &Drive, download_signal_log &manager,
+   virtual void MediaChange(std::string Media,std::string Drive, download_signal_log &manager,
 			    const sigc::slot1<void, bool> &k);
    virtual void IMSHit(pkgAcquire::ItemDesc &Itm, download_signal_log &manager);
    virtual void Fetch(pkgAcquire::ItemDesc &Itm, download_signal_log &manager);
