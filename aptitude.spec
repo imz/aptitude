@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt9.M80P.1
+Release: alt9.M80P.2
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -91,6 +91,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Wed Apr  7 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt9.M80P.2
+- Fixed some unreliable/questionable code and added stricter compiler checks.
+
 * Fri Apr 26 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt9.M80P.1
 - (no user visible changes) Removed "interesting" dead code (related
   to Recommends, not present in ALT rpm), which didn't compile after
