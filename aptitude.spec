@@ -97,7 +97,8 @@ rm -f %buildroot%_datadir/%name/function_*
 %changelog
 * Wed Apr  7 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt13
 - Reverted some changes from the previous release, since we recently reverted
-  some changes in the APT API in apt-0.5.15lorg2-alt72.
+  some changes in the APT API in apt-0.5.15lorg2-alt72;
+  and adapted to the current API (including pkgCacheFile class in RAII style).
 - Fixed some unreliable/questionable code and added stricter compiler checks.
 
 * Thu Jun 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt12
