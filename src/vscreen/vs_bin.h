@@ -39,16 +39,16 @@ public:
 
   vs_widget_ref get_subwidget() {return subwidget;}
 
-  void destroy();
+  void destroy() override;
 
-  virtual void show_all();
+  virtual void show_all() override;
 
-  virtual void add_widget(const vs_widget_ref &w);
-  virtual void rem_widget(const vs_widget_ref &w);
+  virtual void add_widget(const vs_widget_ref &w) override;
+  virtual void rem_widget(const vs_widget_ref &w) override;
 
-  vs_widget_ref get_focus();
+  vs_widget_ref get_focus() override;
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 };
 
 #endif

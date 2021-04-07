@@ -177,7 +177,7 @@ class vs_menu:public vscreen_widget
   void sanitize_cursor(bool forward);
 
 protected:
-  virtual bool handle_key(const key &k);
+  virtual bool handle_key(const key &k) override;
 
   /** Create a blank menu. */
   vs_menu();
@@ -203,11 +203,11 @@ public:
   // Deletes the items it holds!
   ~vs_menu();
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 
-  int width_request();
-  int height_request(int width);
+  int width_request() override;
+  int height_request(int width) override;
 
   void append_item(vs_menu_item *newitem);
   void remove_item(vs_menu_item *item);
@@ -224,9 +224,9 @@ public:
   /** Move the selection to the bottom of the menu, as if End had been pressed. */
   void move_selection_bottom();
 
-  virtual bool focus_me();
-  virtual void paint(const style &st);
-  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  virtual bool focus_me() override;
+  virtual void paint(const style &st) override;
+  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
   // Emitted when an item is highlighted or when the selection "goes away".
   // In the latter case, the argument is NULL.  (happens only when

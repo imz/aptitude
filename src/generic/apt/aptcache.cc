@@ -90,7 +90,7 @@ public:
   {
   }
 
-  void undo()
+  void undo() override
   {
     if(prev_flags&ReInstall)
       owner->internal_mark_install(pkg, false, true, NULL, false);
@@ -136,7 +136,7 @@ public:
     return packages.empty();
   }
 
-  void undo()
+  void undo() override
   {
     for(vector<pkgCache::PkgIterator>::iterator i=packages.begin(); i!=packages.end(); i++)
       owner->set_new_flag(*i, true);
@@ -159,7 +159,7 @@ public:
   {
   }
 
-  void undo()
+  void undo() override
   {
     owner->set_candidate_version(oldver, NULL);
   }
@@ -1439,14 +1439,13 @@ void aptitudeDepCache::mark_and_sweep(undo_group *undo)
 }
 
 aptitudeCacheFile::aptitudeCacheFile()
-  :Map(NULL), Cache(NULL), DCache(NULL), have_system_lock(false), Policy(NULL)
+  :Cache(NULL), DCache(NULL), have_system_lock(false), Policy(NULL)
 {
 }
 
 aptitudeCacheFile::~aptitudeCacheFile()
 {
   delete Cache;
-  delete Map;
   ReleaseLock();
 
   delete DCache;
@@ -1472,16 +1471,17 @@ bool aptitudeCacheFile::Open(OpProgress &Progress, bool do_initselections,
     return _error->Error(_("The list of sources could not be read."));
 
   // Read the caches:
-  bool Res=pkgMakeStatusCache(List, Progress, &Map, !WithLock);
+  Map=pkgMakeStatusCache(List, Progress, !WithLock);
   Progress.Done();
 
-  if(!Res)
+  // pkgCache ctor below dereferences Map, so we can't continue if it's null
+  if (Map == nullptr)
     return _error->Error(_("The package lists or status file could not be parsed or opened."));
 
   if(!_error->empty())
     _error->Warning(_("You may want to update the package lists to correct these missing files"));
 
-  Cache=new pkgCache(Map);
+  Cache=new pkgCache(*Map);
   if(_error->PendingError())
     return false;
 

@@ -82,7 +82,7 @@ public:
   {
   }
 
-  void dispatch()
+  void dispatch() override
   {
     cm->update_header();
   }

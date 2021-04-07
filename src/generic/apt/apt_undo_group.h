@@ -14,7 +14,7 @@
 class apt_undo_group:public undo_group
 {
 public:
-  void undo();
+  void undo() override;
 };
 
 #endif // APT_UNDO_GROUP_H

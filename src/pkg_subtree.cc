@@ -28,7 +28,7 @@
 void pkg_subtree::paint(vs_tree *win, int y, bool hierarchical,
 			const style &st)
 {
-  vs_subtree<pkg_tree_node>::paint(win, y, hierarchical, name);
+  vs_subtree<pkg_tree_node>::paint_text(win, y, hierarchical, name);
 }
 
 const wchar_t *pkg_subtree::tag()

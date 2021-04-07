@@ -66,8 +66,8 @@ public:
 class empty_column_parameters : public column_parameters
 {
 public:
-  int param_count();
-  std::wstring get_param(int n);
+  int param_count() override;
+  std::wstring get_param(int n) override;
 };
 
 /** Defines how a single column is to be generated. */

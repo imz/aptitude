@@ -92,25 +92,25 @@ public:
   virtual ~vs_multiplex();
 
   /** Returns the maximum width requested by any child. */
-  int width_request();
+  int width_request() override;
 
   /** Returns the maximum height requested by any child. */
-  int height_request(int width);
+  int height_request(int width) override;
 
-  void destroy();
+  void destroy() override;
 
   void layout_me();
 
-  virtual vs_widget_ref get_focus();
+  virtual vs_widget_ref get_focus() override;
   vs_widget_ref visible_widget();
   unsigned int num_children();
   // Returns the number of widgets in the multiplexer.
   unsigned int num_visible();
 
-  virtual void paint(const style &st);
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  virtual void paint(const style &st) override;
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
-  void show_all();
+  void show_all() override;
 
   void set_show_tabs(bool shown);
 
@@ -118,7 +118,7 @@ public:
    *  function and for backwards compatibility; use of this routine is
    *  deprecated.
    */
-  void add_widget(const vs_widget_ref &widget);
+  void add_widget(const vs_widget_ref &widget) override;
   void add_widget(const vs_widget_ref &widget, const std::wstring &title);
   void add_widget_bare(vscreen_widget &widget, const std::wstring &title)
   {
@@ -148,7 +148,7 @@ public:
   }
 
 
-  void rem_widget(const vs_widget_ref &widget);
+  void rem_widget(const vs_widget_ref &widget) override;
 
   // These cycle forward and backwards through the list of visible items.
   void cycle_forward();

@@ -44,7 +44,7 @@ public:						\
   }						\
 						\
   int compare(const pkgCache::PkgIterator &pkg1, const pkgCache::VerIterator &ver1, \
-	      const pkgCache::PkgIterator &pkg2, const pkgCache::VerIterator &ver2) const \
+	      const pkgCache::PkgIterator &pkg2, const pkgCache::VerIterator &ver2) const override \
   {						\
     int rval=do_compare(pkg1, ver1, pkg2, ver2); \
     if(rval==0 && get_chain())			\

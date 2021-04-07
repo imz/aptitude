@@ -59,7 +59,7 @@ public:
   {
   }
 
-  void dispatch()
+  void dispatch() override
   {
     slot();
     return_box.put();
@@ -216,7 +216,7 @@ public:
   {
   }
 
-  void dispatch()
+  void dispatch() override
   {
     t->join();
     continuation(t, res);

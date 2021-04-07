@@ -15,7 +15,7 @@
 class StdinEOFException : public Exception
 {
 public:
-  std::string errmsg() const;
+  std::string errmsg() const override;
 };
 
 /** The main preview-prompt-adjust-preview loop for the command-line

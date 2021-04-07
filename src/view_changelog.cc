@@ -116,34 +116,34 @@ public:
     return rval;
   }
 
-  bool find_search_enabled()
+  bool find_search_enabled() override
   {
     return true;
   }
 
-  bool find_search()
+  bool find_search() override
   {
     do_search();
     return true;
   }
 
-  bool find_search_back_enabled()
+  bool find_search_back_enabled() override
   {
     return true;
   }
 
-  bool find_search_back()
+  bool find_search_back() override
   {
     do_search_back();
     return true;
   }
 
-  bool find_research_enabled()
+  bool find_research_enabled() override
   {
     return !get_last_search().empty();
   }
 
-  bool find_research()
+  bool find_research() override
   {
     do_repeat_search();
     return true;

@@ -42,7 +42,7 @@ class vs_stacked:public vs_passthrough
 
   void hide_widget();
 protected:
-  void paint(const style &st);
+  void paint(const style &st) override;
 
   // The size passed in is used as a preferred size.  (what we get might be
   // larger or smaller)
@@ -50,7 +50,7 @@ protected:
 public:
   ~vs_stacked();
 
-  void destroy();
+  void destroy() override;
 
   static ref_ptr<vs_stacked> create(int w=0, int h=0)
   {
@@ -59,8 +59,8 @@ public:
     return rval;
   }
 
-  void add_widget(const vs_widget_ref &w);
-  void rem_widget(const vs_widget_ref &w);
+  void add_widget(const vs_widget_ref &w) override;
+  void rem_widget(const vs_widget_ref &w) override;
   void raise_widget(const vs_widget_ref &w);
   void lower_widget(const vs_widget_ref &w);
 
@@ -73,14 +73,14 @@ public:
     lower_widget(vs_widget_ref(&w));
   }
 
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
-  vs_widget_ref get_focus();
+  vs_widget_ref get_focus() override;
 
-  void show_all();
+  void show_all() override;
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 };
 
 typedef ref_ptr<vs_stacked> vs_stacked_ref;

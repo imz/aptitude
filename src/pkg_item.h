@@ -51,24 +51,24 @@ public:
 	   const pkgCache::PkgIterator &,
 	   const pkgCache::VerIterator &> *sig);
 
-  virtual void paint(vs_tree *win, int y, bool hierarchical, const style &st);
+  virtual void paint(vs_tree *win, int y, bool hierarchical, const style &st) override;
 
-  virtual const wchar_t *tag();
-  virtual const wchar_t *label();
-  virtual bool matches(const std::string &s) const;
+  virtual const wchar_t *tag() override;
+  virtual const wchar_t *label() override;
+  virtual bool matches(const std::wstring &s) const override;
 
-  virtual void select(undo_group *undo);
-  virtual void hold(undo_group *undo);
-  virtual void keep(undo_group *undo);
-  virtual void remove(undo_group *undo);
-  virtual void set_auto(bool isauto, undo_group *undo);
+  virtual void select(undo_group *undo) override;
+  virtual void hold(undo_group *undo) override;
+  virtual void keep(undo_group *undo) override;
+  virtual void remove(undo_group *undo) override;
+  virtual void set_auto(bool isauto, undo_group *undo) override;
   virtual void forbid_upgrade(undo_group *undo);
 
-  virtual void highlighted(vs_tree *win);
-  virtual void unhighlighted(vs_tree *win);
+  virtual void highlighted(vs_tree *win) override;
+  virtual void unhighlighted(vs_tree *win) override;
 
-  virtual style get_highlight_style();
-  virtual style get_normal_style();
+  virtual style get_highlight_style() override;
+  virtual style get_normal_style() override;
 
   void show_changelog();
   void show_information();
@@ -76,8 +76,8 @@ public:
   const pkgCache::PkgIterator &get_package() const;
   pkgCache::VerIterator visible_version() const;
 
-  bool dispatch_key(const key &k, vs_tree *owner);
-  void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner);
+  bool dispatch_key(const key &k, vs_tree *owner) override;
+  void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner) override;
 
   /** Returns the style that would be used to display the given
    *  package.
@@ -88,12 +88,12 @@ public:
   static style pkg_style(pkgCache::PkgIterator package, bool highlighted);
 
   // Menu redirections:
-  bool package_forbid_enabled();
-  bool package_forbid();
-  bool package_changelog_enabled();
-  bool package_changelog();
-  bool package_information_enabled();
-  bool package_information();
+  bool package_forbid_enabled() override;
+  bool package_forbid() override;
+  bool package_changelog_enabled() override;
+  bool package_changelog() override;
+  bool package_information_enabled() override;
+  bool package_information() override;
 };
 
 #endif

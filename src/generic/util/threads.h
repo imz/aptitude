@@ -41,7 +41,7 @@ namespace threads
   class ThreadCreateException : public ThreadException
   {
   public:
-    std::string errmsg() const;
+    std::string errmsg() const override;
   };
 
   /** Join failure. */
@@ -51,7 +51,7 @@ namespace threads
   public:
     ThreadJoinException(const int error);
 
-    std::string errmsg() const;
+    std::string errmsg() const override;
   };
 
   /** Thrown when code tries to wait on a condition and passes a
@@ -60,14 +60,14 @@ namespace threads
   class ConditionNotLockedException : public ThreadException
   {
   public:
-    std::string errmsg() const;
+    std::string errmsg() const override;
   };
 
   /** Thrown when a mutex is locked twice. */
   class DoubleLockException : public ThreadException
   {
   public:
-    std::string errmsg() const;
+    std::string errmsg() const override;
   };
 
   /** A thread class based on the Boost thread class.  Like the Boost

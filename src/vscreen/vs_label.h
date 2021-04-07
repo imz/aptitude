@@ -50,16 +50,16 @@ public:
 
  ~vs_label();
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 
   /** \return the maximum width of any line in the label. */
-  int width_request();
+  int width_request() override;
 
   /** \return the number of lines in the label. */
-  int height_request(int width);
+  int height_request(int width) override;
 
-  void paint(const style &st);
+  void paint(const style &st) override;
   void set_text(const std::string &_txt, const style &st);
   void set_text(const std::string &_txt);
   void set_text(const std::wstring &_txt, const style &st);
@@ -86,7 +86,7 @@ public:
     return new vs_transientlabel(msg, st);
   }
 
-  bool focus_me() {return true;}
+  bool focus_me() override {return true;}
 };
 
 typedef ref_ptr<vs_label> vs_label_ref;

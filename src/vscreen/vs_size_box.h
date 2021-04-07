@@ -39,14 +39,14 @@ public:
   /** \return the least upper bound of the minimum size passed to the
    *  constructor and the true size request of the child.
    */
-  int width_request();
+  int width_request() override;
 
   /**  \param w the width for which a height should be calculated.
    *
    *   \return the least upper bound of the minimum size passed to the
    *   constructor and the true size request of the child.
    */
-  int height_request(int w);
+  int height_request(int w) override;
 };
 
 typedef ref_ptr<vs_size_box> vs_size_box_ref;

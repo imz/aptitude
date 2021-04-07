@@ -37,15 +37,15 @@ public:
     return new vs_progress;
   }
 
-  virtual void paint(const style &st);
-  virtual void Update();
-  virtual void Done();
+  virtual void paint(const style &st) override;
+  virtual void Update() override;
+  virtual void Done() override;
 
-  int width_request();
-  int height_request(int w);
+  int width_request() override;
+  int height_request(int w) override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
 };
 
 typedef ref_ptr<vs_progress> vs_progress_ref;

@@ -103,7 +103,7 @@ private:
   void layout_me();
 
   // Focus-handling stuff
-  vs_widget_ref get_focus();
+  vs_widget_ref get_focus() override;
   void hide_widget(const vs_widget_ref &w);
   void hide_widget_bare(vscreen_widget &w);
   void show_widget(const vs_widget_ref &w);
@@ -144,7 +144,7 @@ private:
 				      int dy);
 
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
   vs_table();
 
 public:
@@ -157,7 +157,7 @@ public:
 
   ~vs_table();
 
-  void destroy();
+  void destroy() override;
 
   void add_widget_opts(const vs_widget_ref &w, int row_start, int col_start, int row_span, int col_span, int xopts, int yopts);
   void add_widget_opts_bare(vscreen_widget &w, int row_start, int col_start, int row_span, int col_span, int xopts, int yopts);
@@ -165,9 +165,9 @@ public:
   void add_widget(const vs_widget_ref &w, int row_start, int col_start, int row_span=1, int col_span=1, bool expand=true, bool shrink=true);
   void add_widget_bare(vscreen_widget &w, int row_start, int col_start, int row_span=1, int col_span=1, bool expand=true, bool shrink=true);
 
-  void add_widget(const vs_widget_ref &w);
+  void add_widget(const vs_widget_ref &w) override;
 
-  void rem_widget(const vs_widget_ref &w);
+  void rem_widget(const vs_widget_ref &w) override;
 
   void focus_widget(const vs_widget_ref &w);
   void focus_widget_bare(vscreen_widget &w);
@@ -182,13 +182,13 @@ public:
    */
   void set_colsep(int n);
 
-  void show_all();
+  void show_all() override;
 
   /** Calculates the requested width of the entire table.
    *
    *  \return the requested width
    */
-  int width_request();
+  int width_request() override;
 
   /** Calculates the requested height of the entire table.  At the
    *  moment, this is a bit wasteful, since it goes ahead and
@@ -197,10 +197,10 @@ public:
    *  \param w the width of the table
    *  \return the requested height
    */
-  int height_request(int w);
+  int height_request(int w) override;
 
-  void paint(const style &st);
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  void paint(const style &st) override;
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
   static keybindings *bindings;
   static void init_bindings();

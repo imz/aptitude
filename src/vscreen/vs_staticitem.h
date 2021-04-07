@@ -30,9 +30,9 @@ class vs_staticitem:public vs_treeitem
 public:
   vs_staticitem(std::wstring _name, std::wstring _value)
     :vs_treeitem(false),name(_name),value(_value) {}
-  void paint(vs_tree *win, int y, bool hierarchical, const style &st);
-  const wchar_t *tag() {return value.c_str();}
-  const wchar_t *label() {return value.c_str();}
+  void paint(vs_tree *win, int y, bool hierarchical, const style &st) override;
+  const wchar_t *tag() override {return value.c_str();}
+  const wchar_t *label() override {return value.c_str();}
 };
 
 #endif

@@ -56,9 +56,7 @@ struct wchtype
    */
   attr_t attrs;
 
-  wchtype()
-  {
-  }
+  wchtype() = default;
 
   wchtype(const wchar_t &_ch, const attr_t &_attrs)
     :ch(_ch), attrs(_attrs)

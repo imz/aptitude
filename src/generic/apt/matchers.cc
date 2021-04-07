@@ -90,11 +90,11 @@ bool pkg_matcher::matches(const pkgCache::PkgIterator &pkg)
 {
   for(pkgCache::VerIterator v = pkg.VersionList();
       !v.end(); ++v)
-    if(matches(pkg, v))
+    if(matches_with_ver(pkg, v))
       return true;
 
   if(pkg.VersionList().end())
-    return matches(pkg, pkgCache::VerIterator(*apt_cache_file, 0));
+    return matches_with_ver(pkg, pkgCache::VerIterator(*apt_cache_file, 0));
   else
     return false;
 }
@@ -105,10 +105,10 @@ pkg_match_result *pkg_matcher::get_match(const pkgCache::PkgIterator &pkg)
 
   for(pkgCache::VerIterator v = pkg.VersionList();
       rval == NULL && !v.end(); ++v)
-    rval = get_match(pkg, v);
+    rval = get_match_with_ver(pkg, v);
 
   if(pkg.VersionList().end())
-    rval = get_match(pkg, pkgCache::VerIterator(*apt_cache_file, 0));
+    rval = get_match_with_ver(pkg, pkgCache::VerIterator(*apt_cache_file, 0));
 
   return rval;
 }
@@ -124,18 +124,19 @@ pkg_matcher::~pkg_matcher()
 class empty_match_result : public pkg_match_result
 {
 public:
-  unsigned int num_groups() {return 0;}
+  unsigned int num_groups() override {return 0;}
 
-  const string &group(unsigned int n) {abort();}
+  const string &group(unsigned int n) override {abort();}
 };
 
 class pkg_nonstring_matcher : public pkg_matcher
 {
 public:
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    return matches(pkg, ver) ? new empty_match_result : NULL;
+    return matches_with_ver(pkg, ver) ? new empty_match_result : NULL;
   }
 };
 
@@ -145,9 +146,9 @@ class unitary_result : public pkg_match_result
 public:
   unitary_result(const string &_s):s(_s) {}
 
-  unsigned int num_groups() {return 1;}
+  unsigned int num_groups() override {return 1;}
 
-  const string &group(unsigned int n)
+  const string &group(unsigned int n) override
   {
     if(n != 0)
       abort();
@@ -172,12 +173,12 @@ public:
     delete r2;
   }
 
-  unsigned int num_groups()
+  unsigned int num_groups() override
   {
     return r1->num_groups() + r2->num_groups();
   }
 
-  const string &group(unsigned int n)
+  const string &group(unsigned int n) override
   {
     unsigned int num_groups_r1 = r1->num_groups();
 
@@ -241,8 +242,8 @@ class pkg_string_matcher : public pkg_matcher
 	}
     }
 
-    unsigned int num_groups() {return matches.size();}
-    const string &group(unsigned int n) {return matches[n];}
+    unsigned int num_groups() override {return matches.size();}
+    const string &group(unsigned int n) override {return matches[n];}
   };
 public:
   pkg_string_matcher (const string &_pattern)
@@ -302,8 +303,9 @@ public:
   virtual match_target val(const pkgCache::PkgIterator &pkg,
 			   const pkgCache::VerIterator &ver)=0;
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     match_target v = val(pkg, ver);
 
@@ -313,8 +315,9 @@ public:
       return string_matches(v.second.c_str());
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     match_target v = val(pkg, ver);
 
@@ -332,6 +335,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     return match_target(true, pkg.Name());
   }
@@ -344,6 +348,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -361,6 +366,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -378,6 +384,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -400,6 +407,7 @@ public:
 
   match_target val(const pkgCache::PkgIterator &pkg,
 		   const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return match_target(false, "");
@@ -421,16 +429,18 @@ public:
 class pkg_curr_version_matcher : public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return !ver.end() && ver == pkg.CurrentVer();
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(matches(pkg, ver))
+    if(matches_with_ver(pkg, ver))
       return new unitary_result(ver.VerStr());
     else
       return NULL;
@@ -440,17 +450,19 @@ public:
 class pkg_cand_version_matcher : public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return !ver.end() &&
       ver == (*apt_cache_file)[pkg].CandidateVerIter(*apt_cache_file);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(matches(pkg, ver))
+    if(matches_with_ver(pkg, ver))
       return new unitary_result(ver.VerStr());
     else
       return NULL;
@@ -460,17 +472,19 @@ public:
 class pkg_inst_version_matcher : public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return !ver.end() &&
       ver == (*apt_cache_file)[pkg].InstVerIter(*apt_cache_file);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(matches(pkg, ver))
+    if(matches_with_ver(pkg, ver))
       return new unitary_result(ver.VerStr());
     else
       return NULL;
@@ -488,8 +502,9 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -505,8 +520,9 @@ public:
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return NULL;
@@ -535,8 +551,9 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end() || ver.FileList().end())
       return false;
@@ -552,8 +569,9 @@ public:
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end() || ver.FileList().end())
       return NULL;
@@ -578,26 +596,29 @@ public:
 class pkg_auto_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return
       (!pkg.CurrentVer().end() || (*apt_cache_file)[pkg].Install()) &&
       ((*apt_cache_file)->get_ext_state(pkg).install_reason!=aptitudeDepCache::manual);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    return matches(pkg, ver) ? new unitary_result(_("Automatically Installed")) : NULL;
+    return matches_with_ver(pkg, ver) ? new unitary_result(_("Automatically Installed")) : NULL;
   }
 };
 
 class pkg_broken_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -608,10 +629,11 @@ public:
       }
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    return matches(pkg, ver) ? new unitary_result(_("Broken")) : NULL;
+    return matches_with_ver(pkg, ver) ? new unitary_result(_("Broken")) : NULL;
   }
 };
 
@@ -622,8 +644,9 @@ public:
   pkg_priority_matcher(pkgCache::State::VerPriority _type)
     :type(_type) {}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -631,8 +654,9 @@ public:
       return ver->Priority == type;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return NULL;
@@ -687,8 +711,9 @@ public:
   pkg_broken_type_matcher(pkgCache::Dep::DepType _type)
     :type(_type) {}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -713,8 +738,9 @@ public:
     return false;
   }
 
-  pkg_match_result * get_match(const pkgCache::PkgIterator &pkg,
-			       const pkgCache::VerIterator &ver)
+  pkg_match_result * get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                        const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return NULL;
@@ -754,8 +780,9 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     switch(type)
       {
@@ -782,10 +809,11 @@ public:
       }
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       switch(type)
@@ -823,14 +851,16 @@ public:
 
 class pkg_keep_matcher:public pkg_matcher
 {
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return (*apt_cache_file)[pkg].Keep();
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if((*apt_cache_file)[pkg].Keep())
       return new unitary_result(_("Keep"));
@@ -847,14 +877,16 @@ class pkg_keep_matcher:public pkg_matcher
 class pkg_virtual_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return ver.end();
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(!ver.end())
       return NULL;
@@ -868,14 +900,16 @@ public:
 class pkg_installed_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return !pkg.CurrentVer().end() && ver == pkg.CurrentVer();
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(pkg.CurrentVer().end() || ver != pkg.CurrentVer())
       return NULL;
@@ -888,18 +922,20 @@ class pkg_essential_matcher:public pkg_matcher
 // Matches essential packages
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return
       (pkg->Flags&pkgCache::Flag::Essential)==pkgCache::Flag::Essential ||
       (pkg->Flags&pkgCache::Flag::Important)==pkgCache::Flag::Important;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(_("Essential"));
@@ -910,15 +946,17 @@ class pkg_configfiles_matcher:public pkg_matcher
 // Matches a package which was removed but has config files remaining
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return pkg->CurrentState==pkgCache::State::ConfigFiles;
   }
 
   // ???
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(pkg->CurrentState == pkgCache::State::ConfigFiles)
       return new unitary_result(_("Config Files Remain"));
@@ -946,8 +984,9 @@ public:
   }
   ~pkg_dep_matcher() {delete pattern;}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     eassert(!pkg.end());
     if(ver.end())
@@ -970,13 +1009,13 @@ public:
 
 	    // See if a versionless match works,.
 	    if(dep.TargetPkg().VersionList().end() &&
-	       pattern->matches(dep.TargetPkg(), dep.TargetPkg().VersionList()))
+	       pattern->matches_with_ver(dep.TargetPkg(), dep.TargetPkg().VersionList()))
 	      return true;
 
 	    for(pkgCache::VerIterator i=dep.TargetPkg().VersionList(); !i.end(); i++)
 	      if(_system->VS->CheckDep(i.VerStr(), dep->CompareOp, dep.TargetVer()))
 		{
-		  if(pattern->matches(dep.TargetPkg(), i))
+		  if(pattern->matches_with_ver(dep.TargetPkg(), i))
 		    return true;
 		}
 	  }
@@ -985,8 +1024,9 @@ public:
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     eassert(!pkg.end());
     if(ver.end())
@@ -1010,7 +1050,7 @@ public:
 	    // See if a versionless match works,.
 	    if(dep.TargetPkg().VersionList().end())
 	      {
-		pkg_match_result *r=pattern->get_match(dep.TargetPkg(), dep.TargetPkg().VersionList());
+		pkg_match_result *r=pattern->get_match_with_ver(dep.TargetPkg(), dep.TargetPkg().VersionList());
 
 		if(r)
 		  return new result_pair(r, dep_match(dep));
@@ -1019,7 +1059,7 @@ public:
 	    for(pkgCache::VerIterator i=dep.TargetPkg().VersionList(); !i.end(); i++)
 	      if(_system->VS->CheckDep(i.VerStr(), dep->CompareOp, dep.TargetVer()))
 		{
-		  pkg_match_result *r = pattern->get_match(dep.TargetPkg(), i);
+		  pkg_match_result *r = pattern->get_match_with_ver(dep.TargetPkg(), i);
 
 		  if(r)
 		    return new result_pair(r, dep_match(dep));
@@ -1040,29 +1080,33 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
-    return left->matches(pkg, ver) || right->matches(pkg, ver);
+    return left->matches_with_ver(pkg, ver) || right->matches_with_ver(pkg, ver);
   }
 
   bool matches(const pkgCache::PkgIterator &pkg)
+    override
   {
     return left->matches(pkg) || right->matches(pkg);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    pkg_match_result *lr = left->get_match(pkg, ver);
+    pkg_match_result *lr = left->get_match_with_ver(pkg, ver);
 
     if(lr != NULL)
       return lr;
     else
-      return right->get_match(pkg, ver);
+      return right->get_match_with_ver(pkg, ver);
   }
 
   pkg_match_result *get_match(const pkgCache::PkgIterator &pkg)
+    override
   {
     pkg_match_result *lr = left->get_match(pkg);
 
@@ -1088,26 +1132,29 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
-    return left->matches(pkg, ver) && right->matches(pkg, ver);
+    return left->matches_with_ver(pkg, ver) && right->matches_with_ver(pkg, ver);
   }
 
   bool matches(const pkgCache::PkgIterator &pkg)
+    override
   {
     return left->matches(pkg) && right->matches(pkg);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    pkg_match_result *r1 = left->get_match(pkg, ver);
+    pkg_match_result *r1 = left->get_match_with_ver(pkg, ver);
 
     if(r1 == NULL)
       return NULL;
 
-    pkg_match_result *r2 = right->get_match(pkg, ver);
+    pkg_match_result *r2 = right->get_match_with_ver(pkg, ver);
 
     if(r2 == NULL)
       {
@@ -1119,6 +1166,7 @@ public:
   }
 
   pkg_match_result *get_match(const pkgCache::PkgIterator &pkg)
+    override
   {
     pkg_match_result *r1 = left->get_match(pkg);
 
@@ -1152,23 +1200,26 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
-    return !child->matches(pkg, ver);
+    return !child->matches_with_ver(pkg, ver);
   }
 
   bool matches(const pkgCache::PkgIterator &pkg)
+    override
   {
     return !child->matches(pkg);
   }
 
   // Eh, there isn't really a good choice about what to return here...
   // just return an empty result if the child doesn't match.
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    pkg_match_result *child_match = child->get_match(pkg, ver);
+    pkg_match_result *child_match = child->get_match_with_ver(pkg, ver);
 
     if(child_match == NULL)
       return new empty_match_result;
@@ -1180,6 +1231,7 @@ public:
   }
 
   pkg_match_result *get_match(const pkgCache::PkgIterator &pkg)
+    override
   {
     pkg_match_result *child_match = child->get_match(pkg);
 
@@ -1209,24 +1261,28 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return pattern->matches(pkg);
   }
 
   bool matches(const pkgCache::PkgIterator &pkg)
+    override
   {
     return pattern->matches(pkg);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     return pattern->get_match(pkg);
   }
 
   pkg_match_result *get_match(const pkgCache::PkgIterator &pkg)
+    override
   {
     return pattern->get_match(pkg);
   }
@@ -1250,17 +1306,19 @@ public:
     delete pattern;
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
-    return filter->matches(pkg, ver) && pattern->matches(pkg, ver);
+    return filter->matches_with_ver(pkg, ver) && pattern->matches_with_ver(pkg, ver);
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(filter->matches(pkg, ver))
-      return pattern->get_match(pkg, ver);
+    if(filter->matches_with_ver(pkg, ver))
+      return pattern->get_match_with_ver(pkg, ver);
     else
       return NULL;
   }
@@ -1272,8 +1330,9 @@ class pkg_garbage_matcher:public pkg_matcher
 public:
   pkg_garbage_matcher() {}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -1281,10 +1340,11 @@ public:
       return (*apt_cache_file)->get_ext_state(pkg).garbage;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(_("Garbage"));
@@ -1297,14 +1357,16 @@ class pkg_true_matcher:public pkg_matcher
 public:
   pkg_true_matcher() {}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return true;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     return new empty_match_result;
   }
@@ -1316,14 +1378,16 @@ class pkg_false_matcher:public pkg_matcher
 public:
   pkg_false_matcher() {}
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     return NULL;
   }
@@ -1356,8 +1420,9 @@ public:
     delete pattern;
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     // Check direct dependencies.
     for(pkgCache::DepIterator d=pkg.RevDependsList(); !d.end(); ++d)
@@ -1375,7 +1440,7 @@ public:
 	    (type==pkgCache::Dep::Depends && d->Type==pkgCache::Dep::PreDepends)) &&
 	   (!d.TargetVer() || (!ver.end() &&
 			       _system->VS->CheckDep(ver.VerStr(), d->CompareOp, d.TargetVer()))) &&
-	   pattern->matches(d.ParentPkg(), d.ParentVer()))
+	   pattern->matches_with_ver(d.ParentPkg(), d.ParentVer()))
 	  return true;
       }
 
@@ -1398,7 +1463,7 @@ public:
 
 	      // Only unversioned dependencies can match here.
 	      if(d->Type==type && !d.TargetVer() &&
-		 pattern->matches(d.ParentPkg(), d.ParentVer()))
+		 pattern->matches_with_ver(d.ParentPkg(), d.ParentVer()))
 		return true;
 	    }
 	}
@@ -1411,8 +1476,9 @@ public:
   //
   // Maybe I should just forget trying to be efficient and base
   // everything on match results..
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     // Check direct dependencies.
     for(pkgCache::DepIterator d=pkg.RevDependsList(); !d.end(); ++d)
@@ -1431,8 +1497,8 @@ public:
 	   (!d.TargetVer() || (!ver.end() &&
 			       _system->VS->CheckDep(ver.VerStr(), d->CompareOp, d.TargetVer()))))
 	  {
-	    pkg_match_result *r = pattern->get_match(d.ParentPkg(),
-						     d.ParentVer());
+	    pkg_match_result *r = pattern->get_match_with_ver(d.ParentPkg(),
+                                                              d.ParentVer());
 
 	    if(r != NULL)
 	      return new result_pair(r, dep_match(d));
@@ -1459,8 +1525,8 @@ public:
 			continue;
 		    }
 
-		  pkg_match_result *r = pattern->get_match(d.ParentPkg(),
-							   d.ParentVer());
+		  pkg_match_result *r = pattern->get_match_with_ver(d.ParentPkg(),
+                                                                    d.ParentVer());
 		  if(r != NULL)
 		    return new result_pair(r, dep_match(d));
 		}
@@ -1489,8 +1555,9 @@ public:
     delete pattern;
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -1505,15 +1572,17 @@ public:
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return NULL;
 
     for(pkgCache::PrvIterator p=ver.ProvidesList(); !p.end(); ++p)
       {
-	pkg_match_result *r = pattern->get_match(p.ParentPkg(), pkgCache::VerIterator(*apt_cache_file));
+	pkg_match_result *r = pattern->get_match_with_ver(p.ParentPkg(),
+                                                          pkgCache::VerIterator(*apt_cache_file));
 
 	if(r != NULL)
 	  return new result_pair(r, new unitary_result(_("Provides")));
@@ -1540,25 +1609,27 @@ public:
     delete pattern;
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     for(pkgCache::PrvIterator p=pkg.ProvidesList(); !p.end(); ++p)
       {
-	if(pattern->matches(p.OwnerPkg(), p.OwnerVer()))
+	if(pattern->matches_with_ver(p.OwnerPkg(), p.OwnerVer()))
 	  return true;
       }
 
     return false;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
     for(pkgCache::PrvIterator p=pkg.ProvidesList(); !p.end(); ++p)
       {
-	pkg_match_result *r = pattern->get_match(p.OwnerPkg(),
-						 p.OwnerVer());
+	pkg_match_result *r = pattern->get_match_with_ver(p.OwnerPkg(),
+                                                          p.OwnerVer());
 
 	if(r != NULL)
 	  return new result_pair(r,
@@ -1583,8 +1654,9 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -1605,10 +1677,11 @@ public:
       }
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(_("No reverse dependencies"));
@@ -1626,8 +1699,9 @@ public:
   {
   }
 
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     if(ver.end())
       return false;
@@ -1648,10 +1722,11 @@ public:
     return true;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(pkgCache::DepType(type));
@@ -1661,8 +1736,9 @@ public:
 class pkg_new_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     // Don't match virtual packages.
     if(pkg.VersionList().end())
@@ -1671,10 +1747,11 @@ public:
       return (*apt_cache_file)->get_ext_state(pkg).new_package;
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(_("New Package"));
@@ -1684,16 +1761,18 @@ public:
 class pkg_upgradable_matcher:public pkg_matcher
 {
 public:
-  bool matches(const pkgCache::PkgIterator &pkg,
+  bool matches_with_ver(const pkgCache::PkgIterator &pkg,
 	       const pkgCache::VerIterator &ver)
+    override
   {
     return !pkg.CurrentVer().end() && (*apt_cache_file)[pkg].Upgradable();
   }
 
-  pkg_match_result *get_match(const pkgCache::PkgIterator &pkg,
-			      const pkgCache::VerIterator &ver)
+  pkg_match_result *get_match_with_ver(const pkgCache::PkgIterator &pkg,
+                                       const pkgCache::VerIterator &ver)
+    override
   {
-    if(!matches(pkg, ver))
+    if(!matches_with_ver(pkg, ver))
       return NULL;
     else
       return new unitary_result(_("Upgradable"));
