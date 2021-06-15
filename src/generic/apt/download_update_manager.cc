@@ -141,8 +141,8 @@ download_update_manager::finish(pkgAcquire::RunResult res,
   // little redundant work in visual mode, but avoids lots of
   // redundant work at the command-line.
   {
-    pkgCacheFile cachefile;
-    if(!cachefile.BuildCaches(progress, true))
+    pkgCacheFile cachefile(true /* WithLock */);
+    if(!cachefile.BuildCaches(progress))
       {
 	_error->Error(_("Couldn't rebuild package cache"));
 	return failure;
