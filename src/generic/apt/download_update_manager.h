@@ -66,10 +66,12 @@ public:
    */
   bool prepare(OpProgress &progress,
 	       pkgAcquireStatus &acqlog,
-	       download_signal_log *signallog);
+	       download_signal_log *signallog)
+    override;
 
   result finish(pkgAcquire::RunResult result,
-		OpProgress &progress);
+		OpProgress &progress)
+    override;
 
   /** A signal that is invoked after an automatic 'forget new'
    *  operation.

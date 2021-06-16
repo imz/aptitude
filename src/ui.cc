@@ -1140,6 +1140,7 @@ protected:
 		     string pkg,
 		     string ver,
 		     struct stat &stat)
+    override
   {
     if(unlink(file)==0)
       total_size+=stat.st_size;
@@ -2033,7 +2034,7 @@ protected:
   }
 
 public:
-  bool handle_key(const key &k)
+  bool handle_key(const key &k) override
   {
     if(!vs_text_layout::focus_me() ||
        !vs_text_layout::handle_key(k))
@@ -2045,7 +2046,7 @@ public:
   /** \brief Unlike vs_text_layouts, self-destructing widgets
    *  can always grab the focus.
    */
-  bool focus_me()
+  bool focus_me() override
   {
     return true;
   }

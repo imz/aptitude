@@ -79,12 +79,14 @@ public:
    */
   bool prepare(OpProgress &progress,
 	       pkgAcquireStatus &acqlog,
-	       download_signal_log *signallog);
+	       download_signal_log *signallog)
+    override;
 
   /** If download_only is false, call the package manager to install
    *  or remove packages. */
   result finish(pkgAcquire::RunResult result,
-		OpProgress &progress);
+		OpProgress &progress)
+    override;
 
   /** Invoked prior to actually performing the install run. */
   sigc::signal0<void> pre_install_hook;

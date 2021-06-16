@@ -45,7 +45,7 @@ public:
 		   const std::string &exp,
 		   const std::string &msg);
 
-  std::string errmsg() const;
+  std::string errmsg() const override;
 
   /** \return The source file in which the failing assertion occurred. */
   std::string get_file() const

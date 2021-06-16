@@ -24,7 +24,7 @@ class vs_button:public vscreen_widget
   void lose_focus();
 
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
   fragment_cache *get_label() const {return label;}
 
   /** Instantiate a vs_button.
@@ -72,15 +72,15 @@ public:
     return rval;
   }
 
-  void paint(const style &st);
+  void paint(const style &st) override;
 
-  bool get_cursorvisible();
-  point get_cursorloc();
-  bool focus_me();
+  bool get_cursorvisible() override;
+  point get_cursorloc() override;
+  bool focus_me() override;
 
-  int width_request();
-  int height_request(int width);
-  void dispatch_mouse(short id, int x, int y, int z, mmask_t bmask);
+  int width_request() override;
+  int height_request(int width) override;
+  void dispatch_mouse(short id, int x, int y, int z, mmask_t bmask) override;
 
   void set_label(const fragment *_label);
 

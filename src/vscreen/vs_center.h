@@ -22,8 +22,8 @@ public:
     return rval;
   }
 
-  int width_request();
-  int height_request(int width);
+  int width_request() override;
+  int height_request(int width) override;
 };
 
 typedef ref_ptr<vs_center> vs_center_ref;

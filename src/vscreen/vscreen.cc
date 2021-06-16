@@ -215,7 +215,7 @@ class input_thread
     {
     }
 
-    void dispatch()
+    void dispatch() override
     {
       if(global_bindings.key_matches(k, "Refresh"))
 	vscreen_redraw();
@@ -234,7 +234,7 @@ class input_thread
     {
     }
 
-    void dispatch()
+    void dispatch() override
     {
       if(toplevel.valid())
 	toplevel->dispatch_mouse(ev.id, ev.x, ev.y, ev.z, ev.bstate);
@@ -314,7 +314,7 @@ class signal_thread
     {
     }
 
-    void dispatch()
+    void dispatch() override
     {
       switch(signal)
 	{
@@ -814,7 +814,7 @@ void vscreen_handleresize()
 class try_update_event : public vscreen_event
 {
 public:
-  void dispatch()
+  void dispatch() override
   {
     vscreen_tryupdate();
   }

@@ -42,17 +42,18 @@ class download_item:public vs_treeitem
 public:
   download_item(const pkgAcquire::ItemDesc &_item):vs_treeitem(false), item(_item), worker(NULL) {}
 
-  style get_normal_style();
+  style get_normal_style() override;
 
   virtual void paint(vs_tree *win, int y, bool hierarchical,
-		     const style &st);
+		     const style &st)
+    override;
 
   void download_done(bool _hit) {hit=_hit;}
   void set_worker(pkgAcquire::Worker *_worker) {worker=_worker;}
 
   // Nothing sensible to return here.
-  const wchar_t *tag() {return L"";}
-  const wchar_t *label() {return L"";}
+  const wchar_t *tag() override {return L"";}
+  const wchar_t *label() override {return L"";}
 };
 
 #endif

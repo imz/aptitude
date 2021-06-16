@@ -59,7 +59,7 @@ public:
   {
   }
 
-  void dispatch();
+  void dispatch() override;
 };
 
 class vscreen_widget;

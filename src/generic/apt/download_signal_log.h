@@ -91,19 +91,19 @@ public:
 		const sigc::slot0<void> &> Stop_sig;
   sigc::signal1<void, download_signal_log &> Complete_sig;
 
-  void Fetched(unsigned long Size, unsigned long ResumePoint);
+  void Fetched(unsigned long Size, unsigned long ResumePoint) override;
   void MediaChange(const std::string &Media, const std::string &Drive,
 		   const sigc::slot1<void, bool> &k);
-  bool MediaChange(std::string Media, std::string Drive);
-  void IMSHit(pkgAcquire::ItemDesc &item);
-  void Fetch(pkgAcquire::ItemDesc &item);
-  void Done(pkgAcquire::ItemDesc &item);
-  void Fail(pkgAcquire::ItemDesc &item);
+  bool MediaChange(std::string Media, std::string Drive) override;
+  void IMSHit(pkgAcquire::ItemDesc &item) override;
+  void Fetch(pkgAcquire::ItemDesc &item) override;
+  void Done(pkgAcquire::ItemDesc &item) override;
+  void Fail(pkgAcquire::ItemDesc &item) override;
   void Pulse(pkgAcquire *Owner, const sigc::slot1<void, bool> &k);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
   void Stop(const sigc::slot0<void> &k);
-  void Stop();
+  void Stop() override;
 
   // Called when EVERYTHING is over.  "Stop" is not sufficient, since
   // it is potentially called multiple times (eg, for installs spread across

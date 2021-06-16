@@ -70,14 +70,15 @@ public:
   void invalidate();
 
   fragment_contents layout(size_t firstw, size_t restw,
-			   const style &st);
+			   const style &st)
+    override;
 
   void set_attr(int attr);
 
-  size_t max_width(size_t first_indent, size_t rest_indent) const;
-  size_t trailing_width(size_t first_indent, size_t rest_indent) const;
+  size_t max_width(size_t first_indent, size_t rest_indent) const override;
+  size_t trailing_width(size_t first_indent, size_t rest_indent) const override;
 
-  bool final_newline() const;
+  bool final_newline() const override;
 };
 
 

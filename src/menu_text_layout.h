@@ -69,16 +69,16 @@ public:
     return rval;
   }
 
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
-  bool find_search_enabled();
-  bool find_search();
-  bool find_search_back_enabled();
-  bool find_search_back();
-  bool find_research_enabled();
-  bool find_research();
-  bool find_repeat_search_back_enabled();
-  bool find_repeat_search_back();
+  bool find_search_enabled() override;
+  bool find_search() override;
+  bool find_search_back_enabled() override;
+  bool find_search_back() override;
+  bool find_research_enabled() override;
+  bool find_research() override;
+  bool find_repeat_search_back_enabled() override;
+  bool find_repeat_search_back() override;
 };
 typedef ref_ptr<menu_text_layout> menu_text_layout_ref;
 

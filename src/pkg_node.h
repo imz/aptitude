@@ -48,7 +48,7 @@ public:
   void mark_auto(undo_group *undo) {set_auto(true, undo);}
   void unmark_auto(undo_group *undo) {set_auto(false, undo);}
 
-  bool dispatch_key(const key &k, vs_tree *owner);
+  bool dispatch_key(const key &k, vs_tree *owner) override;
   // IMPORTANT NOTE: pkg_tree_node::dispatch_char() does NOT call
   // vs_treeitem::dispatch_char!
 
@@ -56,13 +56,13 @@ public:
   static void init_bindings();
 
   // Menu redirections:
-  bool package_enabled();
-  bool package_install();
-  bool package_remove();
-  bool package_hold();
-  bool package_keep();
-  bool package_mark_auto();
-  bool package_unmark_auto();
+  bool package_enabled() override;
+  bool package_install() override;
+  bool package_remove() override;
+  bool package_hold() override;
+  bool package_keep() override;
+  bool package_mark_auto() override;
+  bool package_unmark_auto() override;
 };
 
 #endif

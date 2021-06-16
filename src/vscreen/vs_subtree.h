@@ -54,12 +54,12 @@ protected:
     {
     }
 
-    vs_treeitem *get_item() {eassert(realitem!=parent_list->end()); return *realitem;}
-    virtual void advance_next() {++realitem;}
-    virtual void return_prev() {--realitem;}
-    bool is_begin() {return realitem==parent_list->begin();}
-    bool is_end() {return realitem==parent_list->end();}
-    levelref *clone() const {return new levelref(*this);}
+    vs_treeitem *get_item() override {eassert(realitem!=parent_list->end()); return *realitem;}
+    virtual void advance_next() override {++realitem;}
+    virtual void return_prev() override {--realitem;}
+    bool is_begin() override {return realitem==parent_list->begin();}
+    bool is_end() override {return realitem==parent_list->end();}
+    levelref *clone() const override {return new levelref(*this);}
   };
 
 private:
@@ -79,24 +79,25 @@ public:
 
   bool get_expanded() {return expanded;}
 
-  void expand() {expanded=true;}
+  void expand() override {expanded=true;}
 
-  void expand_all()
+  void expand_all() override
   {
     expanded=true;
     for(child_iterator i=children.begin(); i!=children.end(); i++)
       (*i)->expand_all();
   }
 
-  void collapse_all()
+  void collapse_all() override
   {
     expanded=false;
     for(child_iterator i=children.begin(); i!=children.end(); i++)
       (*i)->collapse_all();
   }
 
-  void paint(vs_tree *win, int y, bool hierarchical,
-	     const std::wstring &str, int depth_shift=2)
+  void paint_text(vs_tree *win, int y, bool hierarchical,
+                  const std::wstring &str, int depth_shift=2)
+    override
   {
     int width, height;
     int basex=hierarchical?depth_shift*get_depth():0;
@@ -147,7 +148,7 @@ public:
       }
   }
 
-  void set_depth(int _depth)
+  void set_depth(int _depth) override
   {
     for(child_iterator i=children.begin(); i!=children.end(); i++)
       (*i)->set_depth(_depth+1);
@@ -165,7 +166,7 @@ public:
   // Adds a new child item at an unspecified location -- you should call sort()
   // after adding children or the tree will have an undetermined order.  (yes,
   // you can deduce the real order.  Don't.)
-  void sort(sortpolicy &sort_method)
+  void sort(sortpolicy &sort_method) override
   {
     for(child_iterator i=children.begin(); i!=children.end(); i++)
       (*i)->sort(sort_method);
@@ -173,13 +174,13 @@ public:
     children.sort(sortpolicy_wrapper(sort_method));
   }
 
-  void sort()
+  void sort() override
   {
     default_sort sorter;
     sort(sorter);
   }
 
-  virtual bool dispatch_key(const key &k, vs_tree *owner)
+  virtual bool dispatch_key(const key &k, vs_tree *owner) override
   {
     if(vs_tree::bindings->key_matches(k, "ToggleExpanded"))
       {
@@ -221,7 +222,7 @@ public:
   // FIXME: should I use '+' and '-' here?  That would appear to conflict with
   // the other keybindings I need.  Hm.
 
-  virtual void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner)
+  virtual void dispatch_mouse(short id, int x, mmask_t bstate, vs_tree *owner) override
   {
     if(bstate & (BUTTON1_DOUBLE_CLICKED | BUTTON2_DOUBLE_CLICKED |
 		 BUTTON3_DOUBLE_CLICKED | BUTTON4_DOUBLE_CLICKED |
@@ -230,11 +231,11 @@ public:
       expanded=!expanded;
   }
 
-  virtual levelref *begin() {return new levelref(children.begin(), &children);}
-  virtual levelref *end() {return new levelref(children.end(), &children);}
+  virtual levelref *begin() override {return new levelref(children.begin(), &children);}
+  virtual levelref *end() override {return new levelref(children.end(), &children);}
 
-  bool has_visible_children() {return expanded && children.size()>0;}
-  bool has_children() {return children.size()>0;}
+  bool has_visible_children() override {return expanded && children.size()>0;}
+  bool has_children() override {return children.size()>0;}
 
   virtual ~vs_subtree()
   {

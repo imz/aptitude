@@ -598,7 +598,7 @@ int pkg_item::pkg_columnizer::parse_column_type(char id)
 class pkg_item::pkg_columnizer::pkg_genheaders:public column_generator
 {
 protected:
-  column_disposition setup_column(int type)
+  column_disposition setup_column(int type) override
   {
     return column_disposition(_(pkg_columnizer::column_names[type]), 0);
   }

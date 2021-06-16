@@ -50,11 +50,12 @@ public:
   pkg_depitem(pkgCache::DepIterator &_first, pkg_signal *_sig);
 
   void paint(vs_tree *win, int y, bool hierarchical,
-	     const style &st);
+	     const style &st)
+    override;
 
-  style get_normal_style();
+  style get_normal_style() override;
 
-  void select(undo_group *undo);
+  void select(undo_group *undo) override;
   // A special case -- installs the 'best' target package (using
   // SmartTargetPkg() )
 };
@@ -139,8 +140,8 @@ void pkg_depitem::paint(vs_tree *win, int y, bool hierarchical,
 
       wstring broken_str=transcode(available?_("UNSATISFIED"):_("UNAVAILABLE"));
 
-      vs_subtree<pkg_tree_node>::paint(win, y, hierarchical,
-				       get_name()+L" ("+broken_str+L")");
+      vs_subtree<pkg_tree_node>::paint_text(win, y, hierarchical,
+                                            get_name()+L" ("+broken_str+L")");
     }
   else
     pkg_subtree::paint(win, y, hierarchical,
@@ -182,7 +183,7 @@ public:
   pkg_grouppolicy_dep(pkg_signal *_sig, desc_signal *_desc_sig)
     :pkg_grouppolicy(_sig, _desc_sig) {}
 
-  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root)
+  void add_package(const pkgCache::PkgIterator &pkg, pkg_subtree *root) override
   {
     pkg_item_with_generic_subtree *newtree=new pkg_item_with_generic_subtree(pkg,
 									     get_sig());

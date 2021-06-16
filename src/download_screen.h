@@ -39,10 +39,10 @@ class download_tree:public vs_subtree_generic
 public:
   download_tree():vs_subtree_generic(true) {}
 
-  void paint(vs_tree *win, int y, bool hierarchical, const style &style)
-  {vs_subtree_generic::paint(win, y, hierarchical, L"ERROR: SHOULD NOT APPEAR");}
-  const wchar_t * tag() {return L"download tree";}
-  const wchar_t * label() {return L"download tree";}
+  void paint(vs_tree *win, int y, bool hierarchical, const style &style) override
+  {paint_text(win, y, hierarchical, L"ERROR: SHOULD NOT APPEAR");}
+  const wchar_t * tag() override {return L"download tree";}
+  const wchar_t * label() override {return L"download tree";}
 };
 
 class download_screen:public vs_tree, public pkgAcquireStatus
@@ -74,21 +74,21 @@ class download_screen:public vs_tree, public pkgAcquireStatus
   }
 
 protected:
-  bool handle_key(const key &k);
+  bool handle_key(const key &k) override;
 
 public:
   download_screen():prev(NULL),finished(false),cancelled(false) {contents=new download_tree; set_root(contents);}
 
-  bool MediaChange(string media, string drive);
-  void IMSHit(pkgAcquire::ItemDesc &itmdesc);
-  void Fetch(pkgAcquire::ItemDesc &itmdesc);
-  void Done(pkgAcquire::ItemDesc &itmdesc);
-  void Fail(pkgAcquire::ItemDesc &itmdesc);
-  bool Pulse(pkgAcquire *Owner);
-  void Start();
-  void Stop();
+  bool MediaChange(string media, string drive) override;
+  void IMSHit(pkgAcquire::ItemDesc &itmdesc) override;
+  void Fetch(pkgAcquire::ItemDesc &itmdesc) override;
+  void Done(pkgAcquire::ItemDesc &itmdesc) override;
+  void Fail(pkgAcquire::ItemDesc &itmdesc) override;
+  bool Pulse(pkgAcquire *Owner) override;
+  void Start() override;
+  void Stop() override;
 
-  bool get_cursorvisible() {return false;}
+  bool get_cursorvisible() override {return false;}
 
   //void paint_status();
 

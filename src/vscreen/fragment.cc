@@ -45,7 +45,7 @@ public:
   _text_fragment(const wstring &_s):s(_s) {}
 
   fragment_contents layout(size_t firstw, size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     fragment_contents rval;
     rval.push_back(fragment_line(s, st));
@@ -53,18 +53,18 @@ public:
   }
 
   size_t max_width(size_t first_indent,
-		   size_t rest_indent) const
+		   size_t rest_indent) const override
   {
     return first_indent+wcswidth(s.c_str(), s.size());
   }
 
   size_t trailing_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     return first_indent+wcswidth(s.c_str(), s.size());
   }
 
-  bool final_newline() const
+  bool final_newline() const override
   {
     return false;
   }
@@ -150,24 +150,24 @@ class _newline_fragment:public fragment
 public:
   _newline_fragment() {}
 
-  fragment_contents layout(size_t firstw, size_t restw, const style &st)
+  fragment_contents layout(size_t firstw, size_t restw, const style &st) override
   {
     fragment_contents rval;
     rval.set_final_nl(true);
     return rval;
   }
 
-  size_t max_width(size_t first_indent, size_t rest_indent) const
+  size_t max_width(size_t first_indent, size_t rest_indent) const override
   {
     return first_indent;
   }
 
-  size_t trailing_width(size_t first_indent, size_t rest_indent) const
+  size_t trailing_width(size_t first_indent, size_t rest_indent) const override
   {
     return rest_indent;
   }
 
-  bool final_newline() const
+  bool final_newline() const override
   {
     return true;
   }
@@ -188,22 +188,22 @@ public:
   ~_style_fragment() {delete contents;}
 
   fragment_contents layout(size_t firstw, size_t restw,
-			   const style &st2)
+			   const style &st2) override
   {
     return contents->layout(firstw, restw, st2+st);
   }
 
-  size_t max_width(size_t first_indent, size_t rest_indent) const
+  size_t max_width(size_t first_indent, size_t rest_indent) const override
   {
     return contents->max_width(first_indent, rest_indent);
   }
 
-  size_t trailing_width(size_t first_indent, size_t rest_indent) const
+  size_t trailing_width(size_t first_indent, size_t rest_indent) const override
   {
     return contents->trailing_width(first_indent, rest_indent);
   }
 
-  bool final_newline() const
+  bool final_newline() const override
   {
     return contents->final_newline();
   }
@@ -256,20 +256,20 @@ public:
   virtual bool calc_final_newline() const=0;
 
   size_t max_width(size_t first_indent,
-		   size_t rest_indent) const
+		   size_t rest_indent) const override
   {
     update_width(first_indent, rest_indent);
     return max_width_cache;
   }
 
   size_t trailing_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     update_width(first_indent, rest_indent);
     return trailing_width_cache;
   }
 
-  bool final_newline() const
+  bool final_newline() const override
   {
     if(final_nl_stale)
       {
@@ -297,7 +297,7 @@ public:
   }
 
   fragment_contents layout(size_t firstw, const size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     fragment_contents rval;
 
@@ -361,7 +361,7 @@ public:
   }
 
   size_t calc_max_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     size_t rval=0;
     size_t partial=first_indent;
@@ -382,7 +382,7 @@ public:
   }
 
   size_t calc_trailing_width(size_t first_indent,
-			     size_t rest_indent) const
+			     size_t rest_indent) const override
   {
     size_t rval=first_indent;
 
@@ -393,7 +393,7 @@ public:
     return rval;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return !contents.empty() && contents.back()->final_newline();
   }
@@ -456,7 +456,7 @@ public:
   _flowbox(fragment *_contents):contents(_contents) {}
 
   fragment_contents layout(size_t firstw, const size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     if(restw==0)
       return fragment_contents();
@@ -586,18 +586,18 @@ public:
   }
 
   size_t calc_max_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     return contents->max_width(first_indent, rest_indent);
   }
 
   size_t calc_trailing_width(size_t first_indent,
-			     size_t rest_indent) const
+			     size_t rest_indent) const override
   {
     return rest_indent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }
@@ -616,7 +616,7 @@ public:
   _fillbox(fragment *_contents):contents(_contents) {}
 
   fragment_contents layout(size_t firstw, size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     // As far as I know, this is valid everywhere...but it would be
     // rather tricky to write this algorithm without making this
@@ -761,18 +761,18 @@ public:
   }
 
   size_t calc_max_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     return contents->max_width(first_indent, rest_indent);
   }
 
   size_t calc_trailing_width(size_t first_indent,
-			     size_t rest_indent) const
+			     size_t rest_indent) const override
   {
     return rest_indent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }
@@ -793,7 +793,7 @@ public:
   ~_hardwrapbox() {delete contents;}
 
   fragment_contents layout(size_t firstw, const size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     if(restw==0)
       return fragment_contents();
@@ -842,17 +842,17 @@ public:
     return rval;
   }
 
-  size_t calc_max_width(size_t first_indent, size_t rest_indent) const
+  size_t calc_max_width(size_t first_indent, size_t rest_indent) const override
   {
     return contents->max_width(first_indent, rest_indent);
   }
 
-  size_t calc_trailing_width(size_t first_indent, size_t rest_indent) const
+  size_t calc_trailing_width(size_t first_indent, size_t rest_indent) const override
   {
     return rest_indent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }
@@ -872,7 +872,7 @@ public:
   _clipbox(fragment *_contents):contents(_contents) {}
 
   fragment_contents layout(size_t firstw, const size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     fragment_contents rval, lines=contents->layout(firstw, restw,
 						   st);
@@ -902,18 +902,18 @@ public:
   }
 
   size_t calc_max_width(size_t first_indent,
-			size_t rest_indent) const
+			size_t rest_indent) const override
   {
     return contents->max_width(first_indent, rest_indent);
   }
 
   size_t calc_trailing_width(size_t first_indent,
-			     size_t rest_indent) const
+			     size_t rest_indent) const override
   {
     return rest_indent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }
@@ -934,7 +934,7 @@ public:
      restindent(_restindent) {}
 
   fragment_contents layout(size_t firstw, size_t restw,
-			   const style &st)
+			   const style &st) override
   {
     if(restw<=restindent)
       return fragment_contents();
@@ -966,19 +966,19 @@ public:
   }
 
   size_t calc_max_width(size_t my_first_indent,
-			size_t my_rest_indent) const
+			size_t my_rest_indent) const override
   {
     return contents->max_width(my_first_indent+firstindent,
 			       my_rest_indent+restindent);
   }
 
   size_t calc_trailing_width(size_t my_first_indent,
-			     size_t my_rest_indent) const
+			     size_t my_rest_indent) const override
   {
     return my_rest_indent+restindent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }
@@ -1053,7 +1053,7 @@ public:
       delete i->f;
   }
 
-  fragment_contents layout(size_t firstw, size_t restw, const style &st)
+  fragment_contents layout(size_t firstw, size_t restw, const style &st) override
   {
     eassert(firstw == restw);
 
@@ -1119,7 +1119,7 @@ public:
     return rval;
   }
 
-  size_t calc_max_width(size_t first_indent, size_t rest_indent) const
+  size_t calc_max_width(size_t first_indent, size_t rest_indent) const override
   {
     eassert(first_indent == rest_indent);
 
@@ -1150,14 +1150,14 @@ public:
     return rval;
   }
 
-  size_t calc_trailing_width(size_t first_indent, size_t rest_indent) const
+  size_t calc_trailing_width(size_t first_indent, size_t rest_indent) const override
   {
     eassert(first_indent == rest_indent);
 
     return rest_indent;
   }
 
-  bool calc_final_newline() const
+  bool calc_final_newline() const override
   {
     return true;
   }

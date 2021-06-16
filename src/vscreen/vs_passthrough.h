@@ -14,7 +14,7 @@ class vs_passthrough:public vs_container
   void lost_focus();
 
 protected:
-  virtual bool handle_key(const key &k);
+  virtual bool handle_key(const key &k) override;
 
   // These call focussed() and unfocussed() on the result of get_focus().
   // (convenience methods)
@@ -30,13 +30,13 @@ public:
   // Returns the currently focussed widget, if any.
   virtual vs_widget_ref get_focus()=0;
 
-  vs_widget_ref get_active_widget();
+  vs_widget_ref get_active_widget() override;
 
-  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate);
+  virtual void dispatch_mouse(short id, int x, int y, int z, mmask_t bstate) override;
 
-  virtual bool focus_me();
-  virtual bool get_cursorvisible();
-  virtual point get_cursorloc();
+  virtual bool focus_me() override;
+  virtual bool get_cursorvisible() override;
+  virtual point get_cursorloc() override;
 };
 
 typedef ref_ptr<vs_passthrough> vs_passthrough_ref;

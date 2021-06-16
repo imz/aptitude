@@ -50,23 +50,24 @@ public:
   }
 
   virtual void paint(vs_tree *win, int y, bool hierarchical,
-		     const style &st);
-  virtual const wchar_t *tag();
-  virtual const wchar_t *label();
+		     const style &st)
+    override;
+  virtual const wchar_t *tag() override;
+  virtual const wchar_t *label() override;
 
-  virtual void select(undo_group *undo);
-  virtual void hold(undo_group *undo);
-  virtual void keep(undo_group *undo);
-  virtual void remove(undo_group *undo);
-  virtual void set_auto(bool isauto, undo_group *undo);
+  virtual void select(undo_group *undo) override;
+  virtual void hold(undo_group *undo) override;
+  virtual void keep(undo_group *undo) override;
+  virtual void remove(undo_group *undo) override;
+  virtual void set_auto(bool isauto, undo_group *undo) override;
 
-  virtual void highlighted(vs_tree *win);
-  virtual void unhighlighted(vs_tree *win);
+  virtual void highlighted(vs_tree *win) override;
+  virtual void unhighlighted(vs_tree *win) override;
 
   std::wstring get_name() {return name;}
   std::wstring get_description() {return description;}
 
-  bool dispatch_key(const key &k, vs_tree *owner);
+  bool dispatch_key(const key &k, vs_tree *owner) override;
 };
 
 #endif

@@ -35,6 +35,7 @@ protected:
 		     string pkg,
 		     string ver,
 		     struct stat &stat)
+    override
   {
     unlink(file);
   }

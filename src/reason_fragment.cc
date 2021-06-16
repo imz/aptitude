@@ -49,8 +49,8 @@ fragment *depname_frag(pkgCache::DepIterator dep)
 /** Compare two packages by name */
 struct pkg_name_cmp
 {
-  bool operator()(pkgCache::PkgIterator P1,
-		  pkgCache::PkgIterator P2)
+  bool operator()(const pkgCache::PkgIterator &P1,
+		  const pkgCache::PkgIterator &P2) const
   {
     return strcmp(P1.Name(), P2.Name())<0;
   }
@@ -61,10 +61,10 @@ struct pkg_name_cmp
  */
 struct ver_ptr_cmp
 {
-  bool operator()(pkgCache::VerIterator V1,
-		   pkgCache::VerIterator V2)
+  bool operator()(const pkgCache::VerIterator &V1,
+		   const pkgCache::VerIterator &V2) const
   {
-    return less<void*>()(&*V1, &*V2);
+    return less<const void*>()(&*V1, &*V2);
   }
 };
 
