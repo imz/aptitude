@@ -58,7 +58,7 @@ pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, string URI,
 
 // Straight from acquire-item.cc
 /* Here we try other sources */
-void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
+void pkgAcqFileSane::Failed(const string Message,pkgAcquire::MethodConfig *Cnf)
 {
   ErrorText = LookupTag(Message,"Message");
 

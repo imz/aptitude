@@ -135,7 +135,7 @@ void background_status::Fetched(unsigned long Size,
 			&download_signal_log::Fetched);
 }
 
-bool background_status::MediaChange(std::string Media, std::string Drive)
+bool background_status::MediaChange(const std::string Media, const std::string Drive)
 {
   threads::box<bool> return_box;
 
