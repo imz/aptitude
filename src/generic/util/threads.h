@@ -28,6 +28,8 @@
 #include <cerrno>
 #include "exception.h"
 
+#include <pthread.h>
+
 namespace threads
 {
   /** Base exception class for thread errors. */
