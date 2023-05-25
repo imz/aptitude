@@ -20,7 +20,7 @@
 #include <apt-pkg/progress.h>
 #include <apt-pkg/sourcelist.h>
 
-#include <memory>
+#include <map>
 #include <stdio.h>
 
 // Download stuff to the current directory
@@ -46,7 +46,7 @@ int cmdline_download(int argc, char *argv[])
       return -1;
     }
   pkgAcquire fetcher(gen_cmdline_download_progress());
-  std::unique_ptr<string[]> filenames(new string[(*apt_cache_file)->Head().PackageCount]);
+  std::map<decltype((*apt_cache_file)->Head().PackageCount),string> filenames;
   string default_release = aptcfg->Find("APT::Default-Release");
 
   for(int i=1; i<argc; ++i)
